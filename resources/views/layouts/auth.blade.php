@@ -135,5 +135,15 @@
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('dist/js/pages/dashboard3.js')}}"></script>
+<style>
+body {
+  background-image: url('img/shop01.png');
+  
+
+}
+body {
+/*background-image: url('img/shop03.png');*/
+}
+</style>
 </body>
 </html>

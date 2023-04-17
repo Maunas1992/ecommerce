@@ -47,8 +47,20 @@
                         <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
                     </ul>
                     <ul class="header-links pull-right">
-
-                        <li><a href="{{route('signup')}}"><i class="fa fa-user-o"></i> My Account</a></li>
+                        @if (Route::has('login'))
+                        @auth
+                        
+                        <li><a  href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i> Logout
+                    </a></li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                    <li><a href="{{route('viewprofile')}}"><i class="fa fa-user-o"></i> My Profile</a></li>
+                    @else
+                    <li><a href="{{route('home')}}"><i class="fa fa-user-o"></i> Login</a></li>
+                        <li><a href="{{route('register')}}"><i class="fa fa-user-o"></i> Register</a></li>
+                    @endauth
+                    @endif
                     </ul>
                 </div>
             </div>
@@ -173,10 +185,7 @@
                         <li class="active"><a href="#">Home</a></li>
                         <li><a href="#">Hot Deals</a></li>
                         <li><a href="{{route('storeproduct')}}">Categories</a></li>
-                        <li><a href="#">Laptops</a></li>
-                        <li><a href="#">Smartphones</a></li>
-                        <li><a href="#">Cameras</a></li>
-                        <li><a href="#">Accessories</a></li>
+                        
                     </ul>
                     <!-- /NAV -->
                 </div>

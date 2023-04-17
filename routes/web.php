@@ -21,6 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/user/index', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
 
 Route::get('/user/create', [App\Http\Controllers\UserController::class, 'create'])->name('user.create');
@@ -33,5 +34,8 @@ Route::post('/user/update/{id}', [App\Http\Controllers\UserController::class, 'u
 
 Route::post('/user/destroy/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
 Route::get('/signup', [Controller::class, 'signup'])->name('signup');
+
 Route::get('/store', [Controller::class, 'storeproduct'])->name('storeproduct');
 Route::get('/show', [Controller::class, 'showproduct'])->name('showproduct');
+Route::get('/profile', [Controller::class, 'viewprofile'])->name('viewprofile');
+Route::post('/updateprofile/{id}', [Controller::class, 'updateprofile'])->name('updateprofile');
