@@ -57,8 +57,8 @@
                             <label for="gender" class="col-md-4 col-form-label text-md-end">{{ __('Gender') }}</label>
 
                             <div class="col-md-6">
-                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') }}" autocomplete="gender">Male
-                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') }}" autocomplete="gender">Female
+                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="male" autocomplete="gender">Male
+                                <input id="gender" type="radio" class="@error('gender') is-invalid @enderror" name="gender" value="female" autocomplete="gender">Female
 
                                 @error('gender')
                                     <span class="invalid-feedback" role="alert">

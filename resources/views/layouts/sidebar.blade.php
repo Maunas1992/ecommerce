@@ -44,16 +44,16 @@
           		</a>
           		<ul class="nav nav-treeview">
           			<li class="nav-item">
-          				<a href="./index3.html" class="nav-link">
-          					<i class="far fa-circle nav-icon"></i>
-          					<p>Add User</p>
-          				</a>
+				<a href="{{route('user.create')}}" class="nav-link">
+					<i class="far fa-circle nav-icon"></i>
+						<p>Add User</p>
+				</a>
           			</li>
           			<li class="nav-item">
-          				<a href="./index3.html" class="nav-link">
+				<a href="{{route('user.index')}}" class="nav-link">
           					<i class="far fa-circle nav-icon"></i>
           					<p>List User</p>
-          				</a>
+		</a>
           			</li>
           		</ul>
           	</li>
