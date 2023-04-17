@@ -21,6 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/signup', [Controller::class, 'signup'])->name('signup');
 Route::get('/store', [Controller::class, 'storeproduct'])->name('storeproduct');
 Route::get('/show', [Controller::class, 'showproduct'])->name('showproduct');
+Route::get('/profile', [Controller::class, 'viewprofile'])->name('viewprofile');
+Route::post('/updateprofile/{id}', [Controller::class, 'updateprofile'])->name('updateprofile');
