@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,9 @@ Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit
 Route::post('/user/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 
 Route::post('/user/destroy/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
+
+Route::resource('product', ProductController::class);
+
 Route::get('/signup', [Controller::class, 'signup'])->name('signup');
 
 Route::get('/store', [Controller::class, 'storeproduct'])->name('storeproduct');
