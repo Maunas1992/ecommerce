@@ -35,7 +35,7 @@
                   @csrf
                   <div class="row">
                     <div class="col-6">
-                      <input type="text" name="p_name" class="form-control" placeholder="Enter Product Name">
+                      <input type="text" name="p_name" value="{{old('p_name')}}" class="form-control" placeholder="Enter Product Name">
                       <span class="error text-danger">{{$errors->first('p_name')}}</span>
                     </div>
 
@@ -53,21 +53,26 @@
                     </div>
 
                     <div class="col-6">
-                      <input type="text" class="form-control" name="qty" placeholder="Enter Quantity">
+                      <input type="text" class="form-control" value="{{old('qty')}}" name="qty" placeholder="Enter Quantity">
                     <span class="error text-danger">{{$errors->first('qty')}}</span>
                     </div>
 
                     <div class="col-6 mb-3">
-                      <input type="text" name="price" class="form-control" placeholder="Enter price">
+                      <input type="text" name="price" value="{{old('price')}}" class="form-control" placeholder="Enter price">
                     <span class="error text-danger">{{$errors->first('price')}}</span>
                     </div>
 
                     <div class="col-6">
-                      <input type="text" name="color" class="form-control" placeholder="Enter color">
+                      <input type="text" name="color" value="{{old('color')}}" class="form-control" placeholder="Enter color">
                     <span class="error text-danger">{{$errors->first('color')}}</span>
                     </div>
 
                     <div class="col-6 mb-3">
+                      <input type="text" name="discount" value="{{old('discount')}}" class="form-control" placeholder="Enter discount">
+                    <span class="error text-danger">{{$errors->first('discount')}}</span>
+                    </div>
+
+                    <div class="col-6">
                       <input type="file" name="image" class="form-control">
                     <span class="error text-danger">{{$errors->first('image')}}</span>
                     </div>
