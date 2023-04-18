@@ -66,9 +66,6 @@ class ProductController extends Controller
         $products->color = $request->color;
         $products->category_id = $request->category_id;
         if($request->hasFile('image')){
-            if(Storage::exists('public/product',$products->image)){
-                Storage::delete('public/product',$products->image);
-            }
             $image = $request->file('image');
             $image->store('public/product');
             $products->image = $image->hashName();
