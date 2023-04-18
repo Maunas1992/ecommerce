@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\Front\ProductController;
+// use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,13 +15,14 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\Front\ProductController::class, 'index']);
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/user/index', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
 
@@ -43,3 +44,5 @@ Route::get('/store', [Controller::class, 'storeproduct'])->name('storeproduct');
 Route::get('/show', [Controller::class, 'showproduct'])->name('showproduct');
 Route::get('/profile', [Controller::class, 'viewprofile'])->name('viewprofile');
 Route::post('/updateprofile/{id}', [Controller::class, 'updateprofile'])->name('updateprofile');
+
+Route::get('/index', [ProductController::class, 'index'])->name('getproduct');
