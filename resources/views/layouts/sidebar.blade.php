@@ -62,7 +62,7 @@
           		<a href="#" class="nav-link">
           			<i class="nav-icon fas fa-user"></i>
           			<p>
-          				Project Management
+          				Product Management
           				<i class="right fas fa-angle-left"></i>
           			</p>
           		</a>
@@ -81,6 +81,29 @@
           			</li>
           		</ul>
           	</li>
+        <li class="nav-item menu-close">
+			<a href="#" class="nav-link">
+				<i class="nav-icon fas fa-user"></i>
+				<p>
+					Category Management
+					<i class="right fas fa-angle-left"></i>
+				</p>
+			</a>
+			<ul class="nav nav-treeview">
+				<li class="nav-item">
+					<a href="{{route('category.create')}}" class="nav-link">
+						<i class="far fa-circle nav-icon"></i>
+						<p>Add Category</p>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="{{route('category.index')}}" class="nav-link">
+						<i class="far fa-circle nav-icon"></i>
+						<p>List Category</p>
+					</a>
+				</li>
+			</ul>
+		</li>
 
           	<li class="nav-item">
           		<a href="pages/widgets.html" class="nav-link">
