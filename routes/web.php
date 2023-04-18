@@ -38,6 +38,18 @@ Route::post('/user/destroy/{id}', [App\Http\Controllers\UserController::class, '
 
 Route::resource('product', ProductController::class);
 
+Route::get('/category/index', [App\Http\Controllers\CategoryController::class, 'index'])->name('category.index');
+
+Route::get('/category/create', [App\Http\Controllers\CategoryController::class, 'create'])->name('category.create');
+
+Route::post('/category/store', [App\Http\Controllers\CategoryController::class, 'store'])->name('category.store');
+
+Route::get('/category/edit/{id}', [App\Http\Controllers\CategoryController::class, 'edit'])->name('category.edit');
+
+Route::post('/category/update/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
+
+Route::post('/category/destroy/{id}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('category.destroy');
+
 Route::get('/signup', [Controller::class, 'signup'])->name('signup');
 
 Route::get('/store', [Controller::class, 'storeproduct'])->name('storeproduct');

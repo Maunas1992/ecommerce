@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Storage;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -43,16 +44,16 @@ class ProductController extends Controller
             'qty'=>'required',
             'price'=>'required',
             'color'=>'required',        
-            'category_id'=>'required|numeric|min:6',    
+            'category_id'=>'required',
         ];
         $messages =[
-            'p_name.required'=>'Please enter your name',
-            'description.required'=>'Please enter your address',
-            'image.required'=>'Please enter your date of birth',
-            'qty.required'=>'Please select your city name.',
-            'price.required'=>'Please select your state name.',
-            'color.required'=>'Please select your coutry name',
-            'category_id.required'=>'Please enter your pincode',
+            'p_name.required'=>'Please enter product name',
+            'description.required'=>'Please enter description',
+            'image.required'=>'Please select image',
+            'qty.required'=>'Please enter quantity',
+            'price.required'=>'Please enter price',
+            'color.required'=>'Please enter color',
+            'category_id.required'=>'Please select your category',
         ];
                    
         $request->validate($validationrules,$messages);
@@ -64,6 +65,14 @@ class ProductController extends Controller
         $products->price = $request->price;
         $products->color = $request->color;
         $products->category_id = $request->category_id;
+        if($request->hasFile('image')){
+            if(Storage::exists('public/product',$products->image)){
+                Storage::delete('public/product',$products->image);
+            }
+            $image = $request->file('image');
+            $image->store('public/product');
+            $products->image = $image->hashName();
+        }
         $products->save();
         return redirect(route('product.index'));
     }
@@ -89,6 +98,46 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validationrules = [
+            'p_name'=>'required',
+            'description'=>'required',
+            'image'=>'nullable',
+            'qty'=>'required',
+            'price'=>'required',
+            'color'=>'required',
+            'category_id'=>'required',
+        ];
+        $messages =[
+            'p_name.required'=>'Please enter product name',
+            'description.required'=>'Please enter description',
+            'qty.required'=>'Please enter quantity',
+            'price.required'=>'Please enter price',
+            'color.required'=>'Please enter color',
+            'category_id.required'=>'Please select your category',
+        ];
+
+        $request->validate($validationrules,$messages);
+        $products = Product::find($id);
+        $products->p_name = $request->p_name;
+        $products->description = $request->description;
+        $products->qty = $request->qty;
+        $products->price = $request->price;
+        $products->color = $request->color;
+        $products->category_id = $request->category_id;
+        if($request->hasFile('image')){
+            if(Storage::exists('public/product',$products->image)){
+                Storage::delete('public/product',$products->image);
+            }
+            $image = $request->file('image');
+            $image->store('public/product');
+            $products->image = $image->hashName();
+        }
+        $products->save();
+        return redirect(route('product.index'));
+    }
+
+    public function show($id)
+    {
         //
     }
 
@@ -100,6 +149,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $products = Product::find($id);
+        $products->delete();
+        return redirect(route('product.index'));
     }
 }
