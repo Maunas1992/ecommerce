@@ -9,14 +9,17 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categorys = Category::get();
-            return view('category.createcategory',compact('categorys'));
+        $categories = Category::get();
+            return view('admin.category.index',compact('categories'));
     }
-    public function create(Request $request)
+
+    public function create(){
+        return view('admin.category.create');
+    }
+    public function store(Request $request)
     {
         $category = new Category;
         $category->category_name = $request->category_name;
-        $input = $request->all();
         
         $validationrules = [
             'category_name'=>'required',
@@ -28,31 +31,17 @@ class CategoryController extends Controller
                     ];
                     $request->validate($validationrules,$messages);
                     $category->save();
-                        return redirect(route('category.list'));
+                        return redirect(route('category.index'));
 
     }
 
-    public function list()
-    {
-        $categorys = Category::get();
-            return view('category.listcategory',compact('categorys'));
-    }
     public function edit($id)
     {
-        $categorys = Category::find($id);
-            return view('category.edit',compact('categorys'));
+        $categories = Category::find($id);
+            return view('admin.category.edit',compact('categories'));
     }
-    public function destroy($id)
-    {
-        $categorys = Category::find($id);
-        $categorys->delete();
-        return redirect(route('category.listcategory'));
-    }
-
     public function update(Request $request, $id)
     {
-        
-       
         $input = $request->all();
         
         $validationrules = [
@@ -64,10 +53,17 @@ class CategoryController extends Controller
                         
                     ];
                     $request->validate($validationrules,$messages);
-                    $categorys = Category::find($id);
+                    $category = Category::find($id);
                     $category->category_name = $request->category_name;
                     $category->update();
-                        return redirect(route('category.list'));
-
+                        return redirect(route('category.index'));
     }
+
+    public function destroy($id)
+    {
+        $categorys = Category::find($id);
+        $categorys->delete();
+        return redirect(route('category.index'));
+    }
+
 }
