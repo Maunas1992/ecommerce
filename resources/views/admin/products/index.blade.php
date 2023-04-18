@@ -56,32 +56,28 @@
                   </thead>
                   <tbody>
                   	@foreach($products as $product)
-                  <tr>
-                    <td>{{$product->id}}</td>
-                    <td>{{$product->productname}}</td>
-                    <td>{{$product->address}}</td>
-                    <td>{{$product->dob}}</td>
-                    <td>{{$product->city}}</td>
-                    <td>{{$product->state}}</td>
-                    <td>{{$product->pincode}}</td>
-                    <td>{{$product->mobile_no}}</td>
-                    <td>{{$product->email}}</td>
-                    <td>
-                    	<a class="btn btn-primary" href="{{ route('products.edit',$product->id) }}"><i class="fas fa-edit"></i></a>
-                    </td>
+                      <tr>
+                        <td>{{$product->id}}</td>
+                        <td>{{$product->p_name}}</td>
+                        <td>{{$product->category_id}}</td>
+                        <td>{{$product->description}}</td>
+                        <td><img src="{{asset('/storage/product/'.$product->image)}}"class="rounded-circle" height="50px" width="50px"></td>
+                        <td>{{$product->qty}}</td>
+                        <td>{{$product->price}}</td>
+                        <td>{{$product->color}}</td>
+                        <td>
+                          <a class="btn btn-primary" href="{{ route('product.edit',$product->id) }}"><i class="fas fa-edit"></i></a>
+                        </td>
 
-                    <td>
-						<!-- <a class="btn btn-danger" href="{{ route('user.destroy',$user->id) }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-trash"></i>
-	          			</a>
-	          			<form id="logout-form" action="{{ route('user.destroy',$user->id) }}" method="POST" class="d-none">
-			            @csrf
-			          	</form> -->
-			          	<form method="post" action="{{route('product.destroy',$user->id)}}">
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-					</td>
-                  </tr>
+                        <td>
+                          <form method="post" action="{{route('product.destroy',$product->id)}}">
+                              @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">Delete
+                                </button>
+                          </form>
+                        </td>
+                      </tr>
                   	@endforeach
                   </tbody>
                 </table>
