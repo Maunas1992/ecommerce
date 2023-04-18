@@ -31,7 +31,7 @@
                 <h3>Create Product</h3>
               </div>
               <div class="card-body">
-                <form action="{{route('product.store')}}" method="POST">
+                <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
                   @csrf
                   <div class="row">
                     <div class="col-6">
@@ -45,12 +45,15 @@
                     </div>
 
                     <div class="col-6 mb-3">
-                      <input type="file" name="image" class="form-control">
-                    <span class="error text-danger">{{$errors->first('image')}}</span>
+                      <select name="category_id" class="form-control">
+                        <option value="">Select Category</option>
+                        <option value="1">Men</option>
+                      </select>
+                    <span class="error text-danger">{{$errors->first('category_id')}}</span>
                     </div>
 
                     <div class="col-6">
-                      <input type="text" name="qty" value="female"> Female <br>
+                      <input type="text" class="form-control" name="qty" placeholder="Enter Quantity">
                     <span class="error text-danger">{{$errors->first('qty')}}</span>
                     </div>
 
@@ -65,13 +68,10 @@
                     </div>
 
                     <div class="col-6 mb-3">
-                      <select name="category_id">
-                        <!-- @foreach($categories as $category) -->
-                        <option value=""></option>
-                        <!-- @endforeach -->
-                      </select>
-                    <span class="error text-danger">{{$errors->first('category_id')}}</span>
+                      <input type="file" name="image" class="form-control">
+                    <span class="error text-danger">{{$errors->first('image')}}</span>
                     </div>
+
                   </div>
                   <button type="submit" class="btn btn-primary">Save</button>
                 </form>
