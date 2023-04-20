@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::get();
+        $categories = Category::paginate(10);
             return view('admin.category.index',compact('categories'));
     }
 
@@ -18,20 +18,22 @@ class CategoryController extends Controller
     }
     public function store(Request $request)
     {
-        $category = new Category;
-        $category->category_name = $request->category_name;
-        
         $validationrules = [
             'category_name'=>'required',
-    
+            'status'=>'required',
         ];
          $messages =[
-                        'category_name.required'=>'Please enter your category name',
+            'category_name.required'=>'Please enter your category name',
+            'status.required'=>'Please enter status',
                         
-                    ];
-                    $request->validate($validationrules,$messages);
-                    $category->save();
-                        return redirect(route('category.index'));
+        ];
+        $request->validate($validationrules,$messages);
+
+        $category = new Category;
+        $category->category_name = $request->category_name;
+        $category->status = $request->status;
+        $category->save();
+        return redirect(route('category.index'));
 
     }
 
@@ -42,21 +44,21 @@ class CategoryController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $input = $request->all();
-        
         $validationrules = [
             'category_name'=>'required',
+            'status'=>'required',
     
         ];
          $messages =[
-                        'category_name.required'=>'Please enter your category name',
-                        
-                    ];
-                    $request->validate($validationrules,$messages);
-                    $category = Category::find($id);
-                    $category->category_name = $request->category_name;
-                    $category->update();
-                        return redirect(route('category.index'));
+            'category_name.required'=>'Please enter your category name',
+            'status.required'=>'Please enter status',
+        ];
+        $request->validate($validationrules,$messages);
+        $category = Category::find($id);
+        $category->category_name = $request->category_name;
+        $category->status = $request->status;
+        $category->update();
+        return redirect(route('category.index'));
     }
 
     public function destroy($id)
