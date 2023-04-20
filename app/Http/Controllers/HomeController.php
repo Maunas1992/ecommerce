@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 
+use App\Models\Product;
+use App\Models\Category;
 class HomeController extends Controller
 {
     /**
@@ -27,7 +29,9 @@ class HomeController extends Controller
         if(Auth::user()->role == 'admin'){
             return view('home');
         }else{
-            return view('welcome');
+            $products = Product::get();
+            $categories = Category::get();
+            return view('welcome',compact('products','categories'));
         }
     }
 }
