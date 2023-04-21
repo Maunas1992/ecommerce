@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\User;
+use App\Models\Category;
+// use App\Models\Order;
 use Auth;
 
 class HomeController extends Controller
@@ -25,7 +29,10 @@ class HomeController extends Controller
     public function index()
     {
         if(Auth::user()->role == 'admin'){
-            return view('home');
+            $products = Product::count();
+            $users = User::count();
+            $category = Category::count();
+            return view('home',compact('products','users','category'));
         }else{
             return view('welcome');
         }

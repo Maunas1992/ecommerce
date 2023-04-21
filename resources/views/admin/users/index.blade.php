@@ -69,7 +69,13 @@
                     <td>{{$user->state}}</td>
                     <td>{{$user->pincode}}</td>
                     <td>{{$user->mobile_no}}</td>
-                    <td>{{$user->status}}</td>
+                    <td>
+                          @if($user->status == 'Active')
+                          <div class="badge badge-success"> {{$user->status}}</div>
+                          @else
+                          <div class="badge badge-danger"> {{$user->status}}</div>
+                          @endif
+                        </td>
                     <td>{{$user->email}}</td>
                     <td>
                       <div class='btn-group'>

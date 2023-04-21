@@ -58,6 +58,7 @@
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Color</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -72,6 +73,13 @@
                         <td>{{$product->qty}}</td>
                         <td>{{$product->price}}</td>
                         <td>{{$product->color}}</td>
+                        <td>
+                          @if($product->status == 'Active')
+                          <div class="badge badge-success"> {{$product->status}}</div>
+                          @else
+                          <div class="badge badge-danger"> {{$product->status}}</div>
+                          @endif
+                        </td>
                         <td>
                           <div class="btn-group">
                           <a class="text-dark mt-1" href="{{ route('product.edit',$product->id) }}"><i class="fas fa-edit"></i></a>

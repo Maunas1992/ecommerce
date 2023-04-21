@@ -32,8 +32,8 @@
                   @csrf
                   <div class="row">
                     <div class="col-6">
-                      <label>Username: <span class="text-danger">*</span></label>
-                      <input type="text" name="username" value="{{old('username')}}" class="form-control" placeholder="Enter Username">
+                      <label>Name: <span class="text-danger">*</span></label>
+                      <input type="text" name="username" value="{{old('username')}}" class="form-control" placeholder="Enter Name">
                       <span class="error text-danger">{{$errors->first('username')}}</span>
                     </div>
 
@@ -41,6 +41,29 @@
                       <label>Address: <span class="text-danger">*</span></label>
                       <textarea name="address" value="{{old('address')}}" class="form-control" placeholder="Enter Address"></textarea>
                     <span class="error text-danger">{{$errors->first('address')}}</span>
+                    </div>
+
+                    <div class="col-6">
+                      <label>Mobile No: <span class="text-danger">*</span></label>
+                      <input type="text" name="mobile_no" value="{{old('mobile_no')}}" class="form-control" placeholder="Enter Mobile No">
+                    <span class="error text-danger">{{$errors->first('mobile_no')}}</span>
+                    </div>
+
+                    <div class="col-6">
+                      <label>Email: <span class="text-danger">*</span></label>
+                      <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="Enter Email">
+                    <span class="error text-danger">{{$errors->first('email')}}</span>
+                    </div>
+
+                    <div class="col-6">
+                      <label>Password: <span class="text-danger">*</span></label>
+                      <input type="password" name="password" class="form-control" placeholder="Enter Password">
+                    <span class="error text-danger">{{$errors->first('password')}}</span>
+                    </div>
+
+                    <div class="col-6">
+                      <label>Confirm Password:</label>
+                      <input type="password" name="password_confirmation" class="form-control" placeholder="Enter Confirm Password">
                     </div>
 
                     <div class="col-6">
@@ -78,29 +101,6 @@
                       <label>Pincode: <span class="text-danger">*</span></label>
                       <input type="text" name="pincode" value="{{old('pincode')}}" class="form-control" placeholder="Enter Pincode">
                     <span class="error text-danger">{{$errors->first('pincode')}}</span>
-                    </div>
-
-                    <div class="col-6">
-                      <label>Mobile No: <span class="text-danger">*</span></label>
-                      <input type="text" name="mobile_no" value="{{old('mobile_no')}}" class="form-control" placeholder="Enter Mobile No">
-                    <span class="error text-danger">{{$errors->first('mobile_no')}}</span>
-                    </div>
-
-                    <div class="col-6">
-                      <label>Email: <span class="text-danger">*</span></label>
-                      <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="Enter Email">
-                    <span class="error text-danger">{{$errors->first('email')}}</span>
-                    </div>
-
-                    <div class="col-6">
-                      <label>Password: <span class="text-danger">*</span></label>
-                      <input type="password" name="password" class="form-control" placeholder="Enter Password">
-                    <span class="error text-danger">{{$errors->first('password')}}</span>
-                    </div>
-
-                    <div class="col-6">
-                      <label>Confirm Password:</label>
-                      <input type="password" name="password_confirmation" class="form-control" placeholder="Enter Confirm Password">
                     </div>
 
                     <div class="col-6 mb-3">

@@ -16,4 +16,8 @@ class ProductVariant extends Model
         'quantity',
         'discount',
     ];
+
+    public function productMultiVariant(){
+        return $this->hasMany(ProductVariant::class, 'id','product_id');
+    }
 }

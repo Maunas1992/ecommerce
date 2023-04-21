@@ -55,7 +55,13 @@
                   <tr>
                     <td>{{$category->id}}</td>
                     <td>{{$category->category_name}}</td>
-                    <td>{{$category->status}}</td>
+                    <td>
+                          @if($category->status == 'Active')
+                          <div class="badge badge-success"> {{$category->status}}</div>
+                          @else
+                          <div class="badge badge-danger"> {{$category->status}}</div>
+                          @endif
+                        </td>
                     <td>
                       <div class="btn-group">
                       	<a class="btn btn-sm text-dark" href="{{ route('category.edit',$category->id) }}"><i class="fas fa-edit"></i></a>

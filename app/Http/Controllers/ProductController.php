@@ -41,7 +41,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->productVariant);
         $validationrules = [           
             'p_name'=>'required',
             'description'=>'required',
@@ -99,16 +98,21 @@ class ProductController extends Controller
         $products->status = $request->status;
         $products->save();
 
+        foreach($request['productVariant'] as $variant)
+        {
+        $pVariant = [];
         $productVariant = new ProductVariant;
-        if($request['productVariant']){
-            foreach ($request['productVariant'] as $key => $pVariant) {
-                // dd($pVariant);
-            $productVariant->product_id = $products->id;
-            $productVariant->quantity = $pVariant->qty;
-            $productVariant->price = $pVariant->price;
-            $productVariant->color = $pVariant->color;
-            $productVariant->discount = $pVariant->discount;
+            if(! empty($variant))
+            {
+                $pVariant[] = [
+                $productVariant->product_id = $products->id,
+                $productVariant->quantity = $variant['quantity'],
+                $productVariant->price = $variant['price'],
+                $productVariant->color = $variant['color'],
+                $productVariant->discount = $variant['discount'],
+                ];
             }
+          $productVariant->save();
         }
         return redirect(route('product.index'))->with('success','Product added successfully');
     }
@@ -123,7 +127,9 @@ class ProductController extends Controller
     {
         $categories = Category::get();
         $products = Product::find($id);
-        return view('admin.products.edit',compact('products','categories'));
+        $productVariant = ProductVariant::with('productMultiVariant')->where('product_id', $id)->get();
+        // dd($productVariant);
+        return view('admin.products.edit',compact('products','categories','productVariant'));
     }
 
     /**
@@ -189,6 +195,31 @@ class ProductController extends Controller
         }
         $products->status = $request->status;
         $products->save();
+        foreach($request['productVariant'] as $variant)
+        {
+            $pVariant = [];
+            if(isset($variant['variant_id'])){
+                $productVariant = ProductVariant::find($variant['variant_id']);
+                    $pVariant[] = [
+                    $productVariant->product_id = $products->id,
+                    $productVariant->quantity = $variant['quantity'],
+                    $productVariant->price = $variant['price'],
+                    $productVariant->color = $variant['color'],
+                    $productVariant->discount = $variant['discount'],
+                ];
+                $productVariant->save();
+            }else{
+                $productVariant = new ProductVariant;
+                $pVariant[] = [
+                    $productVariant->product_id = $products->id,
+                    $productVariant->quantity = $variant['quantity'],
+                    $productVariant->price = $variant['price'],
+                    $productVariant->color = $variant['color'],
+                    $productVariant->discount = $variant['discount'],
+                ];
+                $productVariant->save();
+            }
+        }
         return redirect(route('product.index'));
     }
 

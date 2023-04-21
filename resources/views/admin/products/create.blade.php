@@ -28,8 +28,8 @@
 
             <div class="card">
               <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">  
+                @csrf
                 <div class="card-body">
-                  @csrf
                   <div class="row">
                     <div class="col-6">
                       <label>Name: <span class="text-danger">*</span></label>
@@ -163,17 +163,12 @@ $(document).ready(function(){
     
     html += '<div class="col-2"><div class="form-group"><input type="text" name="productVariant['+index+'][discount]" class="form-control" placeholder="Enter Title"></div></div>';
 
-    html += '<div class="col-1 ml-2"><button type="button" class="btn btn-danger btn-sm" onclick="return remove_variant(this);"><span class="fa fa-trash"></span></a></div></div></div>';
+    html += '<div class="col-1 ml-2"><button type="button" class="btn btn-danger btn-sm" onclick="return remove_variant(this);"><span class="fa fa-trash"></span></button></div></div></div>';
 
 $('.variant').append(html);
 
 index++;
   });
-
-// $("#deleteRow").click(function(){
-//   alert('ok');
-//    $(this).closest(".variant").remove(); 
-// });
 });
 </script>
 <script type="text/javascript">

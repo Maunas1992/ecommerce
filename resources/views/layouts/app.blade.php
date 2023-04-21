@@ -60,8 +60,8 @@
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{asset('js/demo.js')}}"></script>
+<!-- <script src="{{asset('js/demo.js')}}"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{asset('js/pages/dashboard3.js')}}"></script>
+<!-- <script src="{{asset('js/pages/dashboard3.js')}}"></script> -->
 </body>
 </html>
