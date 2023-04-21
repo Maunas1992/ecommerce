@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Front\ProductFrontController;
 use App\Http\Controllers\ProductController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,13 +15,14 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
 Route::group(['middleware' => ['auth','roles'], 'prefix' => 'admin'], function ($request) {
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/user/index', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
@@ -52,7 +53,15 @@ Route::post('/category/destroy/{id}', [App\Http\Controllers\CategoryController::
 });
 Route::get('/signup', [Controller::class, 'signup'])->name('signup');
 
-Route::get('/store', [Controller::class, 'storeproduct'])->name('storeproduct');
-Route::get('/show', [Controller::class, 'showproduct'])->name('showproduct');
+Route::get('/', [App\Http\Controllers\Front\ProductFrontController::class, 'index']);
+
 Route::get('/profile', [Controller::class, 'viewprofile'])->name('viewprofile');
 Route::post('/updateprofile/{id}', [Controller::class, 'updateprofile'])->name('updateprofile');
+Route::get('/change-password', [Controller::class, 'changePassword'])->name('change-password');
+
+Route::post('/change-password', [Controller::class, 'updatePassword'])->name('update-password');
+Route::get('/order', [ProductFrontController::class, 'order'])->name('setorder');
+Route::get('/index', [ProductFrontController::class, 'index'])->name('getproduct');
+Route::get('/show/{id}', [ProductFrontController::class, 'showproduct'])->name('showproduct');
+Route::get('/store', [ProductFrontController::class, 'storeproduct'])->name('storeproduct');
+Route::get('/search/{id}', [ProductFrontController::class, 'getcategory'])->name('getcategory');

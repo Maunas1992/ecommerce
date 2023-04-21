@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Auth;
+use Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\User;
 use Illuminate\Routing\Controller as BaseController;
@@ -20,15 +21,8 @@ class Controller extends BaseController
         return view('signup');
     }
 
-    public function storeproduct()
-    {
-        return view('store');
-    }
-
-    public function showproduct()
-    {
-        return view('showproduct');
-    }
+    
+    
 
     public function viewprofile()
     {
@@ -78,6 +72,36 @@ class Controller extends BaseController
                    
                         return redirect(route('home',compact('user')));
     }
+
+    public function changePassword()
+    {
+        $user = Auth::user();
+        return view('userchangepassword',compact('user'));
+    }
+
+    public function updatePassword(Request $request)
+    {
+        # Validation
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+
+        #Match The Old Password
+        if(!Hash::check($request->old_password, auth()->user()->password)){
+            return back()->with("error", "Old Password Doesn't match!");
+        }
+
+
+        #Update the new Password
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with("status", "Password changed successfully!");
+    }
+
 
 }
 

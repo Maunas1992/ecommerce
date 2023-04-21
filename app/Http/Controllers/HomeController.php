@@ -9,6 +9,8 @@ use App\Models\Category;
 // use App\Models\Order;
 use Auth;
 
+use App\Models\Product;
+use App\Models\Category;
 class HomeController extends Controller
 {
     /**
@@ -34,7 +36,9 @@ class HomeController extends Controller
             $category = Category::count();
             return view('home',compact('products','users','category'));
         }else{
-            return view('welcome');
+            $products = Product::get();
+            $categories = Category::get();
+            return view('welcome',compact('products','categories'));
         }
     }
 }
