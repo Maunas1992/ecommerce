@@ -78,10 +78,18 @@
                     <span class="error text-danger">{{$errors->first('discount')}}</span>
                     </div>
 
-                    <div class="col-6">
+                    <!-- <div class="col-6">
                       <label>Image: <span class="text-danger">*</span></label>
                       <input type="file" name="image" class="form-control">
                     <span class="error text-danger">{{$errors->first('image')}}</span>
+                    </div> -->
+                    <div class="col-6">
+                      <label>Image: <span class="text-danger">*</span></label>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" name="image" id="customFile">
+                      <label class="custom-file-label" for="customFile">Choose file</label>
+                      <span class="error text-danger">{{$errors->first('image')}}</span>
+                    </div>
                     </div>
 
                     <div class="col-6 mb-3">

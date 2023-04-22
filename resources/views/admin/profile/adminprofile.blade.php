@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">User Management</h1>
+            <h1 class="m-0">Profile Management</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-              <li class="breadcrumb-item active"><a href="{{route('user.index')}}">User</a></li>
+              <li class="breadcrumb-item active"><a href="{{route('adminprofile')}}">Profile</a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -25,10 +25,15 @@
         <div class="row">
           <div class="col-lg-12">
             <!-- /.card -->
-
+            @if ($message = Session::get('success'))
+              <div class="alert alert-success alert-dismissible">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>{{$message}}</strong>
+              </div>
+            @endif
             <div class="card">
               <div class="card-body">
-                <form action="{{route('user.update',$users->id)}}" method="POST">
+                <form action="{{route('adminUpdateProfile',$users->id)}}" method="POST">
                   @csrf
                   <div class="row">
                     <div class="col-6">
@@ -92,17 +97,6 @@
                       <span class="error text-danger">{{$errors->first('email')}}</span>
                     </div>
 
-                    <div class="col-6">
-                      <label>Password: <span class="text-danger">*</span></label>
-                      <input type="password" name="password" value="{{$users->password}}" class="form-control mb-3" placeholder="Enter Password">
-                      <span class="error text-danger">{{$errors->first('password')}}</span>
-                    </div>
-
-                    <div class="col-6">
-                      <label>Confirm Password:</label>
-                      <input type="password" name="password_confirmation" class="form-control" placeholder="Enter Confirm Password">
-                    </div>
-
                     <div class="col-6 mb-3">
                       <label>Status: <span class="text-danger">*</span></label>
                       <select name="status" class="form-control">
@@ -114,7 +108,7 @@
                     </div>
                   </div>
                   <button type="submit" class="btn btn-primary">Update</button>
-                  <a href="{{route('user.index')}}" class="btn btn-danger">Cancle</a>
+                  <a href="{{route('home')}}" class="btn btn-danger">Cancle</a>
                 </form>
               </div>
             </div>

@@ -80,11 +80,11 @@
         </a>
         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
           <!-- <div class="dropdown-divider"></div> -->
-          <a href="#" class="dropdown-item">
+          <a href="{{route('adminprofile')}}" class="dropdown-item">
             <i class="fas fa-user mr-2"></i> Profile
           </a>
           <!-- <div class="dropdown-divider"></div> -->
-          <a href="#" class="dropdown-item">
+          <a href="{{route('adminChangePassword')}}" class="dropdown-item">
             <i class="fas fa-key mr-2"></i> Change Password
           </a>
           <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt mr-2"></i> Logout

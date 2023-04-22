@@ -40,8 +40,8 @@
 				</a>
 			</li>
 
-			<li class="nav-item @if(Request::is('admin/user/index*') || Request::is('admin/user/create*')) active menu-open @endif">
-				<a href="#" class="nav-link @if(Request::is('admin/user/index*') || Request::is('admin/user/create*')) active @endif">
+			<li class="nav-item @if(Request::is('admin/user/index*') || Request::is('admin/user/create*')) || Request::is('admin/user/edit*')) active menu-open @endif">
+				<a href="#" class="nav-link @if(Request::is('admin/user/index*') || Request::is('admin/user/create*')  || Request::is('admin/user/edit*')) active @endif">
 					<i class="nav-icon fas fa-user"></i>
 					<p>User Management
 						<i class="right fas fa-angle-left"></i>

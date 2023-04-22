@@ -17,18 +17,10 @@ class Product extends Model
             'price',
             'color',
             'category_id',
-<<<<<<< HEAD
         ];
-    public function category()
-    {
-        return $this->belongsTo(Category::class,'category_id','id');
-=======
-            'status',
-    ];
 
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
->>>>>>> 85fafb267049b2bed5d046109a66b228c16b0717
     }
 }

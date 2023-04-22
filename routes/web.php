@@ -50,6 +50,15 @@ Route::get('/category/edit/{id}', [App\Http\Controllers\CategoryController::clas
 Route::post('/category/update/{id}', [App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
 
 Route::post('/category/destroy/{id}', [App\Http\Controllers\CategoryController::class, 'destroy'])->name('category.destroy');
+
+Route::get('adminprofile', [App\Http\Controllers\ProfileController::class, 'adminprofile'])->name('adminprofile');
+
+Route::post('adminUpdateProfile/{id}', [App\Http\Controllers\ProfileController::class, 'adminUpdateProfile'])->name('adminUpdateProfile');
+
+Route::get('adminChangePassword', [App\Http\Controllers\ProfileController::class, 'adminChangePassword'])->name('adminChangePassword');
+
+Route::post('adminUpdatePassword/{id}', [App\Http\Controllers\ProfileController::class, 'adminUpdatePassword'])->name('adminUpdatePassword');
+
 });
 Route::get('/signup', [Controller::class, 'signup'])->name('signup');
 
