@@ -32,6 +32,11 @@
               </div>
             @endif
             <div class="card">
+              <div class="card-header">
+                <div class="float-sm-right">
+                <a href="{{route('feedbackList')}}" class="btn btn-success">Back</a>
+              </div>
+              </div>
               <div class="card-body table-responsive p-0">
                 <div class="col-6">
                   <label>No</label>
@@ -40,13 +45,13 @@
 
                 <div class="col-6">
                   <label>User</label>
-                  <p>{{$feedbacks->user_id}}</p>
+                  <p>{{$feedbacks->user->username}}</p>
                 </div>
 
-                <div class="col-6">
+                <!-- <div class="col-6">
                   <label>Name</label>
                   <p>{{$feedbacks->name}}</p>
-                </div>
+                </div> -->
 
                 <div class="col-6">
                   <label>Email</label>

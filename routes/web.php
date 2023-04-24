@@ -18,8 +18,12 @@ use App\Http\Controllers\ProductController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
+Route::group(['prefix' => 'admin'], function ($request) {
 Auth::routes();
+});
+Auth::routes();
+
+Route::get('/login', [App\Http\Controllers\Controller::class, 'frontLoginPage'])->name('login');
 
 Route::group(['middleware' => ['auth','roles'], 'prefix' => 'admin'], function ($request) {
 

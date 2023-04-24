@@ -21,7 +21,9 @@ class Controller extends BaseController
         return view('signup');
     }
 
-    
+    public function frontLoginPage(){
+        return view('front_login');
+    }
     
 
     public function viewprofile()

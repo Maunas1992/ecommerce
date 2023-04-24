@@ -97,7 +97,7 @@ class ProductController extends Controller
         $products->image = $filename;
         $products->status = $request->status;
         $products->save();
-
+        if(isset($request['productVariant'])){
         foreach($request['productVariant'] as $variant)
         {
         $pVariant = [];
@@ -113,6 +113,7 @@ class ProductController extends Controller
                 ];
             }
           $productVariant->save();
+        }
         }
         return redirect(route('product.index'))->with('success','Product added successfully');
     }
@@ -195,6 +196,12 @@ class ProductController extends Controller
         }
         $products->status = $request->status;
         $products->save();
+        // $array1[] = ProductVariant::where('product_id',$products->id)->get();
+        // $array2 = $request['productVariant'];
+        // // dd($array1,$array2);
+        // $result = array_diff($array1, $array2);
+        // dd($result);
+        if(isset($request['productVariant'])){
         foreach($request['productVariant'] as $variant)
         {
             $pVariant = [];
@@ -219,6 +226,7 @@ class ProductController extends Controller
                 ];
                 $productVariant->save();
             }
+        }
         }
         return redirect(route('product.index'));
     }
