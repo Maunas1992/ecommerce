@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
+use response;
 use Illuminate\Http\Request;
 
 class Roles
@@ -26,9 +27,10 @@ class Roles
     }
 
     private function unauthorized($message = null){
-        return response()->json([
-            'message' => $message ? $message : 'You are unauthorized to access this resource',
-            'success' => false
-        ], 401);
+        // return response()->json([
+        //     'message' => $message ? $message : 'You are unauthorized to access this resource',
+        //     'success' => false
+        // ], 401);
+        return response(view('admin.errorPages.403'));
     }
 }

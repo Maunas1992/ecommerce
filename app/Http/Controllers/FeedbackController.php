@@ -19,7 +19,7 @@ class FeedbackController extends Controller
 
     public function destroy($id){
         $feedbacks = Feedback::find($id);
-        $feedback->delete();
+        $feedbacks->delete();
         return redirect()->route('feedbackList');
     }
 }

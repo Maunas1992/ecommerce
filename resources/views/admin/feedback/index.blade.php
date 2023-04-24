@@ -51,7 +51,6 @@
                   <thead>
                   <tr>
                   	<th>No</th>
-                    <th>Name</th>
                     <th>User</th>
                     <th>Email</th>
                     <th>Mobile No</th>
@@ -64,8 +63,7 @@
                   	@foreach($feedbacks as $feedback)
                       <tr>
                         <td>{{$feedback->id}}</td>
-                        <td>{{$feedback->name}}</td>
-                        <td>{{$feedback->user->name}}</td>
+                        <td>{{$feedback->user->username}}</td>
                         <td>{{$feedback->email}}</td>
                         <td>{{$feedback->mobile_no}}</td>
                         <td>{{$feedback->subject}}</td>
@@ -75,7 +73,6 @@
                           <a class="text-dark mt-1" href="{{ route('showFeedback',$feedback->id) }}"><i class="fas fa-eye"></i></a>
                         
                           <form method="post" action="{{route('feedback.destroy',$feedback->id)}}">
-                              @method('DELETE')
                                 @csrf
                                 <button type="submit" onclick="return myFunction();" class="btn btn-sm"><i class="fas fa-trash"></i>
                                 </button>
