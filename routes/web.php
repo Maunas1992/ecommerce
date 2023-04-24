@@ -82,4 +82,13 @@ Route::get('/order', [ProductFrontController::class, 'order'])->name('setorder')
 Route::get('/index', [ProductFrontController::class, 'index'])->name('getproduct');
 Route::get('/show/{id}', [ProductFrontController::class, 'showproduct'])->name('showproduct');
 Route::get('/store', [ProductFrontController::class, 'storeproduct'])->name('storeproduct');
-Route::get('/search/{id}', [ProductFrontController::class, 'getcategory'])->name('getcategory');
+Route::get('/getcategory', [ProductFrontController::class, 'getcategory'])->name('getcategory');
+Route::get('/favourite', [ProductFrontController::class, 'myfavourite'])->name('myfavourite');
+Route::post('/addfavourite', [ProductFrontController::class, 'addfavourite'])->name('addfavourite');
+
+
+// Route::get('/topics/{category}/{forum}', [
+//     'as'   => 'topics.show',
+//     'uses' => 'TopicsController@show'
+// ]);
+

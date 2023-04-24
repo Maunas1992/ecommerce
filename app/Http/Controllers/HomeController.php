@@ -28,6 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // echo "<pre>"; print_r(Auth::user()); exit;
         if(Auth::user()->role == 'admin'){
             $products = Product::count();
             $users = User::count();

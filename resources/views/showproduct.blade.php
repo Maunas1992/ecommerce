@@ -78,12 +78,6 @@
 
 							<div class="product-options">
 								<label>
-									Size
-									<select class="input-select">
-										<option value="0">X</option>
-									</select>
-								</label>
-								<label>
 									Color
 									<select class="input-select">
 										<option value="0"></option>
