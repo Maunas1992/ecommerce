@@ -59,6 +59,11 @@ Route::get('adminChangePassword', [App\Http\Controllers\ProfileController::class
 
 Route::post('adminUpdatePassword/{id}', [App\Http\Controllers\ProfileController::class, 'adminUpdatePassword'])->name('adminUpdatePassword');
 
+Route::get('feedbackList', [App\Http\Controllers\FeedbackController::class, 'feedbackList'])->name('feedbackList');
+
+Route::get('showFeedback/{id}', [App\Http\Controllers\FeedbackController::class, 'showFeedback'])->name('showFeedback');
+
+Route::post('/feedback/destroy/{id}', [App\Http\Controllers\FeedbackController::class, 'destroy'])->name('feedback.destroy');
 });
 Route::get('/signup', [Controller::class, 'signup'])->name('signup');
 

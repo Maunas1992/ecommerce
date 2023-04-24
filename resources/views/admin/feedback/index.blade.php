@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Products Management</h1>
+            <h1 class="m-0">Feedback Management</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-              <li class="breadcrumb-item active"><a href="{{route('product.index')}}">Product</a></li>
+              <li class="breadcrumb-item active"><a href="{{route('product.index')}}">Feedback</a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -33,9 +33,9 @@
             @endif
             <div class="card">
               <div class="card-header">
-                <div class="float-sm-right">
+                <!-- <div class="float-sm-right">
                   <a href="{{route('product.create')}}" class="btn btn-success">Add Product</a>
-                </div>
+                </div> -->
                 <!-- <h3>Products Management</h3> -->
                 <!-- <div class="card-tools">
                   <a href="#" class="btn btn-tool btn-sm">
@@ -51,40 +51,30 @@
                   <thead>
                   <tr>
                   	<th>No</th>
-                    <th>Image</th>
                     <th>Name</th>
-                    <th>Category</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Color</th>
-                    <th>Status</th>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Mobile No</th>
+                    <th>Subject</th>
+                    <th>Message</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                  	@foreach($products as $product)
+                  	@foreach($feedbacks as $feedback)
                       <tr>
-                        <td>{{$product->id}}</td>
-                        <td><img src="{{asset('/storage/product/'.$product->image)}}"class="rounded-circle" height="50px" width="50px"></td>
-                        <td>{{$product->p_name}}</td>
-                        <td>{{$product->category->category_name ?? '-'}}</td>
-                        <td>{{$product->description}}</td>
-                        <td>{{$product->qty}}</td>
-                        <td>{{$product->price}}</td>
-                        <td>{{$product->color}}</td>
-                        <td>
-                          @if($product->status == 'Active')
-                          <div class="badge badge-success"> {{$product->status}}</div>
-                          @else
-                          <div class="badge badge-danger"> {{$product->status}}</div>
-                          @endif
-                        </td>
+                        <td>{{$feedback->id}}</td>
+                        <td>{{$feedback->name}}</td>
+                        <td>{{$feedback->user->name}}</td>
+                        <td>{{$feedback->email}}</td>
+                        <td>{{$feedback->mobile_no}}</td>
+                        <td>{{$feedback->subject}}</td>
+                        <td>{{$feedback->message}}</td>
                         <td>
                           <div class="btn-group">
-                          <a class="text-dark mt-1" href="{{ route('product.edit',$product->id) }}"><i class="fas fa-edit"></i></a>
+                          <a class="text-dark mt-1" href="{{ route('showFeedback',$feedback->id) }}"><i class="fas fa-eye"></i></a>
                         
-                          <form method="post" action="{{route('product.destroy',$product->id)}}">
+                          <form method="post" action="{{route('feedback.destroy',$feedback->id)}}">
                               @method('DELETE')
                                 @csrf
                                 <button type="submit" onclick="return myFunction();" class="btn btn-sm"><i class="fas fa-trash"></i>
@@ -96,7 +86,7 @@
                   </tbody>
                 </table>
                 <div class="float-sm-right mt-3 mr-2"> 
-                  {!! $products->links() !!}
+                  {!! $feedbacks->links() !!}
                 </div>
               </div>
             </div>
