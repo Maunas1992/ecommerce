@@ -11,12 +11,9 @@ class Category extends Model
 
     protected $fillable = [
             'category_name',
-<<<<<<< HEAD
-           ];
-=======
             'status',
-    ];
->>>>>>> 85fafb267049b2bed5d046109a66b228c16b0717
+            'is_header',
+           ];
 
     public function products()
     {

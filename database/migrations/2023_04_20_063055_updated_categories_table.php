@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdatedProductsTable extends Migration
+class UpdatedCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class UpdatedProductsTable extends Migration
      */
     public function up()
     {
-       Schema::table('products', function (Blueprint $table) {
-            $table->unsignedBigInteger('category_id')->after('color')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories');        
+        Schema::table('categories', function (Blueprint $table) {
+            $table->string('is_header')->after('category_name')->nullable();       
         });
     }
 

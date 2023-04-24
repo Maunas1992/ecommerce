@@ -43,7 +43,7 @@
                 <!-- row -->
                 <div class="row">
                     <!-- LOGO -->
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <div class="header-logo">
                             <a href="{{route('home')}}" class="logo">
                                 <img src="{{asset('img/logo.png')}}" alt="">
@@ -53,29 +53,36 @@
                     <!-- /LOGO -->
 
                     <!-- SEARCH BAR -->
-                    <div class="col-md-6">
-                        <div class="header-search">
-                            <form role="search" method="GET" action="{{route('getproduct')}}" >
-
-                                <select class="input-select">
-                                    <option value="0">All Categories</option>
-                                    @foreach(category() as $cat)
-                                    <option value="1"><a href="{{route('getcategory',$cat->id)}}">{{$cat->category_name}}</a></option>
-                                    @endforeach
-                                </select>
-                                <input class="input" type="search" placeholder="Search" name = "search"aria-label="Search" value="{{old('search')}}">
-                                <button class="search-btn" type="submit">Search</button>
-                            </form>
+                        <div class="col-md-3">
+                           <div class="header-search">
+                                <form method="GET" action="{{route('getcategory')}}" >
+                                    <select class="input-select" onchange="location =    this.options[this.selectedIndex].value;">
+                                        <option value="{{route('home')}}">All Categories</option>
+                                        @foreach(category() as $cat)
+                                        <option value="{{route('getcategory')}}?category={{$cat->id}}" name="category_option"><button  class="input" name="category_option" value="{{$cat->id}}">{{$cat->category_name}}</button></a></option>
+                                        @endforeach
+                                    </select>
+                                </form>
+                                </div>
                         </div>
-                    </div>
+                            <div class="col-md-4">
+                            <div class="header-search">
+                                <form role="search" method="GET" action="{{route('getproduct')}}" >
+                                    <input class="input" type="search" placeholder="Search" name = "search"aria-label="Search" value="{{old('search')}}">
+                                    <button class="search-btn" type="submit">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    
+                    
                     <!-- /SEARCH BAR -->
 
                     <!-- ACCOUNT -->
                     <div class="col-md-3 clearfix">
                         <div class="header-ctn">
                             <!-- Wishlist -->
-                            <div>
-                                <a href="#">
+                            <div> 
+                                <a href="{{route('myfavourite')}}">
                                     <i class="fa fa-heart-o"></i>
                                     <span>Your Wishlist</span>
                                     <div class="qty">2</div>
@@ -153,14 +160,25 @@
             <!-- responsive-nav -->
             <div id="responsive-nav">
                 <!-- NAV -->
+                <form method="GET" action="{{route('getcategory')}}" >
+                  
                 <ul class="main-nav nav navbar-nav">
+                    
                         <li class="active"><a href="{{route('home')}}">Home</a></li>
                         {{--<li><a href="#">Hot Deals</a></li>--}}
                         @foreach(category() as $cat)
-                        <li><a href="{{route('getcategory',$cat->id)}}">{{$cat->category_name}}</a></li>
+                        @if($cat->is_header == 0)
+                        <li>
+                        <a href="{{route('getcategory')}}?category={{$cat->id}}"name="category">{{$cat->category_name}}</a>
+                            
+                        </li>
+                        @endif
                         @endforeach
-                        
+                       
+                                
+                                
                 </ul>
+                </form>
                 <!-- /NAV -->
             </div>
             <!-- /responsive-nav -->

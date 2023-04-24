@@ -31,6 +31,8 @@ class CategoryController extends Controller
 
         $category = new Category;
         $category->category_name = $request->category_name;
+        $category->is_header = 0;
+
         $category->status = $request->status;
         $category->save();
         return redirect(route('category.index'));
@@ -57,6 +59,7 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->category_name = $request->category_name;
         $category->status = $request->status;
+        $category->is_header = 1;
         $category->update();
         return redirect(route('category.index'));
     }
