@@ -59,7 +59,7 @@
                     <th>Price</th>
                     <th>Color</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th width="10%">Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -82,14 +82,19 @@
                         </td>
                         <td>
                           <div class="btn-group">
-                          <a class="text-dark mt-1" href="{{ route('product.edit',$product->id) }}"><i class="fas fa-edit"></i></a>
+                            <span data-toggle="tooltip" data-placement="top" title="edit" style="margin-top: 3px;">
+                              <a class="text-dark mt-2" href="{{ route('product.edit',$product->id) }}"><i class="fas fa-edit"></i></a>
+                            </span>
                         
-                          <form method="post" action="{{route('product.destroy',$product->id)}}">
-                              @method('DELETE')
-                                @csrf
+                            <form method="post" action="{{route('product.destroy',$product->id)}}">
+                            @method('DELETE')
+                            @csrf
+                              <span data-toggle="tooltip" data-placement="top" title="delete">
                                 <button type="submit" onclick="return myFunction();" class="btn btn-sm"><i class="fas fa-trash"></i>
                                 </button>
-                          </form></div>
+                              </span>
+                            </form>
+                          </div>
                         </td>
                       </tr>
                   	@endforeach

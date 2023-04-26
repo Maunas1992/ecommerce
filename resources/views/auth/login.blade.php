@@ -6,7 +6,7 @@
         <div class="col-md-9 mt-5">
             <div class="card">
                 <div class="card-header bg-primary">
-                    <h2 class="text-primary text-center text-white">Login Form</h2>
+                    <h2 class="text-primary text-center text-white">Login</h2>
                 </div>
 
                 <div class="card-body">

@@ -36,21 +36,31 @@
                   <div class="row">
                     <div class="col-6 mb-3">
                       <label>Name: <span class="text-danger">*</span></label>
-                      <input type="text" name="category_name" class="form-control" value="{{$categories->category_name}}" placeholder="Enter Category Name">
+                      <input type="text" name="category_name" class="form-control" value="{{ old('category_name') ? old('category_name') : $categories->category_name}}" placeholder="Enter Category Name">
+                    </div>
+
+                    <div class="col-6 mb-3">
+                      <label>Is Header: <span class="text-danger">*</span></label>
+                      <select name="is_header" class="form-control">
+                        <option value="" selected disabled hidden>Select Is Header</option>
+                        <option value="0" {{ old('is_header') ? old('is_header') :  $categories->is_header == '0' ? 'selected' : '' }}>0</option>
+                        <option value="1" {{ old('is_header') ? old('is_header') :  $categories->is_header == '1' ? 'selected' : '' }}>1</option>
+                      </select>
+                      <span class="error text-danger">{{$errors->first('is_header')}}</span>
                     </div>
 
                     <div class="col-6 mb-3">
                       <label>Status: <span class="text-danger">*</span></label>
                       <select name="status" class="form-control">
-                        <option value="">Select Status</option>
-                        <option value="Active" {{ $categories->status == 'Active' ? 'selected' : '' }}>Active</option>
-                        <option value="Inactive" {{ $categories->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                        <option value="" selected disabled hidden>Select Status</option>
+                        <option value="Active" {{ old('status') ? old('status') :  $categories->status == 'Active' ? 'selected' : '' }}>Active</option>
+                        <option value="Inactive" {{ old('status') ? old('status') :  $categories->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
                       </select>
                       <span class="error text-danger">{{$errors->first('status')}}</span>
                     </div>
                   </div>
                   <button type="submit" class="btn btn-primary">Update</button>
-                  <a href="{{route('category.index')}}" class="btn btn-danger">Cancle</a>
+                  <a href="{{route('category.index')}}" class="btn btn-danger">Cancel</a>
                 </form>
               </div>
             </div>

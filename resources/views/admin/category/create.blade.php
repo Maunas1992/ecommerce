@@ -41,6 +41,16 @@
                     </div>
 
                     <div class="col-6 mb-3">
+                      <label>Is Header: <span class="text-danger">*</span></label>
+                      <select name="is_header" class="form-control">
+                        <option value="">Select Status</option>
+                        <option value="0" {{ old('is_header') == '0' ? 'selected' : '' }}>0</option>
+                        <option value="1" {{ old('is_header') == '1' ? 'selected' : '' }}>1</option>
+                      </select>
+                      <span class="error text-danger">{{$errors->first('is_header')}}</span>
+                    </div>
+
+                    <div class="col-6 mb-3">
                       <label>Status: <span class="text-danger">*</span></label>
                       <select name="status" class="form-control">
                         <option value="">Select Status</option>
@@ -51,7 +61,7 @@
                     </div>
                   </div>
                   <button type="submit" class="btn btn-primary">Save</button>
-                  <a href="{{route('category.index')}}" class="btn btn-danger">Cancle</a>
+                  <a href="{{route('category.index')}}" class="btn btn-danger">Cancel</a>
                 </form>
               </div>
             </div>

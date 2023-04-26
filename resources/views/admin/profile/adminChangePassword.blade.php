@@ -61,7 +61,7 @@
                     </div>
                   </div>
                   <button type="submit" class="btn btn-primary">Change Password</button>
-                  <a href="{{route('home')}}" class="btn btn-danger">Cancle</a>
+                  <a href="{{route('home')}}" class="btn btn-danger">Cancel</a>
                 </form>
               </div>
             </div>

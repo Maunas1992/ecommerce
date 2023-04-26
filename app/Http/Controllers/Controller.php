@@ -35,7 +35,7 @@ class Controller extends BaseController
     public function updateprofile(Request $request,$id)
     {
         $user = User::find($id);
-    $input = $request->all();
+        $input = $request->all();
         
         $validationrules = [
             'username'=>'required',
@@ -67,12 +67,11 @@ class Controller extends BaseController
                         'email'=> 'Please enter valid email address.',
                         'email.required'=>'Please enter your email.',
                         'email.unique'=> 'Please enter other email address,Email address is already exist. ',
-                    ];
+            ];
                     
-                    $request->validate($validationrules,$messages);
-                    $user->update($input);
-                   
-                        return redirect(route('home',compact('user')));
+            $request->validate($validationrules,$messages);
+            $user->update($input);
+            return redirect()->back()->with("success","Profile updated successfully!");
     }
 
     public function changePassword()

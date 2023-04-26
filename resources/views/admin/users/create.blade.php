@@ -114,7 +114,7 @@
                     </div>
                   </div>
                   <button type="submit" class="btn btn-primary">Save</button>
-                  <a href="{{route('user.index')}}" class="btn btn-danger">Cancle</a>
+                  <a href="{{route('user.index')}}" class="btn btn-danger">Cancel</a>
                 </form>
               </div>
             </div>

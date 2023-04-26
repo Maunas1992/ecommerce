@@ -19,6 +19,8 @@ use App\Http\Controllers\ProductController;
 //     return view('welcome');
 // });
 Route::group(['prefix' => 'admin'], function ($request) {
+	
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 });
 Auth::routes();
@@ -38,6 +40,8 @@ Route::post('/user/store', [App\Http\Controllers\UserController::class, 'store']
 Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
 
 Route::post('/user/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
+
+Route::get('/user/show/{id}', [App\Http\Controllers\UserController::class, 'show'])->name('user.show');
 
 Route::post('/user/destroy/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
 

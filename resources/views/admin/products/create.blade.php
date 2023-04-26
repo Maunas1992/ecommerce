@@ -25,7 +25,17 @@
         <div class="row">
           <div class="col-lg-12">
             <!-- /.card -->
+            @if ($message = Session::get('error'))
 
+<div class="alert alert-danger alert-block">
+
+  <button type="button" class="close" data-dismiss="alert">×</button> 
+
+        <strong>{{ $message }}</strong>
+
+</div>
+
+@endif
             <div class="card">
               <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">  
                 @csrf
@@ -144,7 +154,7 @@
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary ml-3 mb-3">Save</button>
-                <a href="{{route('product.index')}}" class="btn btn-danger mb-3">Cancle</a>
+                <a href="{{route('product.index')}}" class="btn btn-danger mb-3">Cancel</a>
               </form>
             </div>
             <!-- /.card -->

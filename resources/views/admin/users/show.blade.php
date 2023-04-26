@@ -6,12 +6,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Feedback Management</h1>
+            <h1 class="m-0">User Management</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-              <li class="breadcrumb-item active"><a href="{{route('feedbackList')}}">Feedback</a></li>
+              <li class="breadcrumb-item active"><a href="{{route('product.index')}}">User</a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -28,43 +28,63 @@
             <div class="card">
               <div class="card-header">
                 <div class="float-sm-right">
-                <a href="{{route('feedbackList')}}" class="btn btn-success">Back</a>
+                <a href="{{route('user.index')}}" class="btn btn-success">Back</a>
               </div>
               </div>
               <div class="card-body table-responsive p-0">
                 <div class="col-6">
                   <label>No</label>
-                  <p>{{$feedbacks->id}}</p>
+                  <p>{{$users->id}}</p>
                 </div>
 
                 <div class="col-6">
-                  <label>User</label>
-                  <p>{{$feedbacks->user->username}}</p>
-                </div>
-
-                <!-- <div class="col-6">
                   <label>Name</label>
-                  <p>{{$feedbacks->name}}</p>
-                </div> -->
+                  <p>{{$users->username}}</p>
+                </div>
 
                 <div class="col-6">
-                  <label>Email</label>
-                  <p>{{$feedbacks->email}}</p>
+                  <label>Address</label>
+                  <p>{{$users->address}}</p>
+                </div>
+
+                <div class="col-6">
+                  <label>Date Of Birth</label>
+                  <p>{{$users->dob}}</p>
+                </div>
+
+                <div class="col-6">
+                  <label>Gender</label>
+                  <p>{{$users->gender}}</p>
+                </div>
+
+                <div class="col-6">
+                  <label>Pincode</label>
+                  <p>{{$users->pincode}}</p>
+                </div>
+
+                <div class="col-6">
+                  <label>City</label>
+                  <p>{{$users->city}}</p>
+                </div>
+
+                <div class="col-6">
+                  <label>State</label>
+                  <p>{{$users->state}}</p>
                 </div>
 
                 <div class="col-6">
                   <label>Mobile No</label>
-                  <p>{{$feedbacks->mobile_no}}</p>
+                  <p>{{$users->mobile_no}}</p>
                 </div>
 
                 <div class="col-6">
-                  <label>Subject</label>
-                  <p>{{$feedbacks->subject}}</p>
+                  <label>Email</label>
+                  <p>{{$users->email}}</p>
                 </div>
 
                 <div class="col-6">
-                  <label>Message</label>
-                  <p>{{$feedbacks->message}}</p>
+                  <label>Status</label>
+                  <p>{{$users->status}}</p>
                 </div>
               </div>
             </div>

@@ -18,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = Product::orderBy('created_at','DESC')->paginate(10);
         return view('admin.products.index',compact('products'));
     }
 
@@ -51,10 +51,10 @@ class ProductController extends Controller
             'discount'=>'required',        
             'category_id'=>'required',
             'status'=>'required',
-            // 'productVariant.*.color' => 'required',
-            // 'productVariant.*.quantity' => 'required',
-            // 'productVariant.*.price' => 'required',
-            // 'productVariant.*.discount' => 'required',
+            'productVariant.*.color' => 'required',
+            'productVariant.*.quantity' => 'required',
+            'productVariant.*.price' => 'required',
+            'productVariant.*.discount' => 'required',
         ];
         $messages =[
             'p_name.required'=>'Please enter product name',
@@ -66,6 +66,10 @@ class ProductController extends Controller
             'discount.required'=>'Please enter discount',
             'status.required'=>'Please select status',
             'category_id.required'=>'Please select category',
+            'productVariant.*.color' =>'Please enter variant color',
+            'productVariant.*.quantity' =>'Please enter variant quantity',
+            'productVariant.*.price' =>'Please enter variant price',
+            'productVariant.*.discount' =>'Please enter variant discount',
         ];
                    
         $request->validate($validationrules,$messages);
@@ -196,11 +200,17 @@ class ProductController extends Controller
         }
         $products->status = $request->status;
         $products->save();
-        // $array1[] = ProductVariant::where('product_id',$products->id)->get();
-        // $array2 = $request['productVariant'];
-        // // dd($array1,$array2);
-        // $result = array_diff($array1, $array2);
-        // dd($result);
+
+        $array1 = ProductVariant::where('product_id',$products->id)->pluck('id')->toArray();
+        $array2 = $request['productVariant'];
+        if(isset($array1) && $array2){
+        $variant_id = array_column($array2, 'variant_id');
+        $result = array_diff($array1,$variant_id);
+        foreach ($result as $key => $id) {
+            $removeVariants = ProductVariant::find($id);
+            $removeVariants->delete();
+        }
+        }
         if(isset($request['productVariant'])){
         foreach($request['productVariant'] as $variant)
         {

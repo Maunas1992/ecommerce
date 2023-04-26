@@ -56,7 +56,7 @@
                     <th>Mobile No</th>
                     <th>Subject</th>
                     <th>Message</th>
-                    <th>Action</th>
+                    <th width="10%">Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -70,13 +70,18 @@
                         <td>{{$feedback->message}}</td>
                         <td>
                           <div class="btn-group">
-                          <a class="text-dark mt-1" href="{{ route('showFeedback',$feedback->id) }}"><i class="fas fa-eye"></i></a>
+                            <span data-toggle="tooltip" data-placement="top" title="show" style="margin-top: 3px;">
+                              <a class="text-dark mt-2" href="{{ route('showFeedback',$feedback->id) }}"><i class="fas fa-eye"></i></a>
+                            </span>
                         
-                          <form method="post" action="{{route('feedback.destroy',$feedback->id)}}">
-                                @csrf
+                            <form method="post" action="{{route('feedback.destroy',$feedback->id)}}">
+                              @csrf
+                              <span data-toggle="tooltip" data-placement="top" title="delete">
                                 <button type="submit" onclick="return myFunction();" class="btn btn-sm"><i class="fas fa-trash"></i>
                                 </button>
-                          </form></div>
+                            </span>
+                            </form>
+                          </div>
                         </td>
                       </tr>
                   	@endforeach

@@ -38,62 +38,62 @@
                   <div class="row">
                     <div class="col-6">
                       <label>Name: <span class="text-danger">*</span></label>
-                      <input type="text" name="username" class="form-control" value="{{$users->username}}" placeholder="Enter Name">
+                      <input type="text" name="username" class="form-control" value="{{ old('username') ? old('username') : $users->username}}" placeholder="Enter Name">
                       <span class="error text-danger">{{$errors->first('username')}}</span>
                     </div>
 
                     <div class="col-6">
                       <label>Address: <span class="text-danger">*</span></label>
-                      <textarea name="address" class="form-control mb-3" placeholder="Enter Address">{{$users->address}}</textarea>
+                      <textarea name="address" class="form-control mb-3" placeholder="Enter Address">{{ old('address') ? old('address') : $users->address}}</textarea>
                       <span class="error text-danger">{{$errors->first('address')}}</span>
                     </div>
 
                     <div class="col-6">
                       <label>Date of Birth: <span class="text-danger">*</span></label>
-                      <input type="date" name="dob" value="{{$users->dob}}" class="form-control mb-3" placeholder="Enter Date of Birth">
+                      <input type="date" name="dob" value="{{ old('dob') ? old('dob') : $users->dob}}" class="form-control mb-3" placeholder="Enter Date of Birth">
                       <span class="error text-danger">{{$errors->first('dob')}}</span>
                     </div>
 
                     <div class="col-6 mt-2">
                       <label>Gender: <span class="text-danger">*</span></label><br>
-                      <input type="radio" name="gender" value="male" {{ $users->gender == 'male' ? 'checked' : '' }} {{ old('gender') == 'male' ? 'checked' : '' }}> Male
-                      <input type="radio" name="gender" value="female" {{ $users->gender == 'female' ? 'checked' : '' }} {{ old('gender') == 'female' ? 'checked' : '' }}> Female <br>
+                      <input type="radio" name="gender" value="male" {{ old('gender') ? old('gender') :  $users->gender == 'male' ? 'checked' : '' }} {{ old('gender') == 'male' ? 'checked' : '' }}> Male
+                      <input type="radio" name="gender" value="female" {{ old('gender') ? old('gender') :  $users->gender == 'female' ? 'checked' : '' }} {{ old('gender') == 'female' ? 'checked' : '' }}> Female <br>
                       <span class="error text-danger">{{$errors->first('gender')}}</span>
                     </div>
 
                     <div class="col-6">
                       <label>City: <span class="text-danger">*</span></label>
-                      <input type="text" name="city" value="{{$users->city}}" class="form-control mb-3" placeholder="Enter City">
+                      <input type="text" name="city" value="{{ old('city') ? old('city') : $users->city}}" class="form-control mb-3" placeholder="Enter City">
                       <span class="error text-danger">{{$errors->first('city')}}</span>
                     </div>
 
                     <div class="col-6">
                       <label>State: <span class="text-danger">*</span></label>
-                      <input type="text" name="state" value="{{$users->state}}" class="form-control" placeholder="Enter State">
+                      <input type="text" name="state" value="{{ old('state') ? old('state') : $users->state}}" class="form-control" placeholder="Enter State">
                       <span class="error text-danger">{{$errors->first('state')}}</span>
                     </div>
 
                     <div class="col-6">
                       <label>Country: <span class="text-danger">*</span></label>
-                      <input type="text" name="country" value="{{$users->country}}" class="form-control mb-3" placeholder="Enter Country">
+                      <input type="text" name="country" value="{{ old('country') ? old('country') : $users->country}}" class="form-control mb-3" placeholder="Enter Country">
                       <span class="error text-danger">{{$errors->first('country')}}</span>
                     </div>
 
                     <div class="col-6">
                       <label>Pincode: <span class="text-danger">*</span></label>
-                      <input type="text" name="pincode" value="{{$users->pincode}}" class="form-control" placeholder="Enter Pincode">
+                      <input type="text" name="pincode" value="{{ old('pincode') ? old('pincode') : $users->pincode}}" class="form-control" placeholder="Enter Pincode">
                       <span class="error text-danger">{{$errors->first('pincode')}}</span>
                     </div>
 
                     <div class="col-6">
                       <label>Mobile No: <span class="text-danger">*</span></label>
-                      <input type="text" name="mobile_no" value="{{$users->mobile_no}}" class="form-control mb-3" placeholder="Enter Mobile No">
+                      <input type="text" name="mobile_no" value="{{ old('mobile_no') ? old('mobile_no') : $users->mobile_no}}" class="form-control mb-3" placeholder="Enter Mobile No">
                       <span class="error text-danger">{{$errors->first('mobile_no')}}</span>
                     </div>
 
                     <div class="col-6">
                       <label>Email: <span class="text-danger">*</span></label>
-                      <input type="email" name="email" value="{{$users->email}}" class="form-control" placeholder="Enter Email">
+                      <input type="email" name="email" value="{{ old('email') ? old('email') : $users->email}}" class="form-control" placeholder="Enter Email">
                       <span class="error text-danger">{{$errors->first('email')}}</span>
                     </div>
 
@@ -101,14 +101,14 @@
                       <label>Status: <span class="text-danger">*</span></label>
                       <select name="status" class="form-control">
                         <option value="">Select Status</option>
-                        <option value="Active" {{ $users->status == 'Active' ? 'selected' : '' }} {{ old('status') == 'Active' ? 'selected' : '' }}>Active</option>
-                        <option value="Inactive" {{ $users->status == 'Inactive' ? 'selected' : '' }} {{ old('status') == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                        <option value="Active" {{ old('status') ? old('status') :  $users->status == 'Active' ? 'selected' : '' }}>Active</option>
+                        <option value="Inactive" {{ old('status') ? old('status') :  $users->status == 'Inactive' ? 'selected' : '' }}>Inactive</option>
                       </select>
                       <span class="error text-danger">{{$errors->first('status')}}</span>
                     </div>
                   </div>
                   <button type="submit" class="btn btn-primary">Update</button>
-                  <a href="{{route('home')}}" class="btn btn-danger">Cancle</a>
+                  <a href="{{route('home')}}" class="btn btn-danger">Cancel</a>
                 </form>
               </div>
             </div>

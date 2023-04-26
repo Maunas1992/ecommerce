@@ -47,14 +47,12 @@
                   	<th>No</th>
                     <th>Username</th>
                     <th>Address</th>
-                    <th>DOB</th>
                     <th>City</th>
                     <th>State</th>
-                    <th>Pincode</th>
                     <th>Mobile No</th>
                     <th>Status</th>
                     <th>Email</th>
-                    <th>Action</th>
+                    <th width="10%">Action</th>
                     
                   </tr>
                   </thead>
@@ -64,10 +62,8 @@
                     <td>{{$user->id}}</td>
                     <td>{{$user->username}}</td>
                     <td>{{$user->address}}</td>
-                    <td>{{$user->dob}}</td>
                     <td>{{$user->city}}</td>
                     <td>{{$user->state}}</td>
-                    <td>{{$user->pincode}}</td>
                     <td>{{$user->mobile_no}}</td>
                     <td>
                           @if($user->status == 'Active')
@@ -79,12 +75,21 @@
                     <td>{{$user->email}}</td>
                     <td>
                       <div class='btn-group'>
-                    	<a href="{{ route('user.edit',$user->id) }}" class="text-dark mt-1"><i class="fas fa-edit"></i></a>
+                    	  <!-- <a href="{{ route('user.edit',$user->id) }}" class="text-dark mt-1" data-toggle="tooltip"><i class="fas fa-edit"></i></a> -->
 
-                     <form method="post" action="{{route('user.destroy',$user->id)}}">
+                        <span data-toggle="tooltip" data-placement="top" title="show" style="margin-top: 4px; margin-right: 3px;">
+                              <a class="text-dark mr-4" href="{{ route('user.show',$user->id) }}"><i class="fas fa-eye"></i></a>
+                            </span>
+
+                        <span data-toggle="tooltip" data-placement="top" title="edit" style="margin-top: 3px;">
+                          <a href="{{ route('user.edit',$user->id) }}" class="text-dark mt-2"><i class="fas fa-edit"></i></a>
+                        </span>
+                          <form method="post" action="{{route('user.destroy',$user->id)}}">
                             @csrf
-                            <button type="submit" onclick="return myFunction();" class="btn btn-sm"><i class="fas fa-trash"></i></button>
-                        </form>
+                            <span data-toggle="tooltip" data-placement="top" title="delete">
+                              <button type="submit" onclick="return myFunction();" class="btn btn-sm"><i class="fas fa-trash"></i></button>
+                            </span>
+                          </form>
                       </div>
                     </td>
                   </tr>
@@ -110,5 +115,9 @@
       if(!confirm("Are You Sure to delete this"))
       event.preventDefault();
   }
+
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
   </script>
 @endsection

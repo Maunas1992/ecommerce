@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::paginate(10);
+        $categories = Category::orderBy('created_at','DESC')->paginate(10);
             return view('admin.category.index',compact('categories'));
     }
 
@@ -21,18 +21,19 @@ class CategoryController extends Controller
         $validationrules = [
             'category_name'=>'required',
             'status'=>'required',
+            'is_header'=>'required',
         ];
          $messages =[
-            'category_name.required'=>'Please enter your category name',
-            'status.required'=>'Please enter status',
+            'category_name.required'=>'Please enter category name',
+            'status.required'=>'Please select status',
+            'is_header.required'=>'Please select Is Header',
                         
         ];
         $request->validate($validationrules,$messages);
 
         $category = new Category;
         $category->category_name = $request->category_name;
-        $category->is_header = 0;
-
+        $category->is_header = $request->is_header;
         $category->status = $request->status;
         $category->save();
         return redirect(route('category.index'));
@@ -49,17 +50,19 @@ class CategoryController extends Controller
         $validationrules = [
             'category_name'=>'required',
             'status'=>'required',
+            'is_header'=>'required',
     
         ];
          $messages =[
-            'category_name.required'=>'Please enter your category name',
-            'status.required'=>'Please enter status',
+            'category_name.required'=>'Please enter category name',
+            'status.required'=>'Please select status',
+            'is_header.required'=>'Please select Is Header',
         ];
         $request->validate($validationrules,$messages);
         $category = Category::find($id);
         $category->category_name = $request->category_name;
         $category->status = $request->status;
-        $category->is_header = 1;
+        $category->is_header = $request->is_header;
         $category->update();
         return redirect(route('category.index'));
     }

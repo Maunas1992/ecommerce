@@ -25,7 +25,7 @@ class ProfileController extends Controller
             'state'=>'required',
             'country'=>'required',        
             'pincode'=>'required|numeric|min:6',
-            'mobile_no'=>'required|numeric|min:10|unique:users,mobile_no,'.$user->id,
+            'mobile_no'=>['required', 'digits:10','unique:users,mobile_no,'.$user->id],
             'email'=>'required|max:255|email:rfc,dns|unique:users,email,'.$user->id,
             'status'=>'required',        
            
@@ -63,7 +63,7 @@ class ProfileController extends Controller
         $user->email = $request->email;
         $user->status = $request->status;
         $user->save();
-        return redirect(route('adminprofile'))->with('success','Profile Updated');
+        return redirect(route('home'))->with('success','Profile Updated');
     }
 
     public function adminChangePassword(){
@@ -83,11 +83,7 @@ class ProfileController extends Controller
         ];
                    
         $request->validate($validationrules,$messages);
-
-
         $users = User::find($id);
-        // dd($request);
-        // echo "<pre>"; print_r($users); exit();
 
         if (!(Hash::check($request->get('old_password'), Auth::user()->password))) {
             // The passwords matches

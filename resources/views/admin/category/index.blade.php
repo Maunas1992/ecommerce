@@ -45,9 +45,10 @@
                   <thead>
                   <tr>
                   	<th>No</th>
-                    <th>Category Name</th>
+                    <th>Name</th>
+                    <th>Is Header</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th width="10%">Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -55,6 +56,7 @@
                   <tr>
                     <td>{{$category->id}}</td>
                     <td>{{$category->category_name}}</td>
+                    <td>{{$category->is_header}}</td>
                     <td>
                           @if($category->status == 'Active')
                           <div class="badge badge-success"> {{$category->status}}</div>
@@ -64,11 +66,16 @@
                         </td>
                     <td>
                       <div class="btn-group">
-                      	<a class="btn btn-sm text-dark" href="{{ route('category.edit',$category->id) }}"><i class="fas fa-edit"></i></a>
+                      	<!-- <a class="btn btn-sm text-dark" href="{{ route('category.edit',$category->id) }}"><i class="fas fa-edit"></i></a> -->
+                        <span data-toggle="tooltip" data-placement="top" title="edit" style="margin-top: 3px;">
+                          <a href="{{ route('category.edit',$category->id) }}" class="text-dark mt-2"><i class="fas fa-edit"></i></a>
+                        </span>
 
   			          	    <form method="post" action="{{route('category.destroy',$category->id)}}">
-                              @csrf
-                              <button type="submit" onclick="return myFunction();" class="btn btn-sm"><i class="fas fa-trash"></i></button>
+                        @csrf
+                          <span data-toggle="tooltip" data-placement="top" title="delete">
+                            <button type="submit" onclick="return myFunction();" class="btn btn-sm"><i class="fas fa-trash"></i></button>
+                          </span>
                         </form>
                       </div>
                     </td>

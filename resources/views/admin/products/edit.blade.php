@@ -33,13 +33,13 @@
                   <div class="row">
                     <div class="col-6">
                       <label>Name: <span class="text-danger">*</span></label>
-                      <input type="text" name="p_name" value="{{$products->p_name}}" class="form-control" placeholder="Enter Product Name">
+                      <input type="text" name="p_name" value="{{ old('p_name') ? old('p_name') : $products->p_name}}" class="form-control" placeholder="Enter Product Name">
                       <span class="error text-danger">{{$errors->first('p_name')}}</span>
                     </div>
 
                     <div class="col-6 mb-3">
                       <label>Description: <span class="text-danger">*</span></label>
-                      <textarea name="description" class="form-control" placeholder="Enter Description">{{$products->description}}</textarea>
+                      <textarea name="description" class="form-control" placeholder="Enter Description">{{ old('description') ? old('description') : $products->description}}</textarea>
                     <span class="error text-danger">{{$errors->first('description')}}</span>
                     </div>
 
@@ -48,7 +48,7 @@
                       <select name="category_id" class="form-control">
                         <option value="">Select Category</option>
                         @foreach($categories as $category)
-                        <option value="{{$category->id}}" {{ $products->category_id == $category->id ? 'selected' : '' }}>{{$category->category_name}}</option>
+                        <option value="{{ old('category_id') ? old('category_id') : $category->id}}" {{ $products->category_id == $category->id ? 'selected' : '' }}>{{$category->category_name}}</option>
                         @endforeach
                       </select>
                     <span class="error text-danger">{{$errors->first('category_id')}}</span>
@@ -56,25 +56,25 @@
 
                     <div class="col-6">
                       <label>Quantity: <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" name="qty" value="{{$products->qty}}" placeholder="Enter Quantity">
+                      <input type="text" class="form-control" name="qty" value="{{ old('qty') ? old('qty') : $products->qty}}" placeholder="Enter Quantity">
                     <span class="error text-danger">{{$errors->first('qty')}}</span>
                     </div>
 
                     <div class="col-6 mb-3">
                       <label>Price: <span class="text-danger">*</span></label>
-                      <input type="text" name="price" value="{{$products->price}}" class="form-control" placeholder="Enter price">
+                      <input type="text" name="price" value="{{ old('price') ? old('price') : $products->price}}" class="form-control" placeholder="Enter price">
                     <span class="error text-danger">{{$errors->first('price')}}</span>
                     </div>
 
                     <div class="col-6">
                       <label>Color: <span class="text-danger">*</span></label>
-                      <input type="text" name="color" value="{{$products->color}}" class="form-control" placeholder="Enter color">
+                      <input type="text" name="color" value="{{ old('color') ? old('color') : $products->color}}" class="form-control" placeholder="Enter color">
                     <span class="error text-danger">{{$errors->first('color')}}</span>
                     </div>
 
                     <div class="col-6 mb-3">
                       <label>Discount: <span class="text-danger">*</span></label>
-                      <input type="text" name="discount" value="{{$products->discount}}" class="form-control" placeholder="Enter discount">
+                      <input type="text" name="discount" value="{{ old('discount') ? old('discount') : $products->discount}}" class="form-control" placeholder="Enter discount">
                     <span class="error text-danger">{{$errors->first('discount')}}</span>
                     </div>
 
@@ -82,9 +82,8 @@
                       <label>Status: <span class="text-danger">*</span></label>
                       <select name="status" class="form-control">
                         <option value="">Select Status</option>
-                        <option value="Active" {{ $products->status == 'Active' ? 'selected' : '' }}>Active</option>
-                        <!-- <option value="Active"@if($products->status=='Active') selected='selected' @endif>Active</option> -->
-                        <option value="Inactive">Inactive</option>
+                        <option value="Active" {{ old('status') ? old('status') :  $products->status == 'Active' ? 'selected' : '' }}>Active</option>
+                        <option value="Inactive"{{ old('status') ? old('status') :  $products->status == 'Active' ? 'selected' : '' }}>Inactive</option>
                       </select>
                       <span class="error text-danger">{{$errors->first('status')}}</span>
                     </div>
@@ -153,7 +152,7 @@
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary ml-3 mb-3">Update</button>
-                <a href="{{route('product.index')}}" class="btn btn-danger mb-3">Cancle</a>
+                <a href="{{route('product.index')}}" class="btn btn-danger mb-3">Cancel</a>
               </form>
             </div>
             <!-- /.card -->
@@ -172,8 +171,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 $(document).ready(function(){
-  $("#addRow").click(function(){
     var index = '<?php echo $variant_count; ?>';
+    $("#addRow").click(function(){
     html = '<div class="hello"><div class="row"><div class="col-3"><div class="form-group"><input type="text" name="productVariant['+index+'][color]" class="form-control" placeholder="Enter Color"></div></div>';
 
     html += '<div class="col-2"><div class="form-group"><input type="text" name="productVariant['+index+'][quantity]" class="form-control" placeholder="Enter Quantity"></div></div>';
