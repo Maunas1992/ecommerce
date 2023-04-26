@@ -44,7 +44,7 @@ class Controller extends BaseController
             'state'=>'required',
             'country'=>'required',         
             'pincode'=>'required|numeric|min:6',
-            'mobile_no'=>'required|numeric|min:10|unique:users,mobile_no,' . $user->id,
+            'mobile_no'=>'required|numeric|digits:10|unique:users,mobile_no,' . $user->id,
             'email'=>'required|max:255|email:rfc,dns|unique:users,email,' . $user->id,
             ];
         $messages =[
@@ -59,7 +59,7 @@ class Controller extends BaseController
                         'pincode.min.10'=>'Please enter 6 digit  pincode',
                         'pincode.numeric'=>'Please enter valid  pincode',
                         'mobile_no.unique'=> 'Please enter other contact number ,contact number already exist .',
-                        'mobile_no.min.10'=>'Please enter  10 digit contact number number.',
+                        'mobile_no.digits'=>'Please enter  10 digit contact number number.',
                         'mobile_no.required'=> 'Please enter your contact number number.',
                         'mobile_no.numeric'=> 'Please enter valid contact number.',
                         'email'=> 'Please enter valid email address.',

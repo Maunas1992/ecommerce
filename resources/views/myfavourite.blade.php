@@ -3,59 +3,12 @@
     <!-- SECTION -->
         <div class="section">
 
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <!-- shop -->
-                    <div class="col-md-4 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="{{asset('./img/shop01.png')}}" alt="">
-                            </div>
-                            <div class="shop-body">
-                                <h3>Laptop<br>Collection</h3>
-                                <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /shop -->
-
-                    <!-- shop -->
-                    <div class="col-md-4 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="{{asset('./img/shop03.png')}}" alt="">
-                            </div>
-                            <div class="shop-body">
-                                <h3>Accessories<br>Collection</h3>
-                                <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /shop -->
-
-                    <!-- shop -->
-                    <div class="col-md-4 col-xs-6">
-                        <div class="shop">
-                            <div class="shop-img">
-                                <img src="{{asset('./img/shop02.png')}}" alt="">
-                            </div>
-                            <div class="shop-body">
-                                <h3>Cameras<br>Collection</h3>
-                                <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /shop -->
-                </div>
-                <!-- /row -->
-            </div>
+            
             <!-- /container -->
         </div>
     <!-- /SECTION -->
     <!-- SECTION -->
-        <div class="section">
+        <div class="section" id="appendiv">
             <!-- container -->
             <div class="container">
                 <!-- row -->
@@ -64,7 +17,7 @@
                     <!-- section title -->
                     <div class="col-md-12">
                         <div class="section-title">
-                            <h3 class="title">New Products</h3>
+                            <h3 class="title">My Wishlist</h3>
                             <div class="section-nav">
                                 <ul class="section-tab-nav tab-nav">
                                     <li class="active"><a data-toggle="tab" href="#tab1">Laptops</a></li>
@@ -89,11 +42,9 @@
                                         <div class="col-md-4 col-xs-4">
                                             <div class="product">
                                                 <div class="product-img">
-                                                    @if($product->image)
-                                                    <img src="{{asset('/storage/product/'.$product->image)}}" alt="" >
-                                                    @else
-                                                    No Image
-                                                    @endif
+                                                    
+                                                    <img src="{{asset('/storage/product/'.$product->productsfav->image)}}" alt="" >
+                                                    
                                                     <div class="product-label">
                                                         <span class="sale">-30%</span>
 
@@ -102,8 +53,8 @@
                                                 </div>
                                                 <div class="product-body">
                                                     <p class="product-category">Category</p>
-                                                    <h3 class="product-name"><a href="#" ></a>{{$product->p_name}}</h3>
-                                                    <h4 class="product-price">${{$product->price}}</h4>
+                                                    <h3 class="product-name"><a href="#" ></a>{{$product->productsfav->p_name}}</h3>
+                                                    <h4 class="product-price">${{$product->productsfav->price}}</h4>
                                                     <div class="product-rating">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
@@ -113,7 +64,7 @@
                                                     </div>
                                                     <div class="product-btns">
                                                         <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+                                                        
                                                         <button class="quick-view"><a href="{{route('showproduct',['id'=>$product->id])}}"><i class="fa fa-eye"></i></a><span class="tooltipp">quick view</span></button>
                                                     </div>
                                                 </div>
@@ -123,6 +74,11 @@
                                             </div>
                                         </div>
                                         @endforeach
+                                        <div class="products-slick-nav">
+                                <div id="slick-nav-1" class="products-slick-nav-danger"></div>
+                                
+                            </div>
+                                        
                                     </div>
                                 </div>
                                         <!-- /product -->
@@ -178,120 +134,8 @@
             <!-- /container -->
         </div>
         <!-- /HOT DEAL SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-
-                    <!-- section title -->
-                    <div class="col-md-12">
-                        <div class="section-title">
-                            <h3 class="title">Top selling</h3>
-                            <div class="section-nav">
-                                <ul class="section-tab-nav tab-nav">
-                                    <li class="active"><a data-toggle="tab" href="#tab2">Laptops</a></li>
-                                    <li><a data-toggle="tab" href="#tab2">Smartphones</a></li>
-                                    <li><a data-toggle="tab" href="#tab2">Cameras</a></li>
-                                    <li><a data-toggle="tab" href="#tab2">Accessories</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /section title -->
-
-                    <!-- Products tab & slick -->
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="products-tabs">
-                                <!-- tab -->
-                                            @foreach($products as $product)
-                                            @foreach($categories as $categori)
-                                <div id="tab2" class="tab-pane fade in active">
-                                    <div class="products-slick" data-nav="#slick-nav-2">
-                                        <!-- product -->
-                                        <div class="col-md-4 col-xs-6">
-                                        <div class="product">
-                                            <div class="product-img">
-                                                <img src="{{asset('/storage/product/'.$product->image)}}" alt="">
-                                                <div class="product-label">
-                                                    <span class="sale">-30%</span>
-                                                    <span class="new">NEW</span>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="product-body">
-                                                <p class="product-category">{{$categori->category_name}}</p>
-                                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                                <div class="product-rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="product-btns">
-                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-                                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                                    <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-                                                </div>
-                                            </div>
-                                            <div class="add-to-cart">
-                                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                            </div>
-                                        </div>
-                                        </div>
-                                            @endforeach
-                                            @endforeach
-                                        <!-- /product -->
-                                        <div id="slick-nav-2" class="products-slick-nav">
-                                            <button class="slick-next slick-arrow" aria-label="Next" type="button" style="display: inline-block;">Next</button>
-                                            <button class="slick-next slick-arrow" aria-label="Next" type="button" style="display: inline-block;">Next</button>
-                                        </div>
-                                </div>
-                                <!-- /tab -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Products tab & slick -->
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
+       
         <!-- NEWSLETTER -->
-        <div id="newsletter" class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="newsletter">
-                            <p>Sign Up for the <strong>NEWSLETTER</strong></p>
-                            <form>
-                                <input class="input" type="email" placeholder="Enter Your Email">
-                                <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
-                            </form>
-                            <ul class="newsletter-follow">
-                                <li>
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
+       
+      
 @endsection

@@ -43,14 +43,18 @@
 								        @foreach($categories as $marchio)
 								        
 								        	<li>
-								        		<input type="checkbox" id="m{{$m}}" class="marchio" name="category_ids[]" value="{{ $marchio->id }}" onClick="filterProducts(this)" checked="checked" >
+								        		<input type="checkbox" id="m{{$m}}" class="marchio" name="category_ids[]" value="{{ $marchio->id }} 
+								        		{{ (collect(old('category_ids',$oldcatid))->contains($marchio->id)) ? 'checked':'' }}" onClick="filterProducts(this)" >
+								        	
 								          		<label for="m{{$m}}">
 								            	<span class="button"></span>
+								            	@if(isset($marchio->id))
 								               	{{ $marchio->category_name }}
+								               	@endif
 								            	</label>   
 								     		</li>
 								 			<?php $m++; ?>
-
+								 			
 								     	@endforeach   
 								</ul>
 							</div>
@@ -143,11 +147,13 @@
 			</div>
 			<!-- /container -->
 		</div>
+		{!! $products->withQueryString()->links() !!}
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script type="text/javascript">
 	function filterProducts(currentElement) {
+		console.log('filterProducts line1')
 		var formData = $('#catform').serialize();
 		console.log($('#catform').serialize());
 		$.ajax({
