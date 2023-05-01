@@ -46,6 +46,9 @@ Route::get('/user/show/{id}', [App\Http\Controllers\UserController::class, 'show
 Route::post('/user/destroy/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
 
 Route::resource('product', ProductController::class);
+Route::any('/product/create', [App\Http\Controllers\ProductController::class, 'create'])->name('product.create');
+
+Route::any('/product/edit/{id}', [App\Http\Controllers\ProductController::class, 'edit'])->name('product.edit');
 
 Route::get('/category/index', [App\Http\Controllers\CategoryController::class, 'index'])->name('category.index');
 

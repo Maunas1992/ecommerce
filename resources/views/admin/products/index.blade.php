@@ -82,6 +82,10 @@
                         </td>
                         <td>
                           <div class="btn-group">
+                            <!-- <span data-toggle="tooltip" data-placement="top" title="show" style="margin-top: 4px; margin-right: 3px;">
+                              <a class="text-dark mr-4" href="{{ route('product.show',$product->id) }}"><i class="fas fa-eye"></i></a>
+                            </span> -->
+
                             <span data-toggle="tooltip" data-placement="top" title="edit" style="margin-top: 3px;">
                               <a class="text-dark mt-2" href="{{ route('product.edit',$product->id) }}"><i class="fas fa-edit"></i></a>
                             </span>

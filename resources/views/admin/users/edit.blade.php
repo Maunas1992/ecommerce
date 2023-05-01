@@ -94,7 +94,7 @@
 
                     <div class="col-6">
                       <label>Password: <span class="text-danger">*</span></label>
-                      <input type="password" name="password" value="{{$users->password}}" class="form-control mb-3" placeholder="Enter Password">
+                      <input type="password" name="password" class="form-control mb-3" placeholder="Enter Password">
                       <span class="error text-danger">{{$errors->first('password')}}</span>
                     </div>
 
@@ -107,8 +107,8 @@
                       <label>Status: <span class="text-danger">*</span></label>
                       <select name="status" class="form-control">
                         <option value="">Select Status</option>
-                        <option value="Active" {{ old('status') ? old('status') :  $users->status == 'Active' ? 'selected' : '' }} {{ old('status') == 'Active' ? 'selected' : '' }}>Active</option>
-                        <option value="Inactive" {{ old('status') ? old('status') :  $users->status == 'Inactive' ? 'selected' : '' }} {{ old('status') == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                        <option value="Active" {{ old('status') == 'Active' ? 'selected' : '' }} {{ $users->status == 'Active' ? 'selected' : ''  }}>Active</option>
+                        <option value="Inactive" {{ old('status') == 'Inactive' ? 'selected' : '' }} {{ $users->status == 'Inactive' ? 'selected' : ''  }}>Inactive</option>
                       </select>
                       <span class="error text-danger">{{$errors->first('status')}}</span>
                     </div>

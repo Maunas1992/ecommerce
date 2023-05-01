@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductVariant;
+use Response;
 use Storage;
 use Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -27,10 +29,96 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $categories = Category::get();
-        return view('admin.products.create',compact('categories'));
+        if ($request->getMethod() == 'POST') {
+            $validationrules = [
+                'p_name'=>'required',
+                'description'=>'required',
+                'image' => 'required|image|mimes:jpeg,bmp,png',
+                'qty'=>'required|numeric',
+                'price'=>'required|numeric',
+                'color'=>'required',
+                'discount'=>'required|numeric',
+                'category_id'=>'required',
+                'status'=>'required',
+                'productVariant.*.color' => 'required',
+                'productVariant.*.quantity' => 'required',
+                'productVariant.*.price' => 'required',
+                'productVariant.*.discount' => 'required',
+            ];
+            $messages =[
+                'p_name.required'=>'Please enter product name',
+                'description.required'=>'Please enter description',
+                'image.required'=>'Please select image',
+                'qty.required'=>'Please enter quantity',
+                'price.required'=>'Please enter price',
+                'color.required'=>'Please enter color',
+                'discount.required'=>'Please enter discount',
+                'status.required'=>'Please select status',
+                'category_id.required'=>'Please select category',
+                'productVariant.*.color.required' =>'Please enter variant color',
+                'productVariant.*.quantity.required' =>'Please enter variant quantity',
+                'productVariant.*.price.required' =>'Please enter variant price',
+                'productVariant.*.discount.required' =>'Please enter variant discount',
+            ];
+
+            $validator = Validator::make($request->all(), $validationrules, $messages);
+            $errors = $validator->errors();
+            if(empty($errors->getMessages())){
+                $products = new Product;
+                $products->p_name = $request->p_name;
+                $products->description = $request->description;
+                $products->qty = $request->qty;
+                $products->price = $request->price;
+                $products->color = $request->color;
+                $products->discount = $request->discount;
+                $products->status = $request->status;
+                $products->category_id = $request->category_id;
+                // if($request->hasFile('image')){
+                //     $image = $request->file('image');
+                //     $image->store('public/product');
+                //     $products->image = $image->hashName();
+                // }
+
+                if($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $filename = $image->hashName();
+                    $image_resize = Image::make($image->getRealPath());
+                    $image_resize->resize(300, 300);
+                    $path = public_path('storage/product/'.$filename);
+                    $image_resize->save($path);
+                }
+
+                $products->image = $filename;
+                $products->status = $request->status;
+                $products->save();
+                if(isset($request['productVariant'])){
+                    foreach($request['productVariant'] as $variant)
+                    {
+                        $pVariant = [];
+                        $productVariant = new ProductVariant;
+                        if(! empty($variant))
+                        {
+                            $pVariant[] = [
+                                $productVariant->product_id = $products->id,
+                                $productVariant->quantity = $variant['quantity'],
+                                $productVariant->price = $variant['price'],
+                                $productVariant->color = $variant['color'],
+                                $productVariant->discount = $variant['discount'],
+                            ];
+                        }
+                        $productVariant->save();
+                    }
+                }
+                return redirect(route('product.index'))->with('success','Product added successfully');
+            }else{
+                return view('admin.products.create',compact('categories', 'errors'));
+            }
+        }else{
+            return view('admin.products.create',compact('categories'));
+        }
     }
 
     /**
@@ -41,14 +129,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validationrules = [           
+        $validationrules = [
             'p_name'=>'required',
             'description'=>'required',
             'image' => 'required|image|mimes:jpeg,bmp,png',
             'qty'=>'required',
             'price'=>'required',
-            'color'=>'required',        
-            'discount'=>'required',        
+            'color'=>'required',
+            'discount'=>'required',
             'category_id'=>'required',
             'status'=>'required',
             'productVariant.*.color' => 'required',
@@ -128,13 +216,128 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        // dd($request->all());
         $categories = Category::get();
+        if ($request->getMethod() == 'POST') {
+            $validationrules = [           
+                'p_name'=>'required',
+                'description'=>'required',
+                'image' => 'nullable|image|mimes:jpeg,bmp,png',
+                'qty'=>'required',
+                'price'=>'required',
+                'color'=>'required',        
+                'discount'=>'required',        
+                'category_id'=>'required',
+                'status'=>'required',
+                'productVariant.*.color' => 'required',
+                'productVariant.*.quantity' => 'required',
+                'productVariant.*.price' => 'required',
+                'productVariant.*.discount' => 'required',
+            ];
+            $messages =[
+                'p_name.required'=>'Please enter product name',
+                'description.required'=>'Please enter description',
+                'qty.required'=>'Please enter quantity',
+                'price.required'=>'Please enter price',
+                'color.required'=>'Please enter color',
+                'discount.required'=>'Please enter discount',
+                'status.required'=>'Please select status',
+                'category_id.required'=>'Please select category',
+                'productVariant.*.color.required' =>'Please enter variant color',
+                'productVariant.*.quantity.required' =>'Please enter variant quantity',
+                'productVariant.*.price.required' =>'Please enter variant price',
+                'productVariant.*.discount.required' =>'Please enter variant discount',
+            ];
+
+            $validator = Validator::make($request->all(), $validationrules, $messages);
+            $errors = $validator->errors();
+            // echo "<pre>"; print_r($errors->getMessages()); exit();
+            if(empty($errors->getMessages())){
+                // echo "<pre>"; print_r('expression'); exit();
+                $products = Product::find($id);
+                $products->p_name = $request->p_name;
+                $products->description = $request->description;
+                $products->qty = $request->qty;
+                $products->price = $request->price;
+                $products->color = $request->color;
+                $products->discount = $request->discount;
+                $products->status = $request->status;
+                $products->category_id = $request->category_id;
+                // if($request->hasFile('image')){
+                //     if(Storage::exists('public/product',$products->image)){
+                //         Storage::delete('public/product',$products->image);
+                //     }
+                //     $image = $request->file('image');
+                //     $image->store('public/product');
+                //     $products->image = $image->hashName();
+                // }
+                if($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    if(Storage::exists('storage/product',$products->image)){
+                        Storage::delete('storage/product',$products->image);
+                    }
+                    $filename = $image->hashName();
+                    $image_resize = Image::make($image->getRealPath());
+                    $image_resize->resize(300, 300);
+                    $path = public_path('storage/product/'.$filename);
+                    $image_resize->save($path);
+                    $products->image = $filename;
+                }
+                $products->status = $request->status;
+                $products->save();
+
+                $array1 = ProductVariant::where('product_id',$products->id)->pluck('id')->toArray();
+                $array2 = $request['productVariant'];
+                if(isset($array1) && $array2){
+                    $variant_id = array_column($array2, 'variant_id');
+                    $result = array_diff($array1,$variant_id);
+                    foreach ($result as $key => $id) {
+                        $removeVariants = ProductVariant::find($id);
+                        $removeVariants->delete();
+                    }
+                }
+                if(isset($request['productVariant'])){
+                    foreach($request['productVariant'] as $variant)
+                    {
+                        $pVariant = [];
+                        if(isset($variant['variant_id'])){
+                            $productVariant = ProductVariant::find($variant['variant_id']);
+                            $pVariant[] = [
+                                $productVariant->product_id = $products->id,
+                                $productVariant->quantity = $variant['quantity'],
+                                $productVariant->price = $variant['price'],
+                                $productVariant->color = $variant['color'],
+                                $productVariant->discount = $variant['discount'],
+                            ];
+                            $productVariant->save();
+                        }else{
+                            $productVariant = new ProductVariant;
+                            $pVariant[] = [
+                                $productVariant->product_id = $products->id,
+                                $productVariant->quantity = $variant['quantity'],
+                                $productVariant->price = $variant['price'],
+                                $productVariant->color = $variant['color'],
+                                $productVariant->discount = $variant['discount'],
+                            ];
+                            $productVariant->save();
+                        }
+                    }
+                }
+                return redirect(route('product.index'))->with('success','Product updated successfully');
+            }else{
+                $products = Product::find($id);
+                $productVariant = ProductVariant::with('productMultiVariant')->where('product_id', $id)->get();
+                $productVariantCount = count($productVariant);
+                return view('admin.products.edit',compact('products','categories','productVariant','errors','productVariantCount'));
+            }
+        }else{
         $products = Product::find($id);
         $productVariant = ProductVariant::with('productMultiVariant')->where('product_id', $id)->get();
-        // dd($productVariant);
-        return view('admin.products.edit',compact('products','categories','productVariant'));
+        $productVariantCount = count($productVariant);
+        return view('admin.products.edit',compact('products','categories','productVariant','productVariantCount'));
+        }
     }
 
     /**
@@ -156,6 +359,10 @@ class ProductController extends Controller
             'discount'=>'required',
             'category_id'=>'required',
             'status'=>'required',
+            'productVariant.*.color' => 'required',
+            'productVariant.*.quantity' => 'required',
+            'productVariant.*.price' => 'required',
+            'productVariant.*.discount' => 'required',
         ];
         $messages =[
             'p_name.required'=>'Please enter product name',
@@ -166,9 +373,20 @@ class ProductController extends Controller
             'discount.required'=>'Please enter discount',
             'category_id.required'=>'Please select category',
             'status.required'=>'Please select status',
+            'productVariant.*.color.required' =>'Please enter variant color',
+            'productVariant.*.quantity.required' =>'Please enter variant quantity',
+            'productVariant.*.price.required' =>'Please enter variant price',
+            'productVariant.*.discount.required' =>'Please enter variant discount',
         ];
-
-        $request->validate($validationrules,$messages);
+        $validator = Validator::make($request->all(), $validationrules, $messages);
+            $errors = $validator->errors();
+        if (!empty($errors->getMessages())) {
+            $categories = Category::get();
+            $products = Product::find($id);
+            $productVariant = ProductVariant::with('productMultiVariant')->where('product_id', $id)->get();
+            return view('admin.products.edit',compact('products','categories','productVariant','errors'));
+            // return Response::make(['error' => $errors], 400);
+        }
         $products = Product::find($id);
         $products->p_name = $request->p_name;
         $products->description = $request->description;
@@ -204,41 +422,41 @@ class ProductController extends Controller
         $array1 = ProductVariant::where('product_id',$products->id)->pluck('id')->toArray();
         $array2 = $request['productVariant'];
         if(isset($array1) && $array2){
-        $variant_id = array_column($array2, 'variant_id');
-        $result = array_diff($array1,$variant_id);
-        foreach ($result as $key => $id) {
-            $removeVariants = ProductVariant::find($id);
-            $removeVariants->delete();
-        }
-        }
-        if(isset($request['productVariant'])){
-        foreach($request['productVariant'] as $variant)
-        {
-            $pVariant = [];
-            if(isset($variant['variant_id'])){
-                $productVariant = ProductVariant::find($variant['variant_id']);
-                    $pVariant[] = [
-                    $productVariant->product_id = $products->id,
-                    $productVariant->quantity = $variant['quantity'],
-                    $productVariant->price = $variant['price'],
-                    $productVariant->color = $variant['color'],
-                    $productVariant->discount = $variant['discount'],
-                ];
-                $productVariant->save();
-            }else{
-                $productVariant = new ProductVariant;
-                $pVariant[] = [
-                    $productVariant->product_id = $products->id,
-                    $productVariant->quantity = $variant['quantity'],
-                    $productVariant->price = $variant['price'],
-                    $productVariant->color = $variant['color'],
-                    $productVariant->discount = $variant['discount'],
-                ];
-                $productVariant->save();
+            $variant_id = array_column($array2, 'variant_id');
+            $result = array_diff($array1,$variant_id);
+            foreach ($result as $key => $id) {
+                $removeVariants = ProductVariant::find($id);
+                $removeVariants->delete();
             }
         }
+        if(isset($request['productVariant'])){
+            foreach($request['productVariant'] as $variant)
+            {
+                $pVariant = [];
+                if(isset($variant['variant_id'])){
+                    $productVariant = ProductVariant::find($variant['variant_id']);
+                    $pVariant[] = [
+                        $productVariant->product_id = $products->id,
+                        $productVariant->quantity = $variant['quantity'],
+                        $productVariant->price = $variant['price'],
+                        $productVariant->color = $variant['color'],
+                        $productVariant->discount = $variant['discount'],
+                    ];
+                    $productVariant->save();
+                }else{
+                    $productVariant = new ProductVariant;
+                    $pVariant[] = [
+                        $productVariant->product_id = $products->id,
+                        $productVariant->quantity = $variant['quantity'],
+                        $productVariant->price = $variant['price'],
+                        $productVariant->color = $variant['color'],
+                        $productVariant->discount = $variant['discount'],
+                    ];
+                    $productVariant->save();
+                }
+            }
         }
-        return redirect(route('product.index'));
+        return redirect(route('product.index'))->with('success','Product updated successfully');
     }
 
     public function show($id)
