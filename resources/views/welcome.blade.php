@@ -62,11 +62,12 @@
                                                     <i class="fa fa-star"></i>
                                                 </div>
                                                 <div class="product-btns">
-                                                    
-                                                    <button class="add-to-wishlist" data-target="#appendiv" data-attr="{{$product->id}}"id="wishid" name="product_id" onClick="tempwish(this)"><i class="fa fa-heart-o"></i>
-                                                        
-                                                        
-                                                    
+                                                    <button class="add-to-wishlist" data-target="#appendiv" data-attr="{{$product->id}}"id="wishid" name="product_id" onClick="tempwish(this)">
+                                                    @if(in_array($product->id,$productschecked))
+                                                        <i class="fa fa-heart" aria-hidden="true"></i>
+                                                    @else
+                                                        <i class="fa fa-heart-o"></i>
+                                                    @endif
                                                     <button class="quick-view"><a href="{{route('showproduct',['id'=>$product->id])}}"><i class="fa fa-eye"></i></a><span class="tooltipp">quick view</span></button>
                                                 </div>
                                             </div>
@@ -98,35 +99,3 @@
         
 
 @endsection
-<script type="text/javascript">
- function tempwish(e) {
-        console.log('tempwish line1')
-         
-        let ahref = $(e).attr('data-attr');
-        console.log(ahref)
-        let url = "{{ route('addwishlist', ['id' => ":ahref"]) }}";
-        url = url.replace(":ahref", ahref);
-        // let smessage = $(e).attr('#message');
-        $.ajax({
-            url: url,
-            type: "POST",
-            dataType : "json",
-            data: ahref,
-
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, 
-              
-            
-            success: function(data) {
-                console.log(data.message)
-                if (data.status == true) {
-                    $("#message").html('<div class="alert alert-success alert-dismissible" id="message"><strong>Your product has been added to your Wishlist</strong></div>');
-                } else {
-
-                    $("#message").html('<div class="alert alert-success alert-dismissible" id="message"><strong>Your product is already in Wishlist</strong></div>');
-                }
-                console.log(data.message)
-            }
-        });
-    
-    }
-</script>

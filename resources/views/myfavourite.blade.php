@@ -1,13 +1,9 @@
 @extends('applayout.mainlayout')
 @section('content')
-    <!-- SECTION -->
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
         <div class="section">
-
-            
-            <!-- /container -->
         </div>
-    <!-- /SECTION -->
-    <!-- SECTION -->
+        <!-- SECTION -->
         <div class="section" id="appendiv">
             <!-- container -->
             <div class="container">
@@ -39,7 +35,7 @@
                                     <div class="products-slick" data-nav="#slick-nav-1">
                                         <!-- product -->
                                         @foreach($products as $product)
-                                        <div class="col-md-4 col-xs-4">
+                                        <div class="col-md-2 col-xs-2">
                                             <div class="product">
                                                 <div class="product-img">
                                                     
@@ -63,7 +59,10 @@
                                                         <i class="fa fa-star"></i>
                                                     </div>
                                                     <div class="product-btns">
-                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                                        <button class="add-to-wishlist" data-target="#appendiv" data-attr="{{$product->id}}"id="wishid" name="product_id" onClick="tempwish(this)">
+                                                            <i class="fa fa-heart" aria-hidden="true"></i>
+                                                            
+                                                        </button>
                                                         
                                                         <button class="quick-view"><a href="{{route('showproduct',['id'=>$product->id])}}"><i class="fa fa-eye"></i></a><span class="tooltipp">quick view</span></button>
                                                     </div>
