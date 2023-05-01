@@ -122,7 +122,7 @@ class ProductFrontController extends Controller
 
     public function myfavourite(Request $request , Product $products)
     {
-        
+        // echo "<pre>"; print_r($products); exit;
         $user = auth()->user();
         // $products = Product::all();
         if ($user) {
@@ -148,6 +148,7 @@ class ProductFrontController extends Controller
     {
         $user = auth()->user();
         $products = Product::find($id);
+        // echo "<pre>"; print_r($products->id); exit;
         if ($user) {
             $productscount = Wishlist::where('product_id', $products->id)
             ->where('user_id',$user->id)
@@ -169,6 +170,7 @@ class ProductFrontController extends Controller
         }
         }
         $productsadded = Wishlist::where('product_id', $products->id)->pluck('product_id')->toArray();
+       
          
         // $products = Wishlist::where('user_id',$user->id)->get();
         // if($request->product_id !== null ) {

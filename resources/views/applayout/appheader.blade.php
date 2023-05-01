@@ -45,7 +45,7 @@
                     <!-- LOGO -->
                     <div class="col-md-2">
                         <div class="header-logo">
-                            <a href="{{route('home')}}" class="logo">
+                            <a href="{{url('/')}}" class="logo">
                                 <img src="{{asset('img/logo.png')}}" alt="">
                             </a>
                         </div>
@@ -164,7 +164,7 @@
                   
                 <ul class="main-nav nav navbar-nav">
                     
-                        <li class="active"><a href="{{route('home')}}">Home</a></li>
+                        <li class="active"><a href="{{url('/')}}">Home</a></li>
                         {{--<li><a href="#">Hot Deals</a></li>--}}
                         @foreach(category() as $cat)
                         @if($cat->is_header == 0)

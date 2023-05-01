@@ -1,9 +1,11 @@
 @extends('applayout.mainlayout')
 @section('content')
+    <!-- SECTION -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
         <div class="section">
         </div>
-        <!-- SECTION -->
+    <!-- /SECTION -->
+    <!-- SECTION -->
         <div class="section" id="appendiv">
             <!-- container -->
             <div class="container">
@@ -27,7 +29,7 @@
                     <!-- /section title -->
 
                     <!-- Products tab & slick -->
-                    <div class="col-md-12">
+                 <div class="col-md-12">
                         <div class="row">
                             <div class="products-tabs">
                                 <!-- tab -->
@@ -35,7 +37,7 @@
                                     <div class="products-slick" data-nav="#slick-nav-1">
                                         <!-- product -->
                                         @foreach($products as $product)
-                                        <div class="col-md-2 col-xs-2">
+                                        <div class="col-md-4 col-xs-4">
                                             <div class="product">
                                                 <div class="product-img">
                                                     
@@ -132,9 +134,5 @@
             </div>
             <!-- /container -->
         </div>
-        <!-- /HOT DEAL SECTION -->
-       
-        <!-- NEWSLETTER -->
-       
-      
+    
 @endsection
