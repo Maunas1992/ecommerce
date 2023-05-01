@@ -26,9 +26,9 @@
           <div class="col-lg-12">
             <!-- /.card -->
             <div class="card">
-              <form action="{{route('product.update',$products->id)}}" method="POST" enctype="multipart/form-data">
+              <!-- <form action="{{route('product.update',$products->id)}}" method="POST" enctype="multipart/form-data"> -->
+              <form action="{{route('product.edit',$products->id)}}" method="POST" enctype="multipart/form-data">
                 <div class="card-body">
-                  @method('PATCH')
                   @csrf
                   <div class="row">
                     <div class="col-6">
@@ -82,8 +82,8 @@
                       <label>Status: <span class="text-danger">*</span></label>
                       <select name="status" class="form-control">
                         <option value="">Select Status</option>
-                        <option value="Active" {{ old('status') ? old('status') :  $products->status == 'Active' ? 'selected' : '' }}>Active</option>
-                        <option value="Inactive"{{ old('status') ? old('status') :  $products->status == 'Active' ? 'selected' : '' }}>Inactive</option>
+                        <option value="Active" {{ old('status') == 'Active' ? 'selected' : '' }} {{ $products->status == 'Active' ? 'selected' : ''  }}>Active</option>
+                        <option value="Inactive"{{ old('status') == 'Inactive' ? 'selected' : '' }} {{ $products->status == 'Inactive' ? 'selected' : ''  }}>Inactive</option>
                       </select>
                       <span class="error text-danger">{{$errors->first('status')}}</span>
                     </div>
@@ -99,47 +99,124 @@
                 <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <div class="float-sm-right">
-                        <a class="btn btn-success add" id="addRow">
-                          <span class="fa fa-plus"></span> &nbsp;Add Row</a>
+                      @if($productVariantCount == 0)
+                      <h3 class="card-title mt-2">This Product haven't Variant, Please Add</h3>
+                      @endif
+                      <div class="card-tools">
+                        <div class="float-sm-right">
+                          <a class="btn btn-success add" id="addRow">
+                              <span class="fa fa-plus"></span> &nbsp;Add Row</a>
+                        </div>
                       </div>
                     </div>
                     <div class="card-body">
                       <div class="variant">
-                        @if(!empty($productVariant))
-                          @foreach($productVariant as $variantkey=> $product_var)
-                            <div class="row hello">
+                        @if(request()->get('productVariant'))
+                          @foreach(request()->get('productVariant') as $variantkey => $product_var)
+                            <div class="row productVar">
                               <input type="hidden" class="variants_key" value="{{$variantkey}}">
-                              <input type="hidden" name="productVariant[{{ $variantkey }}][variant_id]" value="{{$product_var->id}}">
+                              @if(isset($product_var['variant_id']))
+                              <input type="hidden" name="productVariant[{{ $variantkey }}][variant_id]" value="{{$product_var['variant_id']}}">
+                              @endif
                                 <div class="col-3">
                                   <div class="form-group">
-                                    <label for="exampleFormControlInput1">Color</label>
-                                    <input type="text" name="productVariant[{{$variantkey}}][color]" value="{{$product_var->color}}" class="form-control" placeholder="Enter Color">
+                                    @if($variantkey == 0)
+                                      <label for="exampleFormControlInput1">Color</label>
+                                    @endif
+                                    <input type="text" name="productVariant[{{$variantkey}}][color]" value="{{$product_var['color']}}" class="form-control" placeholder="Enter Color">
+                                    <span class="error text-danger">{{$errors->first('productVariant.'.$variantkey.'.color')}}</span>
                                   </div>
                                 </div>
                                 <div class="col-2">
                                   <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Quantity</label>
-                                    <input type="text" name="productVariant[{{$variantkey}}][quantity]" value="{{$product_var->quantity}}" class="form-control" placeholder="Enter Quantity">
+                                    @if($variantkey == 0)
+                                      <label for="exampleFormControlInput1">Quantity</label>
+                                    @endif
+                                    <input type="text" name="productVariant[{{$variantkey}}][quantity]" value="{{$product_var['quantity']}}" class="form-control" placeholder="Enter Quantity">
+                                    <span class="error text-danger">{{$errors->first('productVariant.'.$variantkey.'.quantity')}}</span>
                                   </div>
                                 </div>
 
                                 <div class="col-3">
                                   <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Price</label>
-                                    <input type="text" name="productVariant[{{$variantkey}}][price]" value="{{$product_var->price}}" class="form-control" placeholder="Enter Price">
+                                    @if($variantkey == 0)
+                                      <label for="exampleFormControlInput1">Price</label>
+                                    @endif
+                                    <input type="text" name="productVariant[{{$variantkey}}][price]" value="{{$product_var['price']}}" class="form-control" placeholder="Enter Price">
+                                    <span class="error text-danger">{{$errors->first('productVariant.'.$variantkey.'.price')}}</span>
                                   </div>
                                 </div>
 
                                 <div class="col-2">
                                   <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Discount</label>
-                                    <input type="text" name="productVariant[{{$variantkey}}][discount]" value="{{$product_var->discount}}" class="form-control" placeholder="Enter Discount">
+                                    @if($variantkey == 0)
+                                      <label for="exampleFormControlInput1">Discount</label>
+                                    @endif
+                                    <input type="text" name="productVariant[{{$variantkey}}][discount]" value="{{$product_var['discount']}}" class="form-control" placeholder="Enter Discount">
+                                    <span class="error text-danger">{{$errors->first('productVariant.'.$variantkey.'.discount')}}</span>
                                   </div>
                                 </div>
 
-                                <div class="col-1 ml-1" style="margin-top: 33px;">
-                                  <label for="exampleFormControlSelect1"></label>
+                                <div class="col-1 ml-1">
+                                  @if($variantkey == 0)
+                                      <label for="exampleFormControlInput1">Remove</label>
+                                  @endif
+                                  <button type="button" class="btn btn-danger btn-sm" onclick="return remove_variant(this);">
+                                    <span class="fa fa-trash"></span>
+                                  </button>
+                                </div>
+                            </div>
+                          @endforeach
+                        @else
+                          @foreach($productVariant as $variantkey => $product_var)
+                            <div class="row productVar">
+                              <input type="hidden" class="variants_key" value="{{$variantkey}}">
+                              @if(isset($product_var['variant_id']))
+                              <input type="hidden" name="productVariant[{{ $variantkey }}][variant_id]" value="{{$product_var['variant_id']}}">
+                              @endif
+                                <div class="col-3">
+                                  <div class="form-group">
+                                    @if($variantkey == 0)
+                                      <label for="exampleFormControlInput1">Color</label>
+                                    @endif
+                                    <input type="text" name="productVariant[{{$variantkey}}][color]" value="{{$product_var['color']}}" class="form-control" placeholder="Enter Color">
+                                    <span class="error text-danger">{{$errors->first('productVariant.'.$variantkey.'.color')}}</span>
+                                  </div>
+                                </div>
+                                <div class="col-2">
+                                  <div class="form-group">
+                                    @if($variantkey == 0)
+                                      <label for="exampleFormControlInput1">Quantity</label>
+                                    @endif
+                                    <input type="text" name="productVariant[{{$variantkey}}][quantity]" value="{{$product_var['quantity']}}" class="form-control" placeholder="Enter Quantity">
+                                    <span class="error text-danger">{{$errors->first('productVariant.'.$variantkey.'.quantity')}}</span>
+                                  </div>
+                                </div>
+
+                                <div class="col-3">
+                                  <div class="form-group">
+                                    @if($variantkey == 0)
+                                      <label for="exampleFormControlInput1">Price</label>
+                                    @endif
+                                    <input type="text" name="productVariant[{{$variantkey}}][price]" value="{{$product_var['price']}}" class="form-control" placeholder="Enter Price">
+                                    <span class="error text-danger">{{$errors->first('productVariant.'.$variantkey.'.price')}}</span>
+                                  </div>
+                                </div>
+
+                                <div class="col-2">
+                                  <div class="form-group">
+                                    @if($variantkey == 0)
+                                      <label for="exampleFormControlInput1">Discount</label>
+                                    @endif
+                                    <input type="text" name="productVariant[{{$variantkey}}][discount]" value="{{$product_var['discount']}}" class="form-control" placeholder="Enter Discount">
+                                    <span class="error text-danger">{{$errors->first('productVariant.'.$variantkey.'.discount')}}</span>
+                                  </div>
+                                </div>
+
+                                <div class="col-1 ml-1">
+                                  @if($variantkey == 0)
+                                      <label for="exampleFormControlInput1">Remove</label>
+                                    @endif
                                   <button type="button" class="btn btn-danger btn-sm" onclick="return remove_variant(this);">
                                     <span class="fa fa-trash"></span>
                                   </button>
@@ -173,7 +250,7 @@
 $(document).ready(function(){
     var index = '<?php echo $variant_count; ?>';
     $("#addRow").click(function(){
-    html = '<div class="hello"><div class="row"><div class="col-3"><div class="form-group"><input type="text" name="productVariant['+index+'][color]" class="form-control" placeholder="Enter Color"></div></div>';
+    html = '<div class="productVar"><div class="row"><div class="col-3"><div class="form-group"><input type="text" name="productVariant['+index+'][color]" class="form-control" placeholder="Enter Color"></div></div>';
 
     html += '<div class="col-2"><div class="form-group"><input type="text" name="productVariant['+index+'][quantity]" class="form-control" placeholder="Enter Quantity"></div></div>';
 
@@ -192,7 +269,7 @@ index++;
 
   <script type="text/javascript">
   function remove_variant(e) {
-            $(e).closest('.hello').remove();
+            $(e).closest('.productVar').remove();
         }
   </script>
 @endsection

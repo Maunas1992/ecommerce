@@ -136,29 +136,4 @@
       </nav>
       <!-- /.sidebar-menu -->
   </div>
-  <script>
-        $(document).ready(function () {
-            $("#search").keyup(function () {
-
-                var filter = $(this).val();
-
-                $(`nav li:not(.sidebar_search)`).each(function (index, element) {
-                    // alert('ok');
-                    const item = $(element);
-                    const parentListIsNested = item.closest('ul').hasClass('nav-treeview');
-
-                    if (item.text().match(new RegExp(filter, 'gi'))) {
-                        item.fadeIn();
-                        if (parentListIsNested) {
-                            item.closest('ul').addClass('in');
-                        }
-                    } else {
-                        item.fadeOut();
-                        if (parentListIsNested) {
-                            item.closest('ul').removeClass('in');
-                        }
-                    }
-                });
-            });
-        });
-    </script>
+  
