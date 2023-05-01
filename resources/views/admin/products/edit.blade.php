@@ -33,13 +33,13 @@
                   <div class="row">
                     <div class="col-6">
                       <label>Name: <span class="text-danger">*</span></label>
-                      <input type="text" name="p_name" value="{{ old('p_name') ? old('p_name') : $products->p_name}}" class="form-control" placeholder="Enter Product Name">
+                      <input type="text" name="p_name" value="{{ request()->get('p_name') ? request()->get('p_name') : $products->p_name}}" class="form-control" placeholder="Enter Product Name">
                       <span class="error text-danger">{{$errors->first('p_name')}}</span>
                     </div>
 
                     <div class="col-6 mb-3">
                       <label>Description: <span class="text-danger">*</span></label>
-                      <textarea name="description" class="form-control" placeholder="Enter Description">{{ old('description') ? old('description') : $products->description}}</textarea>
+                      <textarea name="description" class="form-control" placeholder="Enter Description">{{ request()->get('description') ? request()->get('description') : $products->description}}</textarea>
                     <span class="error text-danger">{{$errors->first('description')}}</span>
                     </div>
 
@@ -48,7 +48,7 @@
                       <select name="category_id" class="form-control">
                         <option value="">Select Category</option>
                         @foreach($categories as $category)
-                        <option value="{{ old('category_id') ? old('category_id') : $category->id}}" {{ $products->category_id == $category->id ? 'selected' : '' }}>{{$category->category_name}}</option>
+                        <option value="{{ request()->get('category_id') ? request()->get('category_id') : $category->id}}" {{ $products->category_id == $category->id ? 'selected' : '' }}>{{$category->category_name}}</option>
                         @endforeach
                       </select>
                     <span class="error text-danger">{{$errors->first('category_id')}}</span>
@@ -56,25 +56,25 @@
 
                     <div class="col-6">
                       <label>Quantity: <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" name="qty" value="{{ old('qty') ? old('qty') : $products->qty}}" placeholder="Enter Quantity">
+                      <input type="text" class="form-control" name="qty" value="{{ request()->get('qty') ? request()->get('qty') : $products->qty}}" placeholder="Enter Quantity">
                     <span class="error text-danger">{{$errors->first('qty')}}</span>
                     </div>
 
                     <div class="col-6 mb-3">
                       <label>Price: <span class="text-danger">*</span></label>
-                      <input type="text" name="price" value="{{ old('price') ? old('price') : $products->price}}" class="form-control" placeholder="Enter price">
+                      <input type="text" name="price" value="{{ request()->get('price') ? request()->get('price') : $products->price}}" class="form-control" placeholder="Enter price">
                     <span class="error text-danger">{{$errors->first('price')}}</span>
                     </div>
 
                     <div class="col-6">
                       <label>Color: <span class="text-danger">*</span></label>
-                      <input type="text" name="color" value="{{ old('color') ? old('color') : $products->color}}" class="form-control" placeholder="Enter color">
+                      <input type="text" name="color" value="{{ request()->get('color') ? request()->get('color') : $products->color}}" class="form-control" placeholder="Enter color">
                     <span class="error text-danger">{{$errors->first('color')}}</span>
                     </div>
 
                     <div class="col-6 mb-3">
                       <label>Discount: <span class="text-danger">*</span></label>
-                      <input type="text" name="discount" value="{{ old('discount') ? old('discount') : $products->discount}}" class="form-control" placeholder="Enter discount">
+                      <input type="text" name="discount" value="{{ request()->get('discount') ? request()->get('discount') : $products->discount}}" class="form-control" placeholder="Enter discount">
                     <span class="error text-danger">{{$errors->first('discount')}}</span>
                     </div>
 
@@ -82,8 +82,8 @@
                       <label>Status: <span class="text-danger">*</span></label>
                       <select name="status" class="form-control">
                         <option value="">Select Status</option>
-                        <option value="Active" {{ old('status') == 'Active' ? 'selected' : '' }} {{ $products->status == 'Active' ? 'selected' : ''  }}>Active</option>
-                        <option value="Inactive"{{ old('status') == 'Inactive' ? 'selected' : '' }} {{ $products->status == 'Inactive' ? 'selected' : ''  }}>Inactive</option>
+                        <option value="Active" {{ request()->get('status') == 'Active' ? 'selected' : '' }} {{ $products->status == 'Active' ? 'selected' : ''  }}>Active</option>
+                        <option value="Inactive"{{ request()->get('status') == 'Inactive' ? 'selected' : '' }} {{ $products->status == 'Inactive' ? 'selected' : ''  }}>Inactive</option>
                       </select>
                       <span class="error text-danger">{{$errors->first('status')}}</span>
                     </div>
