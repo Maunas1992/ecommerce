@@ -56,5 +56,8 @@ class User extends Authenticatable
     public function feedback()
     {
         return $this->hasMany(Feedback::class, 'id','user_id');
+    public function productswishlist()
+    {
+        return $this->hasMany(Product::class,'id','user_id');
     }
 }

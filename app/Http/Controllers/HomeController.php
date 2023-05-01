@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 // use App\Models\Order;
 use Auth;
-
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Wishlist; 
+
 class HomeController extends Controller
 {
     /**
@@ -26,9 +27,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request , Product $products)
     {
-        // echo "<pre>"; print_r(Auth::user()); exit;
+        
         if(Auth::user()->role == 'admin'){
             $products = Product::count();
             $users = User::count();
@@ -37,7 +38,15 @@ class HomeController extends Controller
         }else{
             $products = Product::get();
             $categories = Category::get();
-            return view('welcome',compact('products','categories'));
+            $productschecked = [];
+            if ($productschecked == null) {
+            // echo "<pre>"; print_r('expression'); exit;
+            $user = auth()->user();
+            $productschecked = Wishlist::where('user_id', $user->id)->pluck('product_id')->toArray();
+             $status = true;
+            // echo "<pre>"; print_r($productschecked); exit;
+            }   
+            return view('welcome',compact('products','categories','productschecked'));
         }
     }
 }

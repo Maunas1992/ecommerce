@@ -43,7 +43,7 @@
                 <!-- row -->
                 <div class="row">
                     <!-- LOGO -->
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div class="header-logo">
                             <a href="{{route('home')}}" class="logo">
                                 <img src="{{asset('img/logo.png')}}" alt="">
@@ -53,9 +53,9 @@
                     <!-- /LOGO -->
 
                     <!-- SEARCH BAR -->
-                        <div class="col-md-3">
-                           <div class="header-search">
-                                <form method="GET" action="{{route('getcategory')}}" >
+                    <div class="col-md-6">
+                        <div class="header-search"style="display: flex;">
+                            <form method="GET" action="{{route('getcategory')}}" >
                                     <select class="input-select" onchange="location =    this.options[this.selectedIndex].value;">
                                         <option value="{{route('home')}}">All Categories</option>
                                         @foreach(category() as $cat)
@@ -63,13 +63,11 @@
                                         @endforeach
                                     </select>
                                 </form>
-                                </div>
-                        </div>
-                            <div class="col-md-4">
-                            <div class="header-search">
                                 <form role="search" method="GET" action="{{route('getproduct')}}" >
-                                    <input class="input" type="search" placeholder="Search" name = "search"aria-label="Search" value="{{old('search')}}">
+                                    
+                                    <input class="input" type="search" placeholder="Search" name = "search"aria-label="Search" value="{{('search')}}" style="width: 250px;">
                                     <button class="search-btn" type="submit">Search</button>
+                                    
                                 </form>
                             </div>
                         </div>
@@ -78,15 +76,17 @@
                     <!-- /SEARCH BAR -->
 
                     <!-- ACCOUNT -->
-                    <div class="col-md-3 clearfix">
+                    <div class="col-md-3 pull-right">
                         <div class="header-ctn">
                             <!-- Wishlist -->
                             <div> 
+                                
                                 <a href="{{route('myfavourite')}}">
                                     <i class="fa fa-heart-o"></i>
                                     <span>Your Wishlist</span>
                                     <div class="qty">2</div>
                                 </a>
+                                
                             </div>
                             <!-- /Wishlist -->
 

@@ -25,4 +25,9 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
+
+    public function productsfav()
+    {
+        return $this->hasMany(Product::class,'id','product_id');
+    }
 }

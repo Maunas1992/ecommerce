@@ -88,9 +88,11 @@ Route::get('/show/{id}', [ProductFrontController::class, 'showproduct'])->name('
 Route::get('/store', [ProductFrontController::class, 'storeproduct'])->name('storeproduct');
 Route::get('/getcategory', [ProductFrontController::class, 'getcategory'])->name('getcategory');
 Route::get('/favourite', [ProductFrontController::class, 'myfavourite'])->name('myfavourite');
-Route::post('/addfavourite', [ProductFrontController::class, 'addfavourite'])->name('addfavourite');
+// Route::post('/addfavourite', [ProductFrontController::class, 'addfavourite'])->name('addfavourite');
+// Route::get('/addwishlist/{id}', [ProductFrontController::class, 'addwishlist'])->name('addwishlist');
 
-
+Route::post('/addwishlist/{id}', [ProductFrontController::class, 'addwishlist'])->name('addwishlist');
+Route::get('/addwishlist/{id}', [ProductFrontController::class, 'addwishlist'])->name('addwishlist');
 // Route::get('/topics/{category}/{forum}', [
 //     'as'   => 'topics.show',
 //     'uses' => 'TopicsController@show'

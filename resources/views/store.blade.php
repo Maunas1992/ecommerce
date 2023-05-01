@@ -1,6 +1,6 @@
 @extends('applayout.mainlayout')
 @section('content')
-	
+	<meta name="csrf-token" content="{{ csrf_token() }}" />
 
 		<!-- BREADCRUMB -->
 		<div id="breadcrumb" class="section">
@@ -43,14 +43,20 @@
 								        @foreach($categories as $marchio)
 								        
 								        	<li>
-								        		<input type="checkbox" id="m{{$m}}" class="marchio" name="category_ids[]" value="{{ $marchio->id }}" onClick="filterProducts(this)" checked="checked" >
-								          		<label for="m{{$m}}">
+								        		<input type="checkbox" id="m{{$m}}" class="marchio" name="category_ids[]" onClick="filterProducts(this)" value="{{ $marchio->id }}"
+								        		
+								        		@if (request()->get('category_ids'))
+								        		{{ in_array( $marchio->id, request()->get('category_ids')) ? 'checked':'' }}
+								        		@endif >
+								        		<label for="m{{$m}}">
 								            	<span class="button"></span>
+								            	@if(isset($marchio->id))
 								               	{{ $marchio->category_name }}
+								               	@endif
 								            	</label>   
 								     		</li>
 								 			<?php $m++; ?>
-
+								 			
 								     	@endforeach   
 								</ul>
 							</div>
@@ -69,7 +75,6 @@
 						<!-- /aside Widget -->
 					</div>
 					<!-- /ASIDE -->
-
 					<!-- STORE -->
 					<div id="store" class="col-md-9">
 						<!-- store top filter -->
@@ -95,6 +100,7 @@
 						</div>
 						<!-- /store top filter -->
 
+						<div id="message"></div>
 						<!-- store products -->
 						<div class="row categorydetail" id="categorydetail">
 							@foreach($products as $product)
@@ -119,7 +125,13 @@
 								                <i class="fa fa-star"></i>
 								            </div>
 								            <div class="product-btns">
-								                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+								                <button class="add-to-wishlist" data-target="#appendiv" data-attr="{{$product->id}}"id="wishid" name="product_id" onClick="tempwish(this)">
+								                @if(in_array($product->id,$productschecked))
+								                	<i class="fa fa-heart" aria-hidden="true"></i>
+								                @else
+								                <i class="fa fa-heart-o"></i>
+								                @endif
+								            </button>
 								                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
 								                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
 								            </div>
@@ -143,11 +155,13 @@
 			</div>
 			<!-- /container -->
 		</div>
+		{!! $products->withQueryString()->links() !!}
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script type="text/javascript">
 	function filterProducts(currentElement) {
+		console.log('filterProducts line1')
 		var formData = $('#catform').serialize();
 		console.log($('#catform').serialize());
 		$.ajax({
