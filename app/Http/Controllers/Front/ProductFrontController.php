@@ -91,7 +91,6 @@ class ProductFrontController extends Controller
 
     public function getcategory(Request $request , Product $products)
     {
-        
         $user = auth()->user();
         $categories = Category::get(["category_name","id"]);
         $oldcatid = NULL;
