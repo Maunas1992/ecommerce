@@ -63,9 +63,9 @@
                   </tr>
                   </thead>
                   <tbody>
-                  	@foreach($products as $product)
+                  	@foreach($products as $key => $product)
                       <tr>
-                        <td>{{$product->id}}</td>
+                        <td>{{$products->firstItem()+$key}}</td>
                         <td><img src="{{asset('/storage/product/'.$product->image)}}"class="rounded-circle" height="50px" width="50px"></td>
                         <td>{{$product->p_name}}</td>
                         <td>{{$product->category->category_name ?? '-'}}</td>
@@ -75,9 +75,9 @@
                         <td>{{$product->color}}</td>
                         <td>
                           @if($product->status == 'Active')
-                          <div class="badge badge-success"> {{$product->status}}</div>
+                          <div class="badge badge-success"> Active</div>
                           @else
-                          <div class="badge badge-danger"> {{$product->status}}</div>
+                          <div class="badge badge-danger"> Inactive</div>
                           @endif
                         </td>
                         <td>
@@ -106,6 +106,7 @@
                 </table>
                 <div class="float-sm-right mt-3 mr-2"> 
                   {!! $products->links() !!}
+                  <!-- {!! $products->withQueryString()->links() !!} -->
                 </div>
               </div>
             </div>

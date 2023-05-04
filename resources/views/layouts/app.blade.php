@@ -56,7 +56,12 @@
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE -->
 <script src="{{asset('js/adminlte.js')}}"></script>
-
+<script src="{{asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+<script>
+$(function () {
+  bsCustomFileInput.init();
+});
+</script>
 <!-- OPTIONAL SCRIPTS -->
 <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->

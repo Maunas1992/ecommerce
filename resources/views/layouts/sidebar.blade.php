@@ -10,15 +10,15 @@
 		<!-- Sidebar user panel (optional) -->
 		<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 			<div class="image">
-				<img src="{{asset('img/avatar5.png')}}" class="img-circle elevation-2" alt="User Image">
+				<a href="{{route('adminprofile')}}"><img src="{{asset('img/avatar5.png')}}" class="img-circle elevation-2" alt="User Image"></a>
 			</div>
 			<div class="info">
-				<a href="#" class="d-block">Admin</a>
+				<a href="{{route('adminprofile')}}" class="d-block">Admin</a>
 			</div>
 		</div>
 
 		<!-- SidebarSearch Form -->
-		<div class="form-inline">
+		<!-- <div class="form-inline">
 			<div class="input-group" data-widget="sidebar-search">
 				<input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
 				<div class="input-group-append">
@@ -27,7 +27,7 @@
 					</button>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">

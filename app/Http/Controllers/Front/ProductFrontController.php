@@ -92,7 +92,8 @@ class ProductFrontController extends Controller
     public function getcategory(Request $request , Product $products)
     {
         $user = auth()->user();
-        $categories = Category::get(["category_name","id"]);
+        // echo "<pre>"; print_r('expression'); exit;
+        $categories = Category::where('status','Active')->get(["category_name","id"]);
         $oldcatid = NULL;
 
         if(($request->category_ids)) {
@@ -169,7 +170,6 @@ class ProductFrontController extends Controller
 
     public function order()
     {
-        
         return view('order');
     }
 

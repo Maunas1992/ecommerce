@@ -11,7 +11,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-              <li class="breadcrumb-item active"><a href="{{route('product.index')}}">User</a></li>
+              <li class="breadcrumb-item active"><a href="{{route('user.index')}}">User</a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -33,7 +33,7 @@
               </div>
               <div class="card-body table-responsive p-0">
                 <div class="col-6">
-                  <label>No</label>
+                  <label>User ID</label>
                   <p>{{$users->id}}</p>
                 </div>
 
@@ -49,7 +49,7 @@
 
                 <div class="col-6">
                   <label>Date Of Birth</label>
-                  <p>{{$users->dob}}</p>
+                  <p>{{date('d-m-Y', strtotime($users->dob))}}</p>
                 </div>
 
                 <div class="col-6">
@@ -63,15 +63,20 @@
                 </div>
 
                 <div class="col-6">
-                  <label>City</label>
-                  <p>{{$users->city}}</p>
+                  <label>Country</label>
+                  <p>{{$users->country->country_name}}</p>
                 </div>
 
                 <div class="col-6">
                   <label>State</label>
-                  <p>{{$users->state}}</p>
+                  <p>{{$users->state->state_name}}</p>
                 </div>
 
+                <div class="col-6">
+                  <label>City</label>
+                  <p>{{$users->city->name}}</p>
+                </div>
+                
                 <div class="col-6">
                   <label>Mobile No</label>
                   <p>{{$users->mobile_no}}</p>

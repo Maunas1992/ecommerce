@@ -10,6 +10,7 @@ use Auth;
 use Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\User;
+use App\Models\Country;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -29,7 +30,8 @@ class Controller extends BaseController
     public function viewprofile()
     {
         $user = Auth::user();
-        return view('profile',compact('user'));
+        $countries = Country::all();
+        return view('profile',compact('user','countries'));
     }
 
     public function updateprofile(Request $request,$id)
@@ -42,28 +44,28 @@ class Controller extends BaseController
             'address'=>'required',
             'dob'=>'required|date|after:1990|before:2002',
             'gender'=>'required',
-            'city'=>'required',
-            'state'=>'required',
-            'country'=>'required',         
+            'city_id'=>'required',
+            'state_id'=>'required',
+            'country_id'=>'required',
             'pincode'=>'required|numeric|min:6',
-            'mobile_no'=>'required|numeric|digits:10|unique:users,mobile_no,' . $user->id,
+            'mobile_no'=>['required', 'digits:10','unique:users,mobile_no,'.$user->id],
             'email'=>'required|max:255|email:rfc,dns|unique:users,email,' . $user->id,
             ];
         $messages =[
                         'username.required'=>'Please enter your name',
                         'address.required'=>'Please enter your address',
                        'dob.required'=>'Please enter your date of birth',
-                        'city.required'=>'Please select your city name.',
-                        'state.required'=>'Please select your state name.',
-                        'country.required'=>'Please select your coutry name',
+                        'city_id.required'=>'Please select your city name.',
+                        'state_id.required'=>'Please select your state name.',
+                        'country_id.required'=>'Please select your coutry name',
                         
                         'pincode.required'=>'Please enter your pincode',
                         'pincode.min.10'=>'Please enter 6 digit  pincode',
                         'pincode.numeric'=>'Please enter valid  pincode',
-                        'mobile_no.unique'=> 'Please enter other contact number ,contact number already exist .',
-                        'mobile_no.digits'=>'Please enter  10 digit contact number number.',
-                        'mobile_no.required'=> 'Please enter your contact number number.',
-                        'mobile_no.numeric'=> 'Please enter valid contact number.',
+                        'mobile_no.unique'=> 'Please enter other mobile number ,mobile number already exist .',
+                        'mobile_no.digits'=>'Please enter 10 digit mobile number.',
+                        'mobile_no.required'=> 'Please enter your mobile number.',
+                        'mobile_no.numeric'=> 'Please enter valid mobile number.',
                         'email'=> 'Please enter valid email address.',
                         'email.required'=>'Please enter your email.',
                         'email.unique'=> 'Please enter other email address,Email address is already exist. ',

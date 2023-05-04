@@ -20,7 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('created_at','DESC')->paginate(10);
+        $products = Product::orderBy('created_at','DESC')->paginate(5);
         return view('admin.products.index',compact('products'));
     }
 
@@ -31,16 +31,17 @@ class ProductController extends Controller
      */
     public function create(Request $request)
     {
-        $categories = Category::get();
+        $categories = Category::where('status','Active')->get();
         if ($request->getMethod() == 'POST') {
             $validationrules = [
                 'p_name'=>'required',
                 'description'=>'required',
                 'image' => 'required|image|mimes:jpeg,bmp,png',
-                'qty'=>'required|numeric',
+                'qty'=>'required|numeric|regex:/^([0-9]+)(\s[1-9]+)*$/',
                 'price'=>'required|numeric',
-                'color'=>'required',
-                'discount'=>'required|numeric',
+                'color'=>'required|string|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
+                // 'discount'=>['required','regex:/b(?<!\.)(?!0+(?:\.0+)?%)(?:\d|[1-9]\d|100)(?:(?<!100)\.\d+)?%/'],
+                'discount'=>['required','between:0,99.99', 'regex:/^\d+(\.\d{1,2})?%?$/'],
                 'category_id'=>'required',
                 'status'=>'required',
                 'productVariant.*.color' => 'required',
@@ -55,6 +56,7 @@ class ProductController extends Controller
                 'qty.required'=>'Please enter quantity',
                 'price.required'=>'Please enter price',
                 'color.required'=>'Please enter color',
+                'color.regex'=>'Please enter valid color',
                 'discount.required'=>'Please enter discount',
                 'status.required'=>'Please select status',
                 'category_id.required'=>'Please select category',
@@ -218,8 +220,7 @@ class ProductController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        // dd($request->all());
-        $categories = Category::get();
+        $categories = Category::where('status','Active')->get();
         if ($request->getMethod() == 'POST') {
             $validationrules = [           
                 'p_name'=>'required',
@@ -253,9 +254,7 @@ class ProductController extends Controller
 
             $validator = Validator::make($request->all(), $validationrules, $messages);
             $errors = $validator->errors();
-            // echo "<pre>"; print_r($errors->getMessages()); exit();
             if(empty($errors->getMessages())){
-                // echo "<pre>"; print_r('expression'); exit();
                 $products = Product::find($id);
                 $products->p_name = $request->p_name;
                 $products->description = $request->description;
