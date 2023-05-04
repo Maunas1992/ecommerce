@@ -96,6 +96,7 @@ Route::get('/favourite', [ProductFrontController::class, 'myfavourite'])->name('
 
 Route::post('/addwishlist/{id}', [ProductFrontController::class, 'addwishlist'])->name('addwishlist');
 Route::get('/addwishlist/{id}', [ProductFrontController::class, 'addwishlist'])->name('addwishlist');
+Route::post('/removewishlist/{id}', [ProductFrontController::class, 'removewishlist'])->name('removewishlist');
 // Route::get('/topics/{category}/{forum}', [
 //     'as'   => 'topics.show',
 //     'uses' => 'TopicsController@show'

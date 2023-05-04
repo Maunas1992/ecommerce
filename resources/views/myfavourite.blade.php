@@ -1,138 +1,98 @@
 @extends('applayout.mainlayout')
 @section('content')
     <!-- SECTION -->
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <div class="section">
-        </div>
-    <!-- /SECTION -->
-    <!-- SECTION -->
-        <div class="section" id="appendiv">
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+{{--<div class="section">
             <!-- container -->
             <div class="container">
                 <!-- row -->
                 <div class="row">
+                    
+                    <!-- Product main img -->
+                    @foreach($products as $product)
+                    <div class="col-md-3">
+                        <div id="product-main-img">
+                            <div class="product-preview">
+                                <img src="{{asset('/storage/product/'.$product->productsfav->image)}}" alt="">
+                            <h2 class="product-name">{{$product->productsfav->p_name}}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    
+                    <div class="col-md-6">
+                        <div class="product-details">
+                            
+                            <div>
+                                <h3 class="product-price"></h3>
+                            </div>
 
-                    <!-- section title -->
+                        </div>
+                    </div>
+                        
+           
+                </div>
+            </div>
+                                <!-- /tab3  -->
+</div>--}}
+                            
+<div class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
                     <div class="col-md-12">
                         <div class="section-title">
-                            <h3 class="title">My Wishlist</h3>
+                            <h4 class="title">My Wishlist</h4>
                             <div class="section-nav">
-                                <ul class="section-tab-nav tab-nav">
-                                    <li class="active"><a data-toggle="tab" href="#tab1">Laptops</a></li>
-                                    <li><a data-toggle="tab" href="#tab1">Smartphones</a></li>
-                                    <li><a data-toggle="tab" href="#tab1">Cameras</a></li>
-                                    <li><a data-toggle="tab" href="#tab1">Accessories</a></li>
-                                </ul>
+                                <div id="slick-nav-3" class="products-slick-nav"></div>
                             </div>
+                            @foreach($products as $product)
                         </div>
-                    </div>
-                    <!-- /section title -->
-
-                    <!-- Products tab & slick -->
-                 <div class="col-md-12">
-                        <div class="row">
-                            <div class="products-tabs">
-                                <!-- tab -->
-                                <div id="tab1" class="tab-pane active">
-                                    <div class="products-slick" data-nav="#slick-nav-1">
-                                        <!-- product -->
-                                        @foreach($products as $product)
-                                        <div class="col-md-4 col-xs-4">
-                                            <div class="product">
-                                                <div class="product-img">
-                                                    
-                                                    <img src="{{asset('/storage/product/'.$product->productsfav->image)}}" alt="" >
-                                                    
-                                                    <div class="product-label">
-                                                        <span class="sale">-30%</span>
-
-                                                        <span class="new">NEW</span>
-                                                    </div>
-                                                </div>
-                                                <div class="product-body">
-                                                    <p class="product-category">Category</p>
-                                                    <h3 class="product-name"><a href="#" ></a>{{$product->productsfav->p_name}}</h3>
-                                                    <h4 class="product-price">${{$product->productsfav->price}}</h4>
-                                                    <div class="product-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                    <div class="product-btns">
-                                                        <button class="add-to-wishlist" data-target="#appendiv" data-attr="{{$product->id}}"id="wishid" name="product_id" onClick="tempwish(this)">
-                                                            <i class="fa fa-heart" aria-hidden="true"></i>
-                                                            
-                                                        </button>
-                                                        
-                                                        <button class="quick-view"><a href="{{route('showproduct',['id'=>$product->id])}}"><i class="fa fa-eye"></i></a><span class="tooltipp">quick view</span></button>
-                                                    </div>
-                                                </div>
-                                                <div class="add-to-cart">
-                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                        <div class="products-slick-nav">
-                                <div id="slick-nav-1" class="products-slick-nav-danger"></div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="products-widget-slick" data-nav="#slick-nav-3">
                                 
-                            </div>
-                                        
+                                <!-- product widget -->
+                                <div class="product-widget">
+                                    <div class="product">
+                                    <div class="product-img">
+                                        <img src="{{asset('/storage/product/'.$product->productsfav->image)}}" alt="" style="width:120px;height: 150px  ;">
                                     </div>
                                 </div>
-                                        <!-- /product -->
+                                    <div class="product-body" style="margin-left:50px;">
+                                        <div class="product">
+                                            <br>
+                                            <h3 class="product-name"><a href="#">{{$product->productsfav->p_name}} </a></h3>
+                                            <h4 class="product-price">Price:&nbsp;&nbsp;${{$product->productsfav->price}} 
+                                                <div class="product-label">
+                                                        <span class="sale"> 
+                                                        <span>Discount:&nbsp;&nbsp;{{$product->productsfav->discount}}%off</span>
+                                                </div><br>
+                                                <form method="post" action="{{route('removewishlist',$product->id)}}">
+                                                    @csrf
+                                                    <span data-toggle="tooltip" data-placement="top" title="delete">
+                                                        <button type="submit" onclick="return myFunction();" class="add-to-wishlist"><i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </span>
+                                                </form>
+                                                <button class="quick-view" style="position:relative; left:40px; bottom:35px;">
+                                                    <span class="tooltipp" style="margin-top:20px;"><a href="{{route('showproduct',['id'=>$product->product_id])}}"><i class="fa fa-eye"></i></a></span>
+                                                </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div id="slick-nav-1" class="products-slick-nav"></div>
-                        </div>
+                        @endforeach
+                    </div>
                     </div>
                 </div>
             </div>
-                    <!-- Products tab & slick -->
-        </div>
-        <div id="hot-deal" class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="hot-deal">
-                            <ul class="hot-deal-countdown">
-                                <li>
-                                    <div>
-                                        <h3>02</h3>
-                                        <span>Days</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <h3>10</h3>
-                                        <span>Hours</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <h3>34</h3>
-                                        <span>Mins</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <h3>60</h3>
-                                        <span>Secs</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <h2 class="text-uppercase">hot deal this week</h2>
-                            <p>New Collection Up to 50% OFF</p>
-                            <a class="primary-btn cta-btn" href="#">Shop now</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
         </div>
     
 @endsection
+<script type="text/javascript">
+  function myFunction() {
+      if(!confirm("Are You Sure to delete this"))
+      event.preventDefault();
+  }
+  </script>

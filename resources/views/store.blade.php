@@ -3,24 +3,14 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
 
 		<!-- BREADCRUMB -->
-		<div id="breadcrumb" class="section">
+		
 			<!-- container -->
 			<div class="container">
 				<!-- row -->
-				<div class="row">
-					<div class="col-md-12">
-						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
-							<li><a href="#">All Categories</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li class="active">Headphones (227,490 Results)</li>
-						</ul>
-					</div>
-				</div>
+				
 				<!-- /row -->
 			</div>
-			<!-- /container -->
-		</div>
+	
 		<!-- /BREADCRUMB -->
 
 		<!-- SECTION -->
@@ -43,8 +33,7 @@
 								        @foreach($categories as $marchio)
 								        
 								        	<li>
-								        		<input type="checkbox" id="m{{$m}}" class="marchio" name="category_ids[]" onClick="filterProducts(this)" value="{{ $marchio->id }}"
-								        		
+								        		<input type="checkbox" id="m{{$m}}" class="marchio"data-attr="{{ $marchio->id }}" name="category_ids[]" onClick="filterProducts(this)" value="{{ $marchio->id }}"
 								        		@if (request()->get('category_ids'))
 								        		{{ in_array( $marchio->id, request()->get('category_ids')) ? 'checked':'' }}
 								        		@endif >
@@ -60,81 +49,47 @@
 								     	@endforeach   
 								</ul>
 							</div>
-						</form>
-					</div>
-						<!-- aside Widget -->
-						
-						<!-- /aside Widget -->
-
-						<!-- aside Widget -->
-					
-						<!-- /aside Widget -->
-
-						<!-- aside Widget -->
-						
-						<!-- /aside Widget -->
-					</div>
-					<!-- /ASIDE -->
-					<!-- STORE -->
-					<div id="store" class="col-md-9">
-						<!-- store top filter -->
-						<div class="store-filter clearfix">
-							<div class="store-sort">
-								<label>
-									Sort By:
-									<select class="input-select">
-										<option value="0">Popular</option>
-										<option value="1">Position</option>
-									</select>
-								</label>
-
-								<label>
-									Show:
-									<select class="input-select">
-										<option value="0">20</option>
-										<option value="1">50</option>
-									</select>
-								</label>
-							</div>
-							
+							</form>
 						</div>
-						<!-- /store top filter -->
-
+					</div>
+					<div id="store" class="col-md-9">
+					
 						<div id="message"></div>
 						<!-- store products -->
-						<div class="row categorydetail" id="categorydetail">
-							@foreach($products as $product)
-								<div class="col-md-4 col-xs-6">
-								    <div class="product">
-								        <div class="product-img">
-								            <img src="{{asset('/storage/product/'.$product->image)}}" alt="">
-								            <div class="product-label">
-								                <span class="sale">-30%</span>
-								                <span class="new">NEW</span>
-								            </div>
-								        </div>
-								        <div class="product-body">
-								            <p class="product-category">Category</p>
-								            <h3 class="product-name"><a href="#"></a>{{$product->p_name}}</h3>
-								            <h4 class="product-price">{{$product->price}}</h4>
-								            <div class="product-rating">
-								                <i class="fa fa-star"></i>
-								                <i class="fa fa-star"></i>
-								                <i class="fa fa-star"></i>
-								                <i class="fa fa-star"></i>
-								                <i class="fa fa-star"></i>
-								            </div>
-								            <div class="product-btns">
+							<div class="row categorydetail" id="categorydetail">
+								@foreach($products as $product)
+									<div class="col-md-4 col-xs-6">
+								    	<div class="product">
+								        	<div class="product-img">
+								            	<img src="{{asset('/storage/product/'.$product->image)}}" alt="">
+								            	<div class="product-label">
+								                	<span class="sale">{{$product->discount}}%off</span>
+								                
+								            	</div>
+								        	</div>
+								        	<div class="product-body">
+								            	
+								            	<h3 class="product-name"><a href="#"></a>{{$product->p_name}}</h3>
+								            	<h4 class="product-price">${{$product->price}}</h4>
+								            
+								            	<div class="product-btns">
+								            	@if(Route::has('login'))
+                    							@auth
 								                <button class="add-to-wishlist" data-target="#appendiv" data-attr="{{$product->id}}"id="wishid" name="product_id" onClick="tempwish(this)">
+
 								                @if(in_array($product->id,$productschecked))
 								                	<i class="fa fa-heart" aria-hidden="true"></i>
 								                @else
 								                <i class="fa fa-heart-o"></i>
 								                @endif
-								            </button>
-								                <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-								                <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-								            </div>
+								            	</button>
+								            	@else
+                                                    <button class="add-to-wishlist"><a href="{{route('login')}}"><i class="fa fa-heart-o"></i></a>
+                                                        @endauth
+                                                        @endif
+								         		<button class="quick-view"><a href="{{route('showproduct',['id'=>$product->id])}}">
+								            	<i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+								        	</div>
 								        </div>
 								        <div class="add-to-cart">
 								            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
@@ -144,30 +99,31 @@
 								<!-- /product -->
 								@endforeach
 						</div>
-						<!-- /store products -->
-
-						
-						<!-- /store bottom filter -->
 					</div>
-					<!-- /STORE -->
 				</div>
 				<!-- /row -->
 			</div>
 			<!-- /container -->
 		</div>
-		{!! $products->withQueryString()->links() !!}
+		
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script type="text/javascript">
 	function filterProducts(currentElement) {
-		console.log('filterProducts line1')
+		
 		var formData = $('#catform').serialize();
 		console.log($('#catform').serialize());
+		let bhref = $(currentElement).attr('data-attr');
+        console.log(bhref)
+        let url = "{{ route('getcategory', ['id' => ":bhref"]) }}";
+        url = url.replace(":bhref", bhref);
+        console.log(url)
 		$.ajax({
-	        url: "{{route('getcategory')}}",
+	        url: url,
 	        type: 'get',
 			data: formData,
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 			success: function(data) {
 				if (data.status) {
                 	$("#categorydetail").html(data.html);

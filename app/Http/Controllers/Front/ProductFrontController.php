@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Wishlist;    
+use App\Models\Wishlist;
+use App\Models\ProductVariant;    
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Session;
 use View;
@@ -14,39 +15,71 @@ class ProductFrontController extends Controller
 {
     public function index(Request $request , Product $products)
     {
+
         $products = $products->newQuery();
         $categories = Category::get();
-        if ($request->search !== null){
-            $products->select('products.*')
-            ->where(function($query) use($request) {
-                $query->where('p_name', 'LIKE', "%{$request->search}%" )
-                ->orwhere('description', 'LIKE', "%{$request->search}%" );
-            });
-        }
+        if ($products->count() || $productschecked !== null) {
+                // echo "<pre>"; print_r('expression'); exit;
+                $status = true;
+                $user = auth()->user();
+                
+        } 
+        
+        
+        // if ($request->search !== null){
+        //     $products->select('products.*')
+        //     ->where(function($query) use($request) {
+        //         $query->where('p_name', 'LIKE', "%{$request->search}%" )
+        //         ->orwhere('description', 'LIKE', "%{$request->search}%" );
+        //     });
+        // }
+        $user = auth()->user();
         $productschecked = [];
-        if ($productschecked == null) {
-            if (!auth()->user()){
+        if ($productschecked == null && auth()->user()) {
+            
                 $products = $products->newQuery();
                 $categories = Category::get();
-                if ($request->search !== null){
-                    $products->select('products.*')
-                    ->where(function($query) use($request) {
-                        $query->where('p_name', 'LIKE', "%{$request->search}%" )
-                        ->orwhere('description', 'LIKE', "%{$request->search}%" );
-                    });
-                }      
-                $products = $products->paginate(3);
-                return view('welcome',compact('products','categories','productschecked'));
-            }
+                $productschecked = Wishlist::where('user_id', $user->id)->pluck('product_id')->toArray();
+                $status = true;
+
         }
+        
+                // if ($request->search !== null){
+                //     $products->select('products.*')
+                //     ->where(function($query) use($request) {
+                //         $query->where('p_name', 'LIKE', "%{$request->search}%" )
+                //         ->orwhere('description', 'LIKE', "%{$request->search}%" );
+                //     });
+                // }      
+               
+            
+        // echo "<pre>"; print_r($productschecked); exit;
         $products = $products->paginate(3);
         return view('welcome',compact('products','categories','productschecked'));
     }
 
-    public function showproduct($id)
+    public function showproduct($id,Request $request , Product $products ,ProductVariant $productVariant)
     {
-      $products = Product::find($id);
-        return view('showproduct',compact('products'));
+        $products = Product::find($id);
+        $productVariant = ProductVariant::where('product_id',$products->id)->get();
+        
+        // echo "<pre>"; print_r($productVariant); exit;
+        if ($products->count() || $productschecked !== null) {
+                // echo "<pre>"; print_r('expression'); exit;
+                $status = true;
+                $user = auth()->user();
+                
+        } 
+        $productschecked = [];
+        if ($productschecked !== null && auth()->user()) {
+            
+                $user = auth()->user();
+                $productschecked = Wishlist::where('user_id', $user->id)->pluck('product_id')->toArray();
+                $status = true;
+        }
+        $productsshow = Product::get();
+
+        return view('showproduct',compact('products','productschecked','productsshow','productVariant'));
     }
 
     public function storeproduct()
@@ -58,7 +91,8 @@ class ProductFrontController extends Controller
 
     public function getcategory(Request $request , Product $products)
     {
-        // echo "<pre>"; print_r('expression'); exit;
+        
+        $user = auth()->user();
         $categories = Category::get(["category_name","id"]);
         $oldcatid = NULL;
 
@@ -68,11 +102,31 @@ class ProductFrontController extends Controller
         $products = $products->newQuery()
             ->select('products.*');
         if ($request->category !== null){
+                
                 $products = $products->leftJoin('categories','categories.id','=','products.category_id')
                 ->where(function($query) use($request) {
                     $query->where('categories.id', 'LIKE', "%{$request->category}%" );
+                   
                 });
         };
+        if ($request->category_option !== null ){
+            $products->where('category_id',$request->category_option)
+                ->get();
+            }
+            
+            // $products = $products->leftJoin('categories','categories.id','=','products.category_id')
+            //         ->where(function($query) use($request) {
+            //         $query->where('categories.id', 'LIKE', "%{$request->category_option}%" );
+                    
+            // });
+        // };
+        if ($request->search !== null){
+                    $products->where('p_name', 'LIKE', "%{$request->search}%" )
+                        ->orwhere('description', 'LIKE', "%{$request->search}%" )
+                        ->orwhere('price', 'LIKE', "%{$request->search}%" );
+                    // });
+                }
+        
         if($request->ajax()) {
             $html = '';
             $status = false;
@@ -83,17 +137,17 @@ class ProductFrontController extends Controller
                             $query->wherein('categories.id', $request->category_ids );
                     });
             }
+
+
             $products = $products->paginate();
-            if ($products->count() || $productschecked !== null) {
+            $productschecked = [];
+            if ($products->count() && $productschecked !== null) {
                 $status = true;
-                $user = auth()->user();
                 if ($user) {
                     $productschecked = Wishlist::where('user_id', $user->id)->pluck('product_id')->toArray();
-
                     $html = view::make('categoryform',compact('products','productschecked'))
                     ->render();
                 } 
-                $productschecked = Wishlist::where('user_id', $user->id)->pluck('product_id')->toArray();
                 $html = view::make('categoryform',compact('products','productschecked'))
                     ->render();
             } 
@@ -193,5 +247,16 @@ class ProductFrontController extends Controller
                 'status' => $status,
                 'message' => 'Your product is removed from Wishlist.'
             ]);
+    }
+
+    public function removewishlist(Request $request , Product $products,$id)
+    {
+        $user = auth()->user();
+        $wish = Wishlist::find($id);
+        // echo "<pre>"; print_r($wish); exit;
+
+        $wish->delete();
+        return redirect()->route('myfavourite');
+
     }
 }

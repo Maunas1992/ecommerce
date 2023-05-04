@@ -12,22 +12,13 @@
                         <ul class="footer-links">
                             <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
                             <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
-                            <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+                            <li><a href="#"><i class="fa fa-envelope-o"></i><a href="mailto:Electronics@example.com">Electronics@email.com</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-md-3 col-xs-6">
-                    <div class="footer">
-                        <h3 class="footer-title">Categories</h3>
-                        <ul class="footer-links">
-                            <li><a href="#">Hot deals</a></li>
-                            <li><a href="#">Laptops</a></li>
-                            <li><a href="#">Smartphones</a></li>
-                            <li><a href="#">Cameras</a></li>
-                            <li><a href="#">Accessories</a></li>
-                        </ul>
-                    </div>
+                    
                 </div>
 
                 <div class="clearfix visible-xs"></div>
@@ -51,7 +42,21 @@
                         <ul class="footer-links">
                             <li><a href="{{route('viewprofile')}}"> My Profile</a></li>
                             <li><a href="#">View Cart</a></li>
-                            <li><a href="#">Wishlist</a></li>
+                            <li>
+                                @if (Route::has('login'))
+                                @auth
+                                <a href="{{route('myfavourite')}}">
+                                    
+                                    Wishlist
+                                    
+                                </a>
+                                @else
+                                <a href="{{route('login')}}">
+                                    
+                                    Wishlist
+                                </a>
+                                @endauth
+                                @endif</li>
                             <li><a href="#">Track My Order</a></li>
                             <li><a href="#">Help</a></li>
                         </ul>

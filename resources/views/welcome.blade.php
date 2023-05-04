@@ -11,14 +11,7 @@
                 <div class="col-md-12">
                     <div class="section-title">
                         <h3 class="title">New Products</h3>
-                        <div class="section-nav">
-                            <ul class="section-tab-nav tab-nav">
-                                <li class="active"><a data-toggle="tab" href="#tab1">Laptops</a></li>
-                                <li><a data-toggle="tab" href="#tab1">Smartphones</a></li>
-                                <li><a data-toggle="tab" href="#tab1">Cameras</a></li>
-                                <li><a data-toggle="tab" href="#tab1">Accessories</a></li>
-                            </ul>
-                        </div>
+                       
                     </div>
                 </div>
 
@@ -45,29 +38,30 @@
                                                 No Image
                                                 @endif
                                                 <div class="product-label">
-                                                    <span class="sale">-30%</span>
+                                                    <span class="sale">{{$product->discount}}%off</span>
 
-                                                    <span class="new">NEW</span>
+                                                    
                                                 </div>
                                             </div>
                                             <div class="product-body">
-                                                <p class="product-category">Category</p>
+                                                
                                                 <h3 class="product-name"><a href="#" ></a>{{$product->p_name}}</h3>
                                                 <h4 class="product-price">${{$product->price}}</h4>
-                                                <div class="product-rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
+                                                
                                                 <div class="product-btns">
+                                                    @if (Route::has('login'))
+                                                    @auth
                                                     <button class="add-to-wishlist" data-target="#appendiv" data-attr="{{$product->id}}"id="wishid" name="product_id" onClick="tempwish(this)">
+                                                    
                                                     @if(in_array($product->id,$productschecked))
                                                         <i class="fa fa-heart" aria-hidden="true"></i>
                                                     @else
                                                         <i class="fa fa-heart-o"></i>
                                                     @endif
+                                                    @else
+                                                    <button class="add-to-wishlist"><a href="{{route('login')}}"><i class="fa fa-heart-o"></i></a>
+                                                        @endauth
+                                                        @endif
                                                     <button class="quick-view"><a href="{{route('showproduct',['id'=>$product->id])}}"><i class="fa fa-eye"></i></a><span class="tooltipp">quick view</span></button>
                                                 </div>
                                             </div>
@@ -86,11 +80,15 @@
                             </div>
                                     <!-- /product -->
                         </div>
-                        <div id="slick-nav-1" class="products-slick-nav"></div>
+                        <br><b>
+                        
+                        
                     </div>
                 </div>
             </div>
+            <div id="slick-nav-1" class="products-slick-nav-pull-5">{!! $products->withQueryString()->links() !!}</div>
         </div>
+               
                 <!-- Products tab & slick -->
         </div>
         

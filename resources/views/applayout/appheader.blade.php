@@ -55,20 +55,25 @@
                     <!-- SEARCH BAR -->
                     <div class="col-md-6">
                         <div class="header-search"style="display: flex;">
-                            <form method="GET" action="{{route('getcategory')}}" >
-                                    <select class="input-select" onchange="location =    this.options[this.selectedIndex].value;">
-                                        <option value="{{route('home')}}">All Categories</option>
+                            <form method="GET" action="{{route('getcategory')}}"role="search" >
+                                    <select class="input-select"name="category_option" id="category_option">
+                                        <option value="{{url('/')}}">Select Category</option>
                                         @foreach(category() as $cat)
-                                        <option value="{{route('getcategory')}}?category={{$cat->id}}" name="category_option"><button  class="input" name="category_option" value="{{$cat->id}}">{{$cat->category_name}}</button></a></option>
+                                        <option value="{{$cat->id}}"  {{ (collect(old('category_option',request()->get('category_option')))->contains($cat->id)) ? 'selected':'' }}>
+                                            @if(isset($cat->id))
+                                             {{$cat->category_name}}
+                                            @endif
+                                            </option>
                                         @endforeach
                                     </select>
-                                </form>
-                                <form role="search" method="GET" action="{{route('getproduct')}}" >
+                                
+                                
+                                    <input class="input" type="search" placeholder="Search" name = "search"aria-label="Search"  style="width: 250px;"value="{{old('search',request()->get('search'))}}"  >
                                     
-                                    <input class="input" type="search" placeholder="Search" name = "search"aria-label="Search" value="{{('search')}}" style="width: 250px;">
                                     <button class="search-btn" type="submit">Search</button>
                                     
                                 </form>
+                            
                             </div>
                         </div>
                     
@@ -80,12 +85,20 @@
                         <div class="header-ctn">
                             <!-- Wishlist -->
                             <div> 
-                                
+                                @if (Route::has('login'))
+                                @auth
                                 <a href="{{route('myfavourite')}}">
                                     <i class="fa fa-heart-o"></i>
                                     <span>Your Wishlist</span>
-                                    <div class="qty">2</div>
+                                    
                                 </a>
+                                @else
+                                <a href="{{route('login')}}">
+                                    <i class="fa fa-heart-o"></i>
+                                    <span>Your Wishlist</span>
+                                </a>
+                                @endauth
+                                @endif
                                 
                             </div>
                             <!-- /Wishlist -->
@@ -95,8 +108,7 @@
                                 <a href="{{route('setorder')}}"class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span>Your Cart</span>
-                                    <div class="qty">3</div>
-                                </a>
+                                                                    </a>
                                 <div class="cart-dropdown">
                                     <div class="cart-list">
                                         <div class="product-widget">
@@ -169,7 +181,9 @@
                         @foreach(category() as $cat)
                         @if($cat->is_header == 0)
                         <li>
-                        <a href="{{route('getcategory')}}?category={{$cat->id}}"name="category">{{$cat->category_name}}</a>
+                            <a href="{{route('getcategory',['category'=>$cat->id])}}" name="category[]">
+                        <!-- <a href="{{route('getcategory')}}?category[]={{$cat->id}}"name="category[]"> -->
+                            {{$cat->category_name}}</a>
                             
                         </li>
                         @endif

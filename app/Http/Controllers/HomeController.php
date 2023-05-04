@@ -36,8 +36,15 @@ class HomeController extends Controller
             $category = Category::count();
             return view('home',compact('products','users','category'));
         }else{
+            
             $products = Product::get();
             $categories = Category::get();
+            if ($products->count() || $productschecked !== null) {
+                // echo "<pre>"; print_r('expression'); exit;
+                $status = true;
+                $user = auth()->user();
+                
+            } 
             $productschecked = [];
             if ($productschecked == null) {
             // echo "<pre>"; print_r('expression'); exit;
@@ -45,7 +52,8 @@ class HomeController extends Controller
             $productschecked = Wishlist::where('user_id', $user->id)->pluck('product_id')->toArray();
              $status = true;
             // echo "<pre>"; print_r($productschecked); exit;
-            }   
+            }
+              
             return view('welcome',compact('products','categories','productschecked'));
         }
     }
