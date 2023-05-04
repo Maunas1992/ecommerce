@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Front\ProductFrontController;
 use App\Http\Controllers\ProductController;
 /*
@@ -23,9 +24,13 @@ Route::group(['prefix' => 'admin'], function ($request) {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 });
+Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Auth::routes();
 
 Route::get('/login', [App\Http\Controllers\Controller::class, 'frontLoginPage'])->name('login');
+
+Route::post('get-states-by-country',[App\Http\Controllers\UserController::class, 'getState'])->name('getState');
+Route::post('get-cities-by-state',[App\Http\Controllers\UserController::class, 'getCity'])->name('getCity');
 
 Route::group(['middleware' => ['auth','roles'], 'prefix' => 'admin'], function ($request) {
 

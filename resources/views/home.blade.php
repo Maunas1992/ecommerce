@@ -237,7 +237,7 @@
             </div>
             <!-- /.card -->
 
-            <div class="card">
+            <!-- <div class="card">
               <div class="card-header border-0">
                 <h3 class="card-title">Online Store Overview</h3>
                 <div class="card-tools">
@@ -260,9 +260,9 @@
                     </span>
                     <span class="text-muted">CONVERSION RATE</span>
                   </p>
-                </div>
+                </div> -->
                 <!-- /.d-flex -->
-                <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                <!-- <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
                   <p class="text-warning text-xl">
                     <i class="ion ion-ios-cart-outline"></i>
                   </p>
@@ -272,9 +272,9 @@
                     </span>
                     <span class="text-muted">SALES RATE</span>
                   </p>
-                </div>
+                </div> -->
                 <!-- /.d-flex -->
-                <div class="d-flex justify-content-between align-items-center mb-0">
+                <!-- <div class="d-flex justify-content-between align-items-center mb-0">
                   <p class="text-danger text-xl">
                     <i class="ion ion-ios-people-outline"></i>
                   </p>
@@ -284,10 +284,10 @@
                     </span>
                     <span class="text-muted">REGISTRATION RATE</span>
                   </p>
-                </div>
+                </div> -->
                 <!-- /.d-flex -->
-              </div>
-            </div>
+              <!-- </div>
+            </div> -->
           </div>
           <!-- /.col-md-6 -->
         </div>

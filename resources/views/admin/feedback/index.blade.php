@@ -60,14 +60,14 @@
                   </tr>
                   </thead>
                   <tbody>
-                  	@foreach($feedbacks as $feedback)
+                  	@foreach($feedbacks as $key => $feedback)
                       <tr>
-                        <td>{{$feedback->id}}</td>
-                        <td>{{$feedback->user->username}}</td>
-                        <td>{{$feedback->email}}</td>
-                        <td>{{$feedback->mobile_no}}</td>
-                        <td>{{$feedback->subject}}</td>
-                        <td>{{$feedback->message}}</td>
+                        <td>{{$feedbacks->firstItem()+$key}}</td>
+                        <td>{{$feedback->user->username ?? '-'}}</td>
+                        <td>{{$feedback->email ?? '-'}}</td>
+                        <td>{{$feedback->mobile_no ?? '-'}}</td>
+                        <td>{{$feedback->subject ?? '-'}}</td>
+                        <td>{{$feedback->message ?? '-'}}</td>
                         <td>
                           <div class="btn-group">
                             <span data-toggle="tooltip" data-placement="top" title="show" style="margin-top: 3px;">

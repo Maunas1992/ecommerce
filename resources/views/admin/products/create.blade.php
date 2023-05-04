@@ -61,13 +61,13 @@
 
                     <div class="col-6">
                       <label>Quantity: <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" name="qty" value="{{request()->get('qty')}}" placeholder="Enter Quantity">
+                      <input type="text" class="form-control" onkeypress="return isNumberKey(event)" name="qty" pattern="[0-9]*" value="{{request()->get('qty')}}" placeholder="Enter Quantity" message="Please enter valid quantity">
                     <span class="error text-danger">{{$errors->first('qty')}}</span>
                     </div>
 
                     <div class="col-6 mb-3">
                       <label>Price: <span class="text-danger">*</span></label>
-                      <input type="text" name="price" value="{{request()->get('price')}}" class="form-control" placeholder="Enter price">
+                      <input type="text" name="price" onkeypress="return isNumberKey(event)" value="{{request()->get('price')}}" class="form-control" placeholder="Enter price">
                     <span class="error text-danger">{{$errors->first('price')}}</span>
                     </div>
 
@@ -79,7 +79,7 @@
 
                     <div class="col-6 mb-3">
                       <label>Discount: <span class="text-danger">*</span></label>
-                      <input type="text" name="discount" value="{{request()->get('discount')}}" class="form-control" placeholder="Enter discount">
+                      <input type="text" name="discount" min="0" max="99.99" value="{{request()->get('discount')}}" class="form-control percent" placeholder="Enter discount" maxlength="6">
                     <span class="error text-danger">{{$errors->first('discount')}}</span>
                     </div>
 
@@ -171,7 +171,7 @@
                         </div>
                         @endforeach
                       @else
-                        <div class="row">
+                        <div class="row hello">
                         <div class="col-3">
                           <div class="form-group">
                             <label for="exampleFormControlInput1">Color</label>
@@ -197,6 +197,13 @@
                             <label for="exampleFormControlSelect1">Discount</label>
                             <input type="text" name="productVariant[0][discount]" class="form-control" placeholder="Enter Discount">
                           </div>
+                        </div>
+
+                        <div class="col-1 ml-1">
+                            <label for="exampleFormControlInput1">Remove</label>
+                          <button type="button" class="btn btn-danger btn-sm" onclick="return delete_first_variant(this);">
+                            <span class="fa fa-trash"></span>
+                          </button>
                         </div>
                       </div>
                       @endif
@@ -271,4 +278,49 @@
         }
 </script>
 
+<script type="text/javascript">
+  function delete_first_variant(e) {
+            $(e).closest('.hello').remove();
+        }
+</script>
+
+<script type="text/javascript">
+  function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
+</script>
+
+<!-- <script type="text/javascript">
+  document.querySelector('.percent').addEventListener('input', function(e) {
+  let int = e.target.value.slice(0, e.target.value.length - 1);
+
+  if (int.includes('%')) {
+    e.target.value = '%';
+  } else if (int.length >= 3 && int.length <= 4 && !int.includes('.')) {
+    e.target.value = int.slice(0, 2) + '.' + int.slice(2, 3) + '%';
+    e.target.setSelectionRange(4, 4);
+  } else if (int.length >= 5 & int.length <= 6) {
+    let whole = int.slice(0, 2);
+    let fraction = int.slice(3, 5);
+    e.target.value = whole + '.' + fraction + '%';
+  } else {
+    e.target.value = int + '%';
+    e.target.setSelectionRange(e.target.value.length - 1, e.target.value.length - 1);
+  }
+  console.log('For robots: ' + getInt(e.target.value));
+});
+
+function getInt(val) {
+  let v = parseFloat(val);
+  if (v % 1 === 0) {
+    return v;
+  } else {
+    let n = v.toString().split('.').join('');
+    return parseInt(n);
+  }
+}
+</script> -->
 @endsection

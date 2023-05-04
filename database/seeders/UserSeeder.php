@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
             'country' => 'India',
             'pincode' => '380051',
             'mobile_no' => '9999999999',
+            'status' => 'Active',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('12345678'),
             'role' => 'admin',

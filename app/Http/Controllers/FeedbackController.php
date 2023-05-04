@@ -8,7 +8,7 @@ use App\Models\Feedback;
 class FeedbackController extends Controller
 {
     public function feedbackList(){
-        $feedbacks = Feedback::paginate();
+        $feedbacks = Feedback::paginate(5);
         return view('admin.feedback.index',compact('feedbacks'));
     }
 

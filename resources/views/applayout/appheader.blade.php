@@ -179,7 +179,7 @@
                         <li class="active"><a href="{{url('/')}}">Home</a></li>
                         {{--<li><a href="#">Hot Deals</a></li>--}}
                         @foreach(category() as $cat)
-                        @if($cat->is_header == 0)
+                        @if($cat->is_header == 'yes')
                         <li>
                             <a href="{{route('getcategory',['category'=>$cat->id])}}" name="category[]">
                         <!-- <a href="{{route('getcategory')}}?category[]={{$cat->id}}"name="category[]"> -->

@@ -57,19 +57,19 @@
                   </tr>
                   </thead>
                   <tbody>
-                  	@foreach($users as $user)
+                  	@foreach($users as $key => $user)
                   <tr>
-                    <td>{{$user->id}}</td>
+                    <td>{{$users->firstItem()+$key}}</td>
                     <td>{{$user->username}}</td>
                     <td>{{$user->address}}</td>
-                    <td>{{$user->city}}</td>
-                    <td>{{$user->state}}</td>
+                    <td>{{$user->city->name ?? '-'}}</td>
+                    <td>{{$user->state->state_name ?? '-'}}</td>
                     <td>{{$user->mobile_no}}</td>
                     <td>
                           @if($user->status == 'Active')
-                          <div class="badge badge-success"> {{$user->status}}</div>
+                          <div class="badge badge-success"> Active</div>
                           @else
-                          <div class="badge badge-danger"> {{$user->status}}</div>
+                          <div class="badge badge-danger"> InActive </div>
                           @endif
                         </td>
                     <td>{{$user->email}}</td>
