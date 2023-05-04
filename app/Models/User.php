@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Feedback;
+use App\Models\Country;
+use App\Models\State;
+use App\Models\City;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,10 +25,13 @@ class User extends Authenticatable
         'username',
         'address',
         'dob',
-        'city',
+        // 'city',
         'gender',
-        'state',
-        'country',
+        // 'state',
+        // 'country',
+        'country_id',
+        'state_id',
+        'city_id',
         'pincode',
         'mobile_no',
         'email',
@@ -60,5 +66,14 @@ class User extends Authenticatable
     public function productswishlist()
     {
         return $this->hasMany(Product::class,'id','user_id');
+    }
+    public function country() {
+        return $this->belongsTo(Country::class, 'country_id','id');
+    }
+    public function state() {
+        return $this->belongsTo(State::class, 'state_id', 'id');
+    }
+    public function city() {
+        return $this->belongsTo(City::class, 'city_id', 'id');
     }
 }

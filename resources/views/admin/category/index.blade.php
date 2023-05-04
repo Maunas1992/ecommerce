@@ -52,16 +52,16 @@
                   </tr>
                   </thead>
                   <tbody>
-                  	@foreach($categories as $category)
+                  	@foreach($categories as $key => $category)
                   <tr>
-                    <td>{{$category->id}}</td>
+                    <td>{{$categories->firstItem()+$key}}</td>
                     <td>{{$category->category_name}}</td>
                     <td>{{$category->is_header}}</td>
                     <td>
                           @if($category->status == 'Active')
-                          <div class="badge badge-success"> {{$category->status}}</div>
+                          <div class="badge badge-success"> Active</div>
                           @else
-                          <div class="badge badge-danger"> {{$category->status}}</div>
+                          <div class="badge badge-danger"> Inactive</div>
                           @endif
                         </td>
                     <td>

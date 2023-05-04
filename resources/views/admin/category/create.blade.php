@@ -44,8 +44,8 @@
                       <label>Is Header: <span class="text-danger">*</span></label>
                       <select name="is_header" class="form-control">
                         <option value="">Select Status</option>
-                        <option value="0" {{ old('is_header') == '0' ? 'selected' : '' }}>0</option>
-                        <option value="1" {{ old('is_header') == '1' ? 'selected' : '' }}>1</option>
+                        <option value="yes" {{ old('is_header') == 'yes' ? 'selected' : '' }}>Yes</option>
+                        <option value="no" {{ old('is_header') == 'no' ? 'selected' : '' }}>No</option>
                       </select>
                       <span class="error text-danger">{{$errors->first('is_header')}}</span>
                     </div>

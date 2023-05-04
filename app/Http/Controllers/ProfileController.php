@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Country;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
 class ProfileController extends Controller
 {
     public function adminprofile(){
+        $countries = Country::all();
         $users = Auth::user();
-        return view('admin.profile.adminprofile',compact('users'));
+        return view('admin.profile.adminprofile',compact('users','countries'));
     }
 
     public function adminUpdateProfile(Request $request, $id){
@@ -21,9 +23,9 @@ class ProfileController extends Controller
             'address'=>'required',
             'dob'=>'required|date|after:1990|before:2002',
             'gender'=>'required',
-            'city'=>'required',
-            'state'=>'required',
-            'country'=>'required',        
+            'city_id'=>'required',
+            'state_id'=>'required',
+            'country_id'=>'required',        
             'pincode'=>'required|numeric|min:6',
             'mobile_no'=>['required', 'digits:10','unique:users,mobile_no,'.$user->id],
             'email'=>'required|max:255|email:rfc,dns|unique:users,email,'.$user->id,
@@ -34,16 +36,16 @@ class ProfileController extends Controller
             'username.required'=>'Please enter name',
             'address.required'=>'Please enter address',
             'dob.required'=>'Please enter date of birth',
-            'city.required'=>'Please enter city name.',
-            'state.required'=>'Please enter state name.',
-            'country.required'=>'Please enter coutry name',
+            'city_id.required'=>'Please select city name.',
+            'state_id.required'=>'Please select state name.',
+            'country_id.required'=>'Please select coutry name',
             'pincode.required'=>'Please enter pincode',
             'pincode.min.10'=>'Please enter 6 digit  pincode',
             'pincode.numeric'=>'Please enter valid  pincode',
-            'mobile_no.unique'=> 'Please enter other contact number ,contact number already exist .',
-            'mobile_no.min.10'=>'Please enter  10 digit contact number number.',
-            'mobile_no.required'=> 'Please enter contact number number.',
-            'mobile_no.numeric'=> 'Please enter valid contact number.',
+            'mobile_no.unique'=> 'Please enter other mobile number ,mobile number already exist .',
+            'mobile_no.min.10'=>'Please enter  10 digit mobile number number.',
+            'mobile_no.required'=> 'Please enter mobile number.',
+            'mobile_no.numeric'=> 'Please enter valid mobile number.',
             'status.required'=>'Please select status',
             'email'=> 'Please enter valid email address.',
             'email.required'=>'Please enter email.',
@@ -54,10 +56,10 @@ class ProfileController extends Controller
         $user->username = $request->username;
         $user->address = $request->address;
         $user->dob = $request->dob;
-        $user->city = $request->city;
+        $user->city_id = $request->city_id;
         $user->gender = $request->gender;
-        $user->state = $request->state;
-        $user->country = $request->country;
+        $user->state_id = $request->state_id;
+        $user->country_id = $request->country_id;
         $user->pincode = $request->pincode;
         $user->mobile_no = $request->mobile_no;
         $user->email = $request->email;
