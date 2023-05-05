@@ -56,10 +56,10 @@
                     <div class="col-md-6">
                         <div class="header-search"style="display: flex;">
                             <form method="GET" action="{{route('getcategory')}}"role="search" >
-                                    <select class="input-select"name="category_option" id="category_option">
+                                    <select class="input-select"name="category_ids[]" id="category_ids">
                                         <option value="{{url('/')}}">Select Category</option>
                                         @foreach(category() as $cat)
-                                        <option value="{{$cat->id}}"  {{ (collect(old('category_option',request()->get('category_option')))->contains($cat->id)) ? 'selected':'' }}>
+                                        <option value="{{$cat->id}}"  {{ (collect(old('category_ids',request()->get('category_ids')))->contains($cat->id)) ? 'selected':'' }}>
                                             @if(isset($cat->id))
                                              {{$cat->category_name}}
                                             @endif
@@ -105,11 +105,11 @@
 
                             <!-- Cart -->
                             <div class="dropdown">
-                                <a href="{{route('setorder')}}"class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <a href="{{route('addtocart')}}">
                                     <i class="fa fa-shopping-cart"></i>
                                     <span>Your Cart</span>
                                                                     </a>
-                                <div class="cart-dropdown">
+                                {{--<!-- <div class="cart-dropdown">
                                     <div class="cart-list">
                                         <div class="product-widget">
                                             <div class="product-img">
@@ -141,7 +141,7 @@
                                         <a href="#">View Cart</a>
                                         <a href="{{route('setorder')}}">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
                                     </div>
-                                </div>
+                                </div> -->--}}
                             </div>
                             <!-- /Cart -->
 
@@ -176,13 +176,13 @@
                   
                 <ul class="main-nav nav navbar-nav">
                     
-                        <li class="active"><a href="{{url('/')}}">Home</a></li>
+                        <li><a href="{{url('/')}}">Home</a></li>
                         {{--<li><a href="#">Hot Deals</a></li>--}}
                         @foreach(category() as $cat)
                         @if($cat->is_header == 'yes')
-                        <li>
+                        
                             <!-- <a href="{{route('getcategory',['category'=>$cat->id])}}" name="category"> -->
-                        <a href="{{route('getcategory')}}?category={{$cat->id}}"name="category">
+                        <li><a href="{{route('getcategory')}}?category_ids[]={{$cat->id}}"name="category_ids[]" value={{$cat->id}}"  {{ (collect(old('category_ids',request()->get('category_ids')))->contains($cat->id)) ? 'active':'' }}>
                             {{$cat->category_name}}</a>
                             
                         </li>

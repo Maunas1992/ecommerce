@@ -5,7 +5,7 @@ use App\Models\Product;
 if (!function_exists('category')) {
 function category()
 {
-$category = Category::all();
+$category = Category::where('is_header','yes')->where('status','Active')->get();
 // dd($setting);
 if (isset($category)) {
 return $category;

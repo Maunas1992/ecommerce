@@ -34,9 +34,10 @@
 								        
 								        	<li>
 								        		<input type="checkbox" id="m{{$m}}" class="marchio"data-attr="{{ $marchio->id }}" name="category_ids[]" onClick="filterProducts(this)" value="{{ $marchio->id }}"
-								        		@if (request()->get('category_ids'))
-								        		{{ in_array( $marchio->id, request()->get('category_ids')) ? 'checked':'' }}
-								        		@endif >
+								        		{{ (collect(old('category_ids',request()->get('category_ids')))
+								        		->contains($marchio->id)) ? 'checked':'' }}>
+								        		
+								        		
 								        		<label for="m{{$m}}">
 								            	<span class="button"></span>
 								            	@if(isset($marchio->id))
@@ -114,16 +115,19 @@
 		
 		var formData = $('#catform').serialize();
 		console.log($('#catform').serialize());
-		let bhref = $(currentElement).attr('data-attr');
-        console.log(bhref)
-        let url = "{{ route('getcategory', ['id' => ":bhref"]) }}";
-        url = url.replace(bhref);
+		let href = $(currentElement).attr('data-attr');
+        console.log(href)
+        let setid = $(currentElement).attr('name');
+        console.log(setid)
+        let url = "{{ route('getcategory', ['id' => ":href"]) }}";
+        url = url.replace(href);
         console.log(url)
 		$.ajax({
 	        url: url,
 	        type: 'get',
 			data: formData,
 			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+
 			success: function(data) {
 				if (data.status) {
                 	$("#categorydetail").html(data.html);

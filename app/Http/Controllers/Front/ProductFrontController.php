@@ -94,37 +94,28 @@ class ProductFrontController extends Controller
         $user = auth()->user();
         // echo "<pre>"; print_r('expression'); exit;
         $categories = Category::where('status','Active')->get(["category_name","id"]);
-        $oldcatid = NULL;
-
-        if(($request->category_ids)) {
-            $oldcatid = $request->category_ids;
-        }
+       
         $products = $products->newQuery()
             ->select('products.*');
-        if ($request->category !== null){
-                
-                $products = $products->leftJoin('categories','categories.id','=','products.category_id')
-                ->where(function($query) use($request) {
-                    $query->where('categories.id', 'LIKE', "%{$request->category}%" );
+        
+        if ($request->category_ids !== null){
+            
+                //echo "<pre>"; print_r($request->category); exit;
+                $products = $products->where(function($query) use($request) {
+                    $query->whereIn('products.category_id', $request->category_ids );
                    
                 });
         };
-        if ($request->category_option !== null ){
-            $products->where('category_id',$request->category_option)
-                ->get();
-            }
+        // echo "<pre>"; print_r($selectedCategories); exit;
+        
             
-            // $products = $products->leftJoin('categories','categories.id','=','products.category_id')
-            //         ->where(function($query) use($request) {
-            //         $query->where('categories.id', 'LIKE', "%{$request->category_option}%" );
-                    
-            // });
-        // };
         if ($request->search !== null){
                     $products->where('p_name', 'LIKE', "%{$request->search}%" )
                         ->orwhere('description', 'LIKE', "%{$request->search}%" )
                         ->orwhere('price', 'LIKE', "%{$request->search}%" );
+            echo "<pre>"; print_r($products->get()); exit;
                     // });
+                    
                 }
         
         if($request->ajax()) {
@@ -134,7 +125,7 @@ class ProductFrontController extends Controller
                     $products = $products
                         ->leftJoin('categories','categories.id','=','products.category_id')
                         ->where(function($query) use($request) {
-                            $query->wherein('categories.id', $request->category_ids );
+                            $query->whereIn('categories.id', $request->category_ids );
                     });
             }
 
@@ -165,7 +156,7 @@ class ProductFrontController extends Controller
         }
 
         $products = $products->paginate(3);
-        return view('store',compact('products','categories','oldcatid','productschecked'));
+        return view('store',compact('products','categories','productschecked'));
     }
 
     public function order()

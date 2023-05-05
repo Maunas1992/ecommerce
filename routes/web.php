@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Front\ProductFrontController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -102,6 +103,8 @@ Route::get('/favourite', [ProductFrontController::class, 'myfavourite'])->name('
 Route::post('/addwishlist/{id}', [ProductFrontController::class, 'addwishlist'])->name('addwishlist');
 Route::get('/addwishlist/{id}', [ProductFrontController::class, 'addwishlist'])->name('addwishlist');
 Route::post('/removewishlist/{id}', [ProductFrontController::class, 'removewishlist'])->name('removewishlist');
+
+Route::get('/addtocart', [CartController::class, 'addtocart'])->name('addtocart');
 // Route::get('/topics/{category}/{forum}', [
 //     'as'   => 'topics.show',
 //     'uses' => 'TopicsController@show'
