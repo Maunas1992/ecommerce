@@ -37,33 +37,41 @@ class ProductController extends Controller
                 'p_name'=>'required',
                 'description'=>'required',
                 'image' => 'required|image|mimes:jpeg,bmp,png',
-                'qty'=>'required|numeric|regex:/^([0-9]+)(\s[1-9]+)*$/',
+                'qty'=>'required|numeric',
                 'price'=>'required|numeric',
-                'color'=>'required|string|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
-                // 'discount'=>['required','regex:/b(?<!\.)(?!0+(?:\.0+)?%)(?:\d|[1-9]\d|100)(?:(?<!100)\.\d+)?%/'],
-                'discount'=>['required','between:0,99.99', 'regex:/^\d+(\.\d{1,2})?%?$/'],
+                'color'=>'required|string|regex:/^[a-zA-Z]+$/u',
+                'discount'=>'numeric|between:00.00,99.99',
                 'category_id'=>'required',
                 'status'=>'required',
-                'productVariant.*.color' => 'required',
-                'productVariant.*.quantity' => 'required',
-                'productVariant.*.price' => 'required',
-                'productVariant.*.discount' => 'required',
+                'productVariant.*.color' => 'required|string|regex:/^[a-zA-Z]+$/u',
+                'productVariant.*.quantity' => 'required|numeric',
+                'productVariant.*.price' => 'required|numeric',
+                'productVariant.*.discount' => 'required|numeric|regex:/^\d*(\.\d{2})?$/|between:00.0,99.9',
             ];
             $messages =[
                 'p_name.required'=>'Please enter product name',
                 'description.required'=>'Please enter description',
                 'image.required'=>'Please select image',
                 'qty.required'=>'Please enter quantity',
+                'qty.numeric'=>'Please enter valid quantity',
                 'price.required'=>'Please enter price',
+                'price.numeric'=>'Please enter valid price',
                 'color.required'=>'Please enter color',
                 'color.regex'=>'Please enter valid color',
                 'discount.required'=>'Please enter discount',
+                'discount.numeric'=>'Please enter discount in number',
+                'discount.between'=>'Please enter discount 0 to 99.9',
                 'status.required'=>'Please select status',
                 'category_id.required'=>'Please select category',
                 'productVariant.*.color.required' =>'Please enter variant color',
+                'productVariant.*.color.regex'=>'Please enter valid variant color',
                 'productVariant.*.quantity.required' =>'Please enter variant quantity',
+                'productVariant.*.quantity.numeric'=>'Please enter valid variant quantity',
                 'productVariant.*.price.required' =>'Please enter variant price',
+                'productVariant.*.price.numeric'=>'Please enter valid variant price',
                 'productVariant.*.discount.required' =>'Please enter variant discount',
+                'productVariant.*.discount.numeric' =>'Please enter variant discount in number',
+                'productVariant.*.discount.between' =>'Please enter variant discount 0 to 99.9',
             ];
 
             $validator = Validator::make($request->all(), $validationrules, $messages);
@@ -116,6 +124,10 @@ class ProductController extends Controller
                 }
                 return redirect(route('product.index'))->with('success','Product added successfully');
             }else{
+                if($request->file('image')){
+                    $imagename = $request->file('image')->getClientOriginalName();
+                    return view('admin.products.create',compact('categories', 'errors','imagename'));
+                }
                 return view('admin.products.create',compact('categories', 'errors'));
             }
         }else{
@@ -226,30 +238,39 @@ class ProductController extends Controller
                 'p_name'=>'required',
                 'description'=>'required',
                 'image' => 'nullable|image|mimes:jpeg,bmp,png',
-                'qty'=>'required',
-                'price'=>'required',
-                'color'=>'required',        
-                'discount'=>'required',        
+                'qty'=>'required|numeric',
+                'price'=>'required|numeric',
+                'color'=>'required|string|regex:/^[a-zA-Z]+$/u',
+                'discount'=>'numeric|between:00.00,99.99',
                 'category_id'=>'required',
                 'status'=>'required',
-                'productVariant.*.color' => 'required',
-                'productVariant.*.quantity' => 'required',
-                'productVariant.*.price' => 'required',
-                'productVariant.*.discount' => 'required',
+                'productVariant.*.color' => 'required|regex:/^[a-zA-Z]+$/u',
+                'productVariant.*.quantity' => 'required|numeric',
+                'productVariant.*.price' => 'required|numeric',
+                'productVariant.*.discount' => 'required|numeric|between:00.00,99.99',
             ];
             $messages =[
                 'p_name.required'=>'Please enter product name',
                 'description.required'=>'Please enter description',
                 'qty.required'=>'Please enter quantity',
+                'qty.numeric'=>'Please enter valid quantity',
                 'price.required'=>'Please enter price',
+                'price.numeric'=>'Please enter valid price',
                 'color.required'=>'Please enter color',
-                'discount.required'=>'Please enter discount',
+                'color.regex'=>'Please enter valid color',
+                'discount.numeric'=>'Please enter discount in number',
+                'discount.between'=>'Please enter discount 0 to 99.99',
                 'status.required'=>'Please select status',
                 'category_id.required'=>'Please select category',
                 'productVariant.*.color.required' =>'Please enter variant color',
+                'productVariant.*.color.regex' =>'Please enter valid variant color',
                 'productVariant.*.quantity.required' =>'Please enter variant quantity',
+                'productVariant.*.quantity.numeric' =>'Please enter valid variant quantity',
                 'productVariant.*.price.required' =>'Please enter variant price',
+                'productVariant.*.price.numeric' =>'Please enter valid variant price',
                 'productVariant.*.discount.required' =>'Please enter variant discount',
+                'productVariant.*.discount.numeric' =>'Please enter variant discount in number',
+                'productVariant.*.discount.between' =>'Please enter variant discount 0 to 99.99',
             ];
 
             $validator = Validator::make($request->all(), $validationrules, $messages);

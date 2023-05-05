@@ -88,11 +88,25 @@
                       <span class="error text-danger">{{$errors->first('status')}}</span>
                     </div>
 
-                    <div class="col-6 mb-3">
+                    <!-- <div class="col-6 mb-3">
                       <label>Image: <span class="text-danger">*</span></label>
                       <input type="file" name="image" class="form-control mb-3">
-                      <img src="{{asset('/storage/product/'.$products->image)}}" class="rounded-circle" height="100px" width="100px">
+                      <img src="{{asset('/storage/product/'.$products->image)}}" class="rounded-circle" height="100px" width="100px"> -->
                     <!-- <span class="error text-danger">{{$errors->first('image')}}</span> -->
+                    <!-- </div> --> 
+
+                    <div class="col-6 mb-4">
+                      <label>Image: <span class="text-danger">*</span></label>
+                      <div class="custom-file">
+                        <input type="file" id="product_image" class="custom-file-input" name="image">
+                        <label class="custom-file-label mb-2" for="customFile">Choose file</label>
+                        @if($products->image == null)
+                        <img src="#" id="product-img-tag" width="120px" alt="No Image" />
+                        @else
+                        <img src="{{asset('/storage/product/'.$products->image)}}" id="product-img-tag" class="rounded-circle" height="100px" width="100px">
+                        @endif
+                        <span class="error text-danger">{{$errors->first('image')}}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -272,4 +286,19 @@ index++;
             $(e).closest('.productVar').remove();
         }
   </script>
+
+  <script type="text/javascript">
+   function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              $('#product-img-tag').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#product_image").change(function(){
+        readURL(this);
+    });
+</script>
 @endsection
