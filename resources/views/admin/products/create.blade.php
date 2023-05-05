@@ -61,13 +61,13 @@
 
                     <div class="col-6">
                       <label>Quantity: <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" onkeypress="return isNumberKey(event)" name="qty" pattern="[0-9]*" value="{{request()->get('qty')}}" placeholder="Enter Quantity" message="Please enter valid quantity">
+                      <input type="text" class="form-control" name="qty" value="{{request()->get('qty')}}" placeholder="Enter Quantity" message="Please enter valid quantity">
                     <span class="error text-danger">{{$errors->first('qty')}}</span>
                     </div>
 
                     <div class="col-6 mb-3">
                       <label>Price: <span class="text-danger">*</span></label>
-                      <input type="text" name="price" onkeypress="return isNumberKey(event)" value="{{request()->get('price')}}" class="form-control" placeholder="Enter price">
+                      <input type="text" name="price" value="{{request()->get('price')}}" class="form-control" placeholder="Enter price">
                     <span class="error text-danger">{{$errors->first('price')}}</span>
                     </div>
 
@@ -88,16 +88,16 @@
                       <input type="file" name="image" class="form-control">
                     <span class="error text-danger">{{$errors->first('image')}}</span>
                     </div> -->
-                    <div class="col-6">
+                    <!-- <div class="col-6">
                       <label>Image: <span class="text-danger">*</span></label>
-                    <div class="custom-file">
-                      <input type="file" class="custom-file-input" name="image" id="customFile">
-                      <label class="custom-file-label" for="customFile">Choose file</label>
-                      <span class="error text-danger">{{$errors->first('image')}}</span>
-                    </div>
-                    </div>
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="image">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                        <span class="error text-danger">{{$errors->first('image')}}</span>
+                      </div>
+                    </div> -->
 
-                    <div class="col-6 mb-3">
+                    <div class="col-6">
                       <label>Status: <span class="text-danger">*</span></label>
                       <select name="status" class="form-control">
                         <option value="">Select Status</option>
@@ -105,6 +105,20 @@
                         <option value="Inactive" {{ request()->get('status') == 'Inactive' ? 'selected' : '' }}>Inactive</option>
                       </select>
                       <span class="error text-danger">{{$errors->first('status')}}</span>
+                    </div>
+
+                    <div class="col-6 mb-4">
+                      <label>Image: <span class="text-danger">*</span></label>
+                      <div class="custom-file">
+                        <input type="file" id="product_image" class="custom-file-input" name="image">
+                        <label class="custom-file-label mb-2" for="customFile">Choose file</label>
+                        @if(request()->file('image') == null)
+                        <img src="#" id="product-img-tag" width="120px" alt="No Image" />
+                        @else
+                        <img src="#" id="product-img-tag" width="120px" alt="{{$imagename}}" />
+                        @endif
+                        <span class="error text-danger">{{$errors->first('image')}}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -293,6 +307,20 @@
 }
 </script>
 
+<script type="text/javascript">
+   function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#product-img-tag').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#product_image").change(function(){
+        readURL(this);
+    });
+</script>
 <!-- <script type="text/javascript">
   document.querySelector('.percent').addEventListener('input', function(e) {
   let int = e.target.value.slice(0, e.target.value.length - 1);
