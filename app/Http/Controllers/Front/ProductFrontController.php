@@ -91,7 +91,6 @@ class ProductFrontController extends Controller
 
     public function getcategory(Request $request , Product $products)
     {
-        
         $user = auth()->user();
         // echo "<pre>"; print_r('expression'); exit;
         $categories = Category::where('status','Active')->get(["category_name","id"]);

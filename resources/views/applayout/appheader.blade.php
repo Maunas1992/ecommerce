@@ -181,8 +181,8 @@
                         @foreach(category() as $cat)
                         @if($cat->is_header == 'yes')
                         <li>
-                            <a href="{{route('getcategory',['category'=>$cat->id])}}" name="category[]">
-                        <!-- <a href="{{route('getcategory')}}?category[]={{$cat->id}}"name="category[]"> -->
+                            <!-- <a href="{{route('getcategory',['category'=>$cat->id])}}" name="category"> -->
+                        <a href="{{route('getcategory')}}?category={{$cat->id}}"name="category">
                             {{$cat->category_name}}</a>
                             
                         </li>

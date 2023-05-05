@@ -117,7 +117,7 @@
 		let bhref = $(currentElement).attr('data-attr');
         console.log(bhref)
         let url = "{{ route('getcategory', ['id' => ":bhref"]) }}";
-        url = url.replace(":bhref", bhref);
+        url = url.replace(bhref);
         console.log(url)
 		$.ajax({
 	        url: url,
