@@ -71,13 +71,22 @@
                 if (data.status == true) {
                     $(e).html('<i class="fa fa-heart" aria-hidden="true"></i>');
                     $("#message").html('<div class="alert alert-success alert-dismissible" id="message"><strong>Your product has been added to your Wishlist.</strong></div>');
+                    if(data.wishcount != 0){
+                        $("#wishcount").html(data.wishcount);
+                    }else{
+                        $("#wishcount").html('0');
+                    }
                 } else {
                     
                     $(e).html('<i class="fa fa-heart-o"></i>');
                    
                     
                     $("#message").html('<div class="alert alert-success alert-dismissible" id="message"><strong>Your product is removed from Wishlist.</strong></div>');
-
+                    if(data.wishcount != 0){
+                        $("#wishcount").html(data.wishcount);
+                    }else{
+                        $("#wishcount").html('0');
+                    }
                 }
                 console.log(data.message)
             }

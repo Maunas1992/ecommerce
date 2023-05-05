@@ -215,9 +215,12 @@ class ProductFrontController extends Controller
             $wish->product_id = $products->id;
             $wish->user_id = $user->id;
             $wish->save();
+            $userwishlist = Wishlist::where('user_id',$user->id)->get();
+            $wishcount = count($userwishlist);
             $status = true;
                 return response()->json([
                 'status' => $status,
+                'wishcount' => $wishcount,
                 'message' => 'Your product has been added to your Wishlist.'
             ]);
         }
@@ -241,9 +244,12 @@ class ProductFrontController extends Controller
         //     ]); 
         // }  
         // else {
+            $userwishlist = Wishlist::where('user_id',$user->id)->get();
+            $wishcount = count($userwishlist);
             $status = false;
             return response()->json([
                 'status' => $status,
+                'wishcount' => $wishcount,
                 'message' => 'Your product is removed from Wishlist.'
             ]);
     }
